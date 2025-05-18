@@ -73,11 +73,11 @@ Este projeto está sob a GNU GPLv3.
 | **RF003** | Ampliar imagens para visualizar detalhes anatômicos. |
 | **RF004** | Oferecer textos explicativos sobre cada filo abordado. |
 | **RF005** | Disponibilizar uma trilha de conteúdos práticos organizados por filo. |
-| **RF006** | O sistema permite que o aluno realize atividades de identificação de estruturas em imagens. |
-| **RF007** | O aplicativo fornece feedback imediato sobre a resposta do aluno em atividades de identificação. |
-| **RF008** | O aluno pode marcar conteúdos como “vistos” ou “revisados”. |
-| **RF009** | O sistema permite visualizar as estruturas com destaque ao tocar nas imagens (ex: realce de partes). |
-| **RF010** | O aplicativo mantém o progresso local do aluno, como lições visualizadas e acertos em atividades. |
+| **RF006** | Permitir que o aluno realize atividades de identificação de estruturas em imagens. |
+| **RF007** | Fornecer feedback imediato sobre a resposta do aluno em atividades de identificação. |
+| **RF008** | Marcar conteúdos como “vistos” ou “revisados”. |
+| **RF009** | Permitir a visualização das estruturas com destaque ao tocar nas imagens (ex: realce de partes). |
+| **RF010** | Manter o progresso local do aluno, como lições visualizadas e acertos em atividades. |
 
 
 
