@@ -22,6 +22,7 @@ export const Header = () => {
                  <ClerkLoaded>
                     <SignedIn>
                         <UserButton 
+
                             afterSwitchSessionUrl="/"
                             userProfileMode="modal"
                             showName={false}                           
