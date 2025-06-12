@@ -51,7 +51,7 @@ export const Footer = () => {
                     <span className="-translate-x-2">Chaetognathas & Nemerteas</span>
                 </Button>
 
-                <Button size = "lg" variant="ghost">
+                <Button size = "lg" variant="ghost" >
                     <Image 
                         src="/polvo.png" 
                         alt= "polvo"
@@ -59,7 +59,7 @@ export const Footer = () => {
                         width={40}
                         className ="mr-4 rounded-md"
                     />
-                    <span className="-translate-x-2">Moluscos</span>
+                    <span className="-translate-x-2 text">Moluscos</span>
                 </Button>
 
                 
