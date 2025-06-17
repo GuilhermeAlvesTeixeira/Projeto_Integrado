@@ -15,8 +15,7 @@ export default function Home() {
     <h1 className="text-xl lg:text-3xl font-bold text-neutral-600 text-center"> 
       Aprenda, visualize e exercite com InverteLab
     </h1>
-
-    
+ 
     <div className="w-full flex flex-col gap-y-3 max-w-[380px]">
       <ClerkLoading>
         <Loader className="h-5 w-95 text-muted-foreground animate-spin"/>
