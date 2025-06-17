@@ -1,11 +1,11 @@
 import { SideBar} from "@/components/sidebar";
-//import { MobileHeader } from "@/components/mobile-header";
+import { MobileHeader } from "@/components/mobile-header";
 
 type Props = {
     children: React.ReactNode;
 };
 
-/*
+
 const MainLayout = ({children,}: Props) => {
     return (
         <>
@@ -20,4 +20,4 @@ const MainLayout = ({children,}: Props) => {
     );
 };
 
-export default MainLayout; */
+export default MainLayout;
