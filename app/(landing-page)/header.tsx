@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 export const Header = () => {
     return (
 
-        <header className="absolute w-full h-20 left-0 top-0 
-                 bg-[linear-gradient(295.36deg,rgba(217,217,217,0)_-262.38%,rgba(76,68,68,0.15)_195.96%)]
-                 border-b border-b-[#3BBD57]
-                 px-4">
+        <header className="absolute w-full h-20 left-0 top-0 border-b border-b-[#3BBD57] px-4" style={{
+            borderTop: '1px solid #3BBD57',
+            background: 'linear-gradient(295.36deg, rgba(0, 217, 0, 0) -262.38%, rgba(0, 68, 0, 0.15) 195.96%)'
+          }}>
             <div className = "lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
                 <div className = "pt-8 pl-4 pb-7 flex items-center gap-x-3">
                     
