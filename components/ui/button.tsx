@@ -19,13 +19,16 @@ const buttonVariants = cva(
         ghost:            "bg-transparent text-slate-500 border-transparent border-0 hover:bg-slate-100",
         sidebar:          "bg-transparent text-slate-500 border 2 border-transparent hover: bg-slate-100 transition-none",
         sidebarOutline:   "bg-sky-500/15 text-sky-500 border-sky-300 border-2 hover:bg-sky-500/20 transition-none",
+        start:            "bg-[#3BBD57] text-primary-foreground hover:bg-green-500/90 border-[#737c73] border-b-4 active:border-b-0",
+        alreadyAccount:   "bg-white text-green-500 border 2 border-green-500 hover:bg-slate-100",
       },
       size: {
         default: "h-11 px-4 py-2 has-[>svg]:px-3",
         sm: "h-9 gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-12 px-6 has-[>svg]:px-4",
         icon: "h-10 w-10",
-        rounded: "rounded-full",
+        rounded: "rounded-full h-8 px-6 has-[>svg]:px-4 border-b-2 ",
+        bordaFina: "h-12 px-6 has-[>svg]:px-4 border-b-2",
       },
     },
     defaultVariants: {

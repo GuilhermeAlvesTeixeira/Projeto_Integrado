@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512" xml:space="preserve">
+<polygon style="fill:#FFBA00;" points="512,33.995 384,33.995 363.102,208.082 384,382.169 512,382.169 "/>
+<polygon style="fill:#FDE09C;" points="256,33.995 235.102,208.082 256,382.169 384,382.169 384,33.995 "/>
+<polygon style="fill:#FFBA00;" points="256,33.995 128,33.995 107.102,208.082 128,382.169 256,382.169 "/>
+<rect y="33.995" style="fill:#FDE09C;" width="128" height="348.17"/>
+<g>
+	<rect x="164.373" y="192.408" style="fill:#FF8E00;" width="42.315" height="31.347"/>
+	<polygon style="fill:#FF8E00;" points="206.69,84.614 128,84.614 117.551,100.287 128,115.961 206.69,115.961 	"/>
+	<polygon style="fill:#FF8E00;" points="206.69,169.859 206.69,138.512 128,138.512 117.551,154.185 128,169.859 	"/>
+	<polygon style="fill:#FF8E00;" points="142.816,223.755 142.816,192.409 128,192.409 117.551,208.082 128,223.755 	"/>
+	<polygon style="fill:#FF8E00;" points="206.69,331.55 206.69,300.203 128,300.203 117.551,315.877 128,331.55 	"/>
+	<polygon style="fill:#FF8E00;" points="206.69,277.653 206.69,246.306 128,246.306 117.551,261.98 128,277.653 	"/>
+</g>
+<g>
+	<rect x="49.309" y="300.199" style="fill:#FFBA00;" width="42.315" height="31.347"/>
+	<rect x="49.309" y="84.614" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+	<rect x="49.309" y="138.512" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+	<rect x="49.309" y="192.408" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+	<rect x="113.183" y="300.199" style="fill:#FFBA00;" width="14.816" height="31.347"/>
+	<rect x="49.309" y="246.303" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+</g>
+<g>
+	<polygon style="fill:#FF8E00;" points="462.69,84.614 384,84.614 373.551,100.287 384,115.961 462.69,115.961 	"/>
+	<polygon style="fill:#FF8E00;" points="462.69,169.859 462.69,138.512 384,138.512 373.551,154.185 384,169.859 	"/>
+	<polygon style="fill:#FF8E00;" points="462.69,223.755 462.69,192.409 384,192.409 373.551,208.082 384,223.755 	"/>
+	<polygon style="fill:#FF8E00;" points="462.69,277.653 462.69,246.306 384,246.306 373.551,261.98 384,277.653 	"/>
+	<polygon style="fill:#FF8E00;" points="408.793,331.55 408.793,300.203 384,300.203 373.551,315.877 384,331.55 	"/>
+</g>
+<g>
+	<rect x="305.309" y="84.614" style="fill:#FFBA00;" width="42.315" height="31.347"/>
+	<rect x="369.183" y="84.614" style="fill:#FFBA00;" width="14.816" height="31.347"/>
+	<rect x="305.309" y="138.512" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+	<rect x="305.309" y="192.408" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+	<rect x="305.309" y="246.303" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+	<rect x="305.309" y="300.199" style="fill:#FFBA00;" width="78.691" height="31.347"/>
+</g>
+<polygon style="fill:#983300;" points="512,382.169 304.508,382.169 283.61,409.118 304.508,436.066 512,436.066 "/>
+<polygon style="fill:#D5681E;" points="207.493,382.169 186.595,409.118 207.493,436.066 304.508,436.066 304.508,382.169 "/>
+<rect y="382.171" style="fill:#FF9933;" width="207.496" height="53.897"/>
+<polygon style="fill:#FF0F4D;" points="85.834,382.169 64.936,430.087 85.834,466.662 115.01,478.005 115.01,382.169 "/>
+<polygon style="fill:#FF4F67;" points="56.659,382.169 56.659,478.005 85.834,466.662 85.834,382.169 "/>
+</svg>

@@ -13,6 +13,7 @@ const ButtonsPage = () => {
             <Button variant = "ghost"> Ghost </Button>
             <Button variant = "sidebar"> Sidebar</Button>
             <Button variant = "sidebarOutline"> Sidebar</Button>
+            <Button variant = "start" size = "bordaFina" >Start</Button>
         </div>
     );
 };
