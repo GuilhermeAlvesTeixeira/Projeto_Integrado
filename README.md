@@ -63,7 +63,6 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 Este projeto está sob a GNU GPLv3.
 
 ## Link para o Quadro Kanban
-
 https://github.com/users/GuilhermeAlvesTeixeira/projects/3/views/1
 
 ## Legenda de Codificação
