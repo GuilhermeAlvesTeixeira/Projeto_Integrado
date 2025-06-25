@@ -9,46 +9,51 @@ type Props = {
     title: string;
     content: string;
     imageSrc: string; 
-    imageAlt?: string; 
+    imageAlt?: string;
+    href: string;
   }[];
 };
 
 export const FiloSection = ({ imgSrc, title, description, cards }: Props) => {
-  return (
-    <div className="mb-5 mt-5 p-5 pb-10 pt-5 border-b border-gray-300">
-      
-      {/* Header: Imagem + Título + Descrição */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
-        <Image
-          src={imgSrc}
-          alt={title}
-          width={100}
-          height={100}
-          className="w-20 h-20 sm:items-center sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain"
-        />
+  const validCards = cards?.filter(card => 
+    card.href && (typeof card.href === 'string' || typeof card.href === 'object')
+  );
 
-        <div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">{title}</h1>
-          <p className="text-sm sm:text-base md:text-lg text-neutral-700">
+  return (
+    <section className="mb-10 sm:mb-10 mt-10 sm:mt-8 p-3 sm:p-6 pb-6 sm:pb-10 border-b border-gray-200">
+      {/* Cabeçalho */}
+      <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:gap-6">
+        <div className="flex-shrink-0 mx-auto md:mx-0">
+          <Image
+            src={imgSrc}
+            alt={title}
+            width={100}
+            height={100}
+            className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain"
+          />
+        </div>
+
+        <div className="flex-1 text-center md:text-left">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+            {title}
+          </h1>
+          <p className="text-sm lg:text-lg sm:text-base text-gray-600 mt-1 sm:mt-2">
             {description}
           </p>
         </div>
       </div>
 
-      {/* Cards */}
-      {cards && cards.length > 0 && (
-        <div className="mt-6 overflow-x-auto">
-          <FiloCards 
-            items={cards.map(card => ({
-              title: card.title,
-              content: card.content,
-              imageSrc: card.imageSrc,
-              imageAlt: card.imageAlt || card.title,
-            }))} 
-            horizontalScroll={true} 
-          />
+      {/* Seção de Cards */}
+      {validCards && validCards.length > 0 && (
+        <div className="mt-6 sm:mt-8 relative">
+          <div className="overflow-x-auto pb-3 sm:pb-4 -mx-3 sm:-mx-4 px-3 sm:px-4">
+            <FiloCards 
+              items={validCards}
+              horizontalScroll={true}
+            />
+          </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };

@@ -20,12 +20,14 @@ const LearnPage = () => {
                             content: "",
                             imageSrc: "/learn.svg",
                             imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-introducao",
                         },
                         {
                             title: "Anatomia",
                             content: "Soluções criativas",
                             imageSrc: "/porifero-anatomia-1.png",
                             imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-anatomia",
                         },
 
                         {
@@ -33,6 +35,7 @@ const LearnPage = () => {
                             content: "Soluções criativas",
                             imageSrc: "/ciclo-porifera.png",
                             imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-ciclo",
                         },
 
                         {
@@ -40,11 +43,50 @@ const LearnPage = () => {
                             content: "Soluções criativas",
                             imageSrc: "/default_logo.png",
                             imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-lab",
                         },
 
                     ]}
                 />
-    
+
+                <FiloSection
+                    imgSrc={"/jellyfish.svg"}
+                    title="Cnidários"
+                    description="Descubra os animais aquáticos com tentáculos e defesa eletrizante."
+                    cards={[
+                        {
+                            title: "Introdução",
+                            content: "",
+                            imageSrc: "/learn.svg",
+                            imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-introducao",
+                        },
+                        {
+                            title: "Anatomia",
+                            content: "Soluções criativas",
+                            imageSrc: "/cnidario-anatomia-1.png",
+                            imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-anatomia",
+                        },
+
+                        {
+                            title: "Ciclo de Vida",
+                            content: "Soluções criativas",
+                            imageSrc: "/ciclo-porifera.png",
+                            imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-ciclo",
+                        },
+
+                        {
+                            title: "Laboratório",
+                            content: "Soluções criativas",
+                            imageSrc: "/default_logo.png",
+                            imageAlt: "Equipe de design trabalhando",
+                            href: "/porifero-lab",
+                        },
+
+                    ]}
+                />
 
             </div>
         </div>
