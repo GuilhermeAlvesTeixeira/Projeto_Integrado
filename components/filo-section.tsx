@@ -20,7 +20,7 @@ export const FiloSection = ({ imgSrc, title, description, cards }: Props) => {
   );
 
   return (
-    <section className="mb-10 sm:mb-10 mt-10 sm:mt-8 p-3 sm:p-6 pb-6 sm:pb-10 border-b border-gray-200">
+    <section className="lg:mt-15 lg:mb-15 mb-10 sm:mb-10 mt-10 sm:mt-8 p-3 sm:p-6 pb-6 sm:pb-10 border-b border-gray-200">
       {/* Cabeçalho */}
       <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:gap-6">
         <div className="flex-shrink-0 mx-auto md:mx-0">

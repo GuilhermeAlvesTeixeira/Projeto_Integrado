@@ -2,24 +2,19 @@ import {
     Sheet,
     SheetContent,
     SheetTrigger,
-    SheetTitle,
-} from "@/components/ui/sheet";
-
-import {SideBar} from "@/components/sidebar"
-import { Menu } from "lucide-react";
-
-export const MobileSideBar = () => {
+  } from "@/components/ui/sheet";
+  import { SideBar } from "@/components/sidebar";
+  import { Bars3Icon } from "@heroicons/react/24/solid";
+  
+  export const MobileSideBar = () => {
     return (
-        <Sheet>
-
-            <SheetTrigger>
-                <Menu className = "text-white"/>
-            </SheetTrigger>
-    
-            <SheetContent className = "p-0 z-[100]" side="left">
-                <SideBar />
-            </SheetContent>
-
-        </Sheet>
+      <Sheet>
+        <SheetTrigger className="p-2 text-white hover:bg-green-600 rounded-md">
+          <Bars3Icon className="h-5 w-5" />
+        </SheetTrigger>
+        <SheetContent className="p-0 z-[100]" side="right">
+          <SideBar />
+        </SheetContent>
+      </Sheet>
     );
-};
+  };

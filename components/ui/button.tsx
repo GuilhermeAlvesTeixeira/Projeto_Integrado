@@ -29,6 +29,7 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         rounded: "rounded-full h-8 px-6 has-[>svg]:px-4 border-b-2 ",
         bordaFina: "h-12 px-6 has-[>svg]:px-4 border-b-2",
+        smIcon: "h-8 px-1 w-1",
       },
     },
     defaultVariants: {
