@@ -87,15 +87,17 @@ Ex: RF00N_F (Requisito funcional relacionado com o FrontEnd).
 
 | Código  | Descrição |
 |---------|-----------|
-| **RF001** | Navegar pelos filos de invertebrados por meio de um menu organizado. |
-| **RF002** | Exibir imagens ilustrativas de diferentes grupos de invertebrados. |
-| **RF003** | Ampliar imagens para visualizar detalhes anatômicos. |
-| **RF004** | Oferecer textos explicativos sobre cada filo abordado. |
-| **RF005** | Disponibilizar uma trilha de conteúdos práticos organizados por filo. |
-| **RF006** | Permitir que o aluno realize atividades de identificação de estruturas em imagens. |
-| **RF007** | Fornecer feedback imediato sobre a resposta do aluno em atividades de identificação. |
-| **RF008** | Marcar conteúdos como “vistos” ou “revisados”. |
-| **RF009** | Permitir a visualização das estruturas com destaque ao tocar nas imagens (ex: realce de partes). |
-| **RF010** | Manter o progresso local do aluno, como lições visualizadas e acertos em atividades. |
+| **RF001** | Autenticar usuário por meio de login e senha. |
+| **RF002** | Navegar pelos filos de invertebrados por meio de um menu organizado. |
+| **RF003** | Exibir imagens ilustrativas de diferentes grupos de invertebrados. |
+| **RF004** | Ampliar imagens para visualizar detalhes anatômicos. |
+| **RF005** | Oferecer textos explicativos sobre cada filo abordado. |
+| **RF006** | Disponibilizar uma trilha de conteúdos práticos organizados por filo. |
+| **RF007** | Permitir que o aluno realize atividades de identificação de estruturas em imagens. |
+| **RF008** | Fornecer feedback imediato sobre a resposta do aluno em atividades de identificação. |
+| **RF009** | Marcar conteúdos como “vistos” ou “revisados”. |
+| **RF010** | Permitir a visualização das estruturas com destaque ao tocar nas imagens (ex: realce de partes). |
+| **RF011** | Manter o progresso local do aluno, como lições visualizadas e acertos em atividades. |
+| **RF012** | Oferecer opções de acessibilidade, como contraste visual e aumento da fonte. |
 
 
