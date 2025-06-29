@@ -118,6 +118,30 @@ body,
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* Forçar estilos de alto contraste */
+.high-contrast {
+  --hc-bg: #000000;
+  --hc-text: #FFFFFF;
+  --hc-border: #FFFFFF;
+  --hc-accent: #FFFF00;
+}
+
+.high-contrast .hc-bg {
+  background-color: var(--hc-bg) !important;
+}
+
+.high-contrast .hc-text {
+  color: var(--hc-text) !important;
+}
+
+.high-contrast .hc-border {
+  border-color: var(--hc-border) !important;
+}
+
+.high-contrast .hc-accent {
+  color: var(--hc-accent) !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

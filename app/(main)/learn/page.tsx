@@ -1,56 +1,66 @@
-import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
-import { Header } from "./header";
-import { UserProgress } from "@/components/user-progress";
+"use client"
 import { FiloSection } from "@/components/filo-section";
+import { useTheme } from "@/components/theme-context";
 
 const LearnPage = () => {
+    const { theme } = useTheme();
+
     return (
-        <div className="">
-            <div>
-                <h1 className="text-3xl font-bold text"> Learning Paths</h1>
-                <h2 className="text-lg pt-0.5 text-neutral-700"> Step-by-step paths to mastery</h2>
+        <div className="pb-10">
+            <div className="px-5 sm:px-6">
+                <h1 className={`text-3xl font-bold ${
+                    theme === 'high-contrast' ? 'text-white' : 'text-gray-900 dark:text-white'
+                }`}>
+                    Learning Paths
+                </h1>
+                <h2 className={`text-lg pt-0.5 ${
+                    theme === 'light' 
+                        ? 'text-neutral-700' 
+                        : theme === 'dark' 
+                        ? 'text-gray-300' 
+                        : 'text-gray-200'
+                }`}>
+                    Step-by-step paths to mastery
+                </h2>
+                
                 <FiloSection
-                    imgSrc={"/esponja.png"}
+                    imgSrc="/esponja.png"
                     title="Poríferos"
                     description="Explore os seres mais simples do reino animal que filtram água para viver."
                     cards={[
                         {
                             title: "Introdução",
-                            content: "Leitura",
-                            imageSrc: "/learn.svg",
-                            imageAlt: "Equipe de design trabalhando",
+                            content: "Leitura", 
+                            imageSrc: `${theme === "high-contrast" ? "/learn.svg" : "/learn.svg"}`, // mudar depois
+                            imageAlt: "Ícone de aprendizado",
                             href: "/porifero-introducao",
                         },
                         {
                             title: "Anatomia",
                             content: "Prática com esquemáticos",
                             imageSrc: "/porifero-anatomia-1.png",
-                            imageAlt: "Equipe de design trabalhando",
+                            imageAlt: "Anatomia de porífero",
                             href: "/porifero-anatomia",
                         },
-
                         {
                             title: "Ciclo de Vida",
                             content: "Prática com esquemáticos",
                             imageSrc: "/ciclo-porifera.png",
-                            imageAlt: "Equipe de design trabalhando",
+                            imageAlt: "Ciclo de vida de porífero",
                             href: "/porifero-ciclo",
                         },
-
                         {
                             title: "Laboratório",
                             content: "Prática com imagens reais",
-                            imageSrc: "/default_logo.png",
-                            imageAlt: "Equipe de design trabalhando",
+                            imageSrc: `${theme === "high-contrast" ? "/default_logo_contrast.png" : "/default_logo.png"}`, // mudar a logo depois
+                            imageAlt: "Laboratório virtual",
                             href: "/porifero-lab",
                         },
-
                     ]}
                 />
 
                 <FiloSection
-                    imgSrc={"/jellyfish.svg"}
+                    imgSrc="/jellyfish.svg"
                     title="Cnidários"
                     description="Descubra os animais aquáticos com tentáculos e defesa eletrizante."
                     cards={[
@@ -58,172 +68,143 @@ const LearnPage = () => {
                             title: "Introdução",
                             content: "Leitura",
                             imageSrc: "/learn.svg",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-introducao",
+                            imageAlt: "Ícone de aprendizado",
+                            href: "/cnidario-introducao",
                         },
                         {
                             title: "Anatomia",
                             content: "Prática com esquemáticos",
                             imageSrc: "/cnidario-anatomia-1.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-anatomia",
+                            imageAlt: "Anatomia de cnidário",
+                            href: "/cnidario-anatomia",
                         },
-
                         {
                             title: "Ciclo de Vida",
                             content: "Soluções criativas",
-                            imageSrc: "/ciclo-porifera.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-ciclo",
+                            imageSrc: "/ciclo-cnidario.png",
+                            imageAlt: "Ciclo de vida de cnidário",
+                            href: "/cnidario-ciclo",
                         },
-
                         {
                             title: "Laboratório",
                             content: "Soluções criativas",
                             imageSrc: "/default_logo.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-lab",
+                            imageAlt: "Laboratório virtual",
+                            href: "/cnidario-lab",
                         },
-
                     ]}
                 />
 
-<FiloSection
-                    imgSrc={"/planaria.png"}
+                <FiloSection
+                    imgSrc="/planaria.png"
                     title="Platelmintos"
-                    description="Descubra os animais aquáticos com tentáculos e defesa eletrizante."
+                    description="Conheça os vermes achatados e suas adaptações parasitárias."
                     cards={[
                         {
                             title: "Introdução",
                             content: "Leitura",
                             imageSrc: "/learn.svg",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-introducao",
+                            imageAlt: "Ícone de aprendizado",
+                            href: "/platelminto-introducao",
                         },
                         {
                             title: "Anatomia",
                             content: "Prática com esquemáticos",
-                            imageSrc: "/cnidario-anatomia-1.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-anatomia",
+                            imageSrc: "/platelminto-anatomia.png",
+                            imageAlt: "Anatomia de platelminto",
+                            href: "/platelminto-anatomia",
                         },
-
                         {
                             title: "Ciclo de Vida",
                             content: "Soluções criativas",
-                            imageSrc: "/ciclo-porifera.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-ciclo",
+                            imageSrc: "/ciclo-platelminto.png",
+                            imageAlt: "Ciclo de vida de platelminto",
+                            href: "/platelminto-ciclo",
                         },
-
                         {
                             title: "Laboratório",
                             content: "Soluções criativas",
                             imageSrc: "/default_logo.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-lab",
+                            imageAlt: "Laboratório virtual",
+                            href: "/platelminto-lab",
                         },
-
                     ]}
                 />
 
-<FiloSection
-                    imgSrc={"/nemertea.png"}
+                <FiloSection
+                    imgSrc="/nemertea.png"
                     title="Nemerteas"
-                    description="Descubra os animais aquáticos com tentáculos e defesa eletrizante."
+                    description="Explore os vermes proboscídeos com sistema circulatório simples."
                     cards={[
                         {
                             title: "Introdução",
                             content: "Leitura",
                             imageSrc: "/learn.svg",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-introducao",
+                            imageAlt: "Ícone de aprendizado",
+                            href: "/nemertea-introducao",
                         },
                         {
                             title: "Anatomia",
                             content: "Prática com esquemáticos",
-                            imageSrc: "/cnidario-anatomia-1.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-anatomia",
+                            imageSrc: "/nemertea-anatomia.png",
+                            imageAlt: "Anatomia de nemertea",
+                            href: "/nemertea-anatomia",
                         },
-
                         {
                             title: "Ciclo de Vida",
                             content: "Soluções criativas",
-                            imageSrc: "/ciclo-porifera.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-ciclo",
+                            imageSrc: "/ciclo-nemertea.png",
+                            imageAlt: "Ciclo de vida de nemertea",
+                            href: "/nemertea-ciclo",
                         },
-
                         {
                             title: "Laboratório",
                             content: "Soluções criativas",
                             imageSrc: "/default_logo.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-lab",
+                            imageAlt: "Laboratório virtual",
+                            href: "/nemertea-lab",
                         },
-
                     ]}
                 />
 
-<FiloSection
-                    imgSrc={"/polvo.png"}
+                <FiloSection
+                    imgSrc="/polvo.png"
                     title="Moluscos"
-                    description="Descubra os animais aquáticos com tentáculos e defesa eletrizante."
+                    description="Descubra a diversidade de animais com conchas e pés musculares."
                     cards={[
                         {
                             title: "Introdução",
                             content: "Leitura",
                             imageSrc: "/learn.svg",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-introducao",
+                            imageAlt: "Ícone de aprendizado",
+                            href: "/molusco-introducao",
                         },
                         {
                             title: "Anatomia",
                             content: "Prática com esquemáticos",
-                            imageSrc: "/cnidario-anatomia-1.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-anatomia",
+                            imageSrc: "/molusco-anatomia.png",
+                            imageAlt: "Anatomia de molusco",
+                            href: "/molusco-anatomia",
                         },
-
                         {
                             title: "Ciclo de Vida",
                             content: "Soluções criativas",
-                            imageSrc: "/ciclo-porifera.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-ciclo",
+                            imageSrc: "/ciclo-molusco.png",
+                            imageAlt: "Ciclo de vida de molusco",
+                            href: "/molusco-ciclo",
                         },
-
                         {
                             title: "Laboratório",
                             content: "Soluções criativas",
                             imageSrc: "/default_logo.png",
-                            imageAlt: "Equipe de design trabalhando",
-                            href: "/porifero-lab",
+                            imageAlt: "Laboratório virtual",
+                            href: "/molusco-lab",
                         },
-
                     ]}
                 />
-
             </div>
         </div>
     );
 }
 
 export default LearnPage;
-
-
-/*
-                <StickyWrapper>
-                <UserProgress
-                    activeCourse = {{ title: "Mollusca", imageSrc: "/polvo.png"}}
-                    hearts = {5}
-                />
-            </StickyWrapper>
-
-
-
-            <FeedWrapper>
-                <Header title="Filo Mollusca" />
-            </FeedWrapper>
-*/
