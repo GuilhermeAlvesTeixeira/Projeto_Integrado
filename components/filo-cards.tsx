@@ -51,7 +51,7 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
                 : 'bg-black border-none outline-1 outline-yellow-400 hover:outline-yellow-200 hover:shadow-none'
             }
           `}>
-            {/* Container da imagem - altura responsiva */}
+         
             <div className={`
               flex justify-center items-center 
               h-20 sm:h-24 md:h-28 lg:h-32 mb-2 sm:mb-3
@@ -76,7 +76,7 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
               />
             </div>
 
-            {/* Container do texto - altura responsiva */}
+  
             <div className="flex flex-col min-h-[60px] sm:min-h-[70px] md:min-h-[80px] px-1">
               <h3 className={`
                 font-bold text-sm sm:text-base md:text-lg text-center line-clamp-2

@@ -3,7 +3,7 @@
 import FiloTemplate from '@/components/filo-template';
 
 const MoluscosPage = () => {
-  // Dados específicos para Moluscos
+ 
   const moluscosData = {
     name: 'Moluscos',
     modules: [

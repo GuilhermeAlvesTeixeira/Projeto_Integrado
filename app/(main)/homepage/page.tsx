@@ -54,7 +54,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Seção Hero */}
+     
       <div className={`bg-green-600 p-6 sm:p-8 md:p-12 lg:p-16 rounded-lg mx-4 sm:mx-6 md:mx-10 lg:mx-auto lg:max-w-6xl mt-8 mb-12 ${
         theme === 'dark' ? 'bg-green-800' : theme === 'high-contrast' ? 'bg-transparent border border-amber-400' : ''
       }`}>
@@ -86,7 +86,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Seção de Cards - Layout ajustado */}
+      {/* seção dos cards*/}
       <div className="flex-1 px-4 sm:px-6 md:px-10 lg:px-0 pb-10 max-w-6xl mx-auto w-full">
         <h2 className={`text-xl sm:text-2xl font-semibold mb-8 text-center ${
           theme === 'light' ? 'text-gray-900' : 
@@ -104,7 +104,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Rodapé ajustado */}
+      {/* seção do footer*/}
       <div className={`text-center p-4 mt-auto ${
         theme === 'light' ? 'text-gray-600' : 
         theme === 'dark' ? 'text-gray-300' : 

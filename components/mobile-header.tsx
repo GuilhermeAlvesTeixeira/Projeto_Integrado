@@ -20,10 +20,10 @@ export const MobileHeader = () => {
   const [isMobile, setIsMobile] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Verifica se é mobile quando o componente monta e em redimensionamentos
+  // verifica se é mobile quando o componente monta e em redimensionamentos
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 640); // sm breakpoint do Tailwind
+      setIsMobile(window.innerWidth < 640); 
     };
     
     checkIfMobile();
@@ -32,7 +32,7 @@ export const MobileHeader = () => {
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
-  // Fecha o dropdown quando clicar fora
+  // fechar o dropdown quando clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -54,7 +54,7 @@ export const MobileHeader = () => {
   // Função para lidar com o clique no botão de tema
   const handleThemeClick = () => {
     if (isMobile) {
-      toggleTheme(); // Alterna entre temas em mobile
+      toggleTheme(); // permite alternancia de temas no mobile
     } else {
       setShowThemeDropdown(!showThemeDropdown); // Mostra/oculta dropdown em desktop
     }
@@ -67,7 +67,8 @@ export const MobileHeader = () => {
       'bg-black border-white'
     }`}>
       <div className="flex items-center justify-between w-full max-w-[1056px] mx-auto">
-        {/* Logo e nome */}
+        
+        {/* seção de logo e nome */}
         <Link href="/" className={`flex items-center gap-2 ${
           theme === 'high-contrast' ? 'p-1' : ''
         }`}>
@@ -87,7 +88,7 @@ export const MobileHeader = () => {
           </h2>
         </Link>
 
-        {/* Ícones */}
+        {/* ícones do app */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 sm:gap-4">
             <Button 
@@ -122,7 +123,7 @@ export const MobileHeader = () => {
               </Link>
             </Button>
 
-            {/* Botão/Dropdown de temas */}
+            {/* botões e Dropdown de temas */}
             <div className="relative" ref={dropdownRef}>
               <Button 
                 size="sm" 
@@ -144,7 +145,7 @@ export const MobileHeader = () => {
                 {!isMobile && <ChevronDownIcon className="h-4 w-4" />}
               </Button>
 
-              {/* Mostra dropdown apenas em desktop e quando aberto */}
+              {/* mostra dropdown apenas em desktop e quando aberto */}
               {!isMobile && showThemeDropdown && (
                 <div className={`absolute right-0 mt-2 w-40 rounded-md shadow-lg py-1 z-50 ${
                   theme === 'light' ? 'bg-white border border-gray-200' :
@@ -204,7 +205,7 @@ export const MobileHeader = () => {
             </div>
           </div>
 
-          {/* Menu mobile */}
+          {/* menu mobile */}
           <div className="flex items-center gap-2">
             <MobileSideBar />
             <UserButton afterSignOutUrl="/" />
