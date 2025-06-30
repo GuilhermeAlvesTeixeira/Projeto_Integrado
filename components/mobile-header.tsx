@@ -4,16 +4,61 @@ import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import {
   HomeIcon,
   AcademicCapIcon,
   EyeIcon,
   MoonIcon,
-  SunIcon
+  SunIcon,
+  ChevronDownIcon
 } from "@heroicons/react/24/solid";
 
 export const MobileHeader = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, setTheme } = useTheme();
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Verifica se é mobile quando o componente monta e em redimensionamentos
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint do Tailwind
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  // Fecha o dropdown quando clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowThemeDropdown(false);
+      }
+    };
+
+    if (showThemeDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showThemeDropdown]);
+
+  // Função para lidar com o clique no botão de tema
+  const handleThemeClick = () => {
+    if (isMobile) {
+      toggleTheme(); // Alterna entre temas em mobile
+    } else {
+      setShowThemeDropdown(!showThemeDropdown); // Mostra/oculta dropdown em desktop
+    }
+  };
 
   return (
     <nav className={`px-4 sm:px-6 h-[50px] flex items-center border-b fixed top-0 w-full z-50 ${
@@ -77,56 +122,90 @@ export const MobileHeader = () => {
               </Link>
             </Button>
 
-            {/* Alternador de temas (desktop) */}
-            <Button 
-              size="sm" 
-              variant="ghost" 
-              className={`p-2 hidden sm:flex ${
-                theme === 'light' ? 'text-white hover:bg-green-600' :
-                theme === 'dark' ? 'text-white hover:bg-green-800' :
-                'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
-              }`}
-              title={theme == 'light' ? 'Modo Claro' : theme == 'dark' ? 'Modo Escuro' : 'Contraste'}
-              onClick={toggleTheme}
-            >
-              {theme == 'light' ? (
-                <SunIcon className="h-5 w-5" />
-              ) : theme == 'dark' ? (
-                <MoonIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
+            {/* Botão/Dropdown de temas */}
+            <div className="relative" ref={dropdownRef}>
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                onClick={handleThemeClick}
+                className={`p-2 flex items-center gap-1 ${
+                  theme === 'light' ? 'text-white hover:bg-green-600' :
+                  theme === 'dark' ? 'text-white hover:bg-green-800' :
+                  'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
+                }`}
+              >
+                {theme == 'light' ? (
+                  <SunIcon className="h-5 w-5" />
+                ) : theme == 'dark' ? (
+                  <MoonIcon className="h-5 w-5" />
+                ) : (
+                  <EyeIcon className="h-5 w-5" />
+                )}
+                {!isMobile && <ChevronDownIcon className="h-4 w-4" />}
+              </Button>
+
+              {/* Mostra dropdown apenas em desktop e quando aberto */}
+              {!isMobile && showThemeDropdown && (
+                <div className={`absolute right-0 mt-2 w-40 rounded-md shadow-lg py-1 z-50 ${
+                  theme === 'light' ? 'bg-white border border-gray-200' :
+                  theme === 'dark' ? 'bg-gray-800 border border-gray-700' :
+                  'bg-black border-2 border-yellow-400'
+                }`}>
+                  <button
+                    onClick={() => {
+                      setTheme('light');
+                      setShowThemeDropdown(false);
+                    }}
+                    className={`block w-full text-left px-4 py-2 text-sm ${
+                      theme === 'light' ? 'bg-green-100 text-green-900' :
+                      theme === 'dark' ? 'hover:bg-gray-700 text-gray-300' :
+                      'hover:bg-gray-900 text-yellow-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <SunIcon className="h-4 w-4" />
+                      Modo Claro
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setTheme('dark');
+                      setShowThemeDropdown(false);
+                    }}
+                    className={`block w-full text-left px-4 py-2 text-sm ${
+                      theme === 'dark' ? 'bg-gray-700 text-white' :
+                      theme === 'light' ? 'hover:bg-gray-100 text-gray-900' :
+                      'hover:bg-gray-900 text-yellow-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <MoonIcon className="h-4 w-4" />
+                      Modo Escuro
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setTheme('high-contrast');
+                      setShowThemeDropdown(false);
+                    }}
+                    className={`block w-full text-left px-4 py-2 text-sm ${
+                      theme === 'high-contrast' ? 'bg-gray-900 text-yellow-400' :
+                      theme === 'light' ? 'hover:bg-gray-100 text-gray-900' :
+                      'hover:bg-gray-700 text-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <EyeIcon className="h-4 w-4" />
+                      Alto Contraste
+                    </div>
+                  </button>
+                </div>
               )}
-              <span className={`sr-only md:not-sr-only lg:not-sr-only ${
-                theme === 'high-contrast' ? 'text-yellow-400' : 'text-white'
-              }`}>
-                {theme == 'light' ? 'Claro' : theme == 'dark' ? 'Escuro' : 'Contraste'}
-              </span>
-            </Button>
+            </div>
           </div>
 
           {/* Menu mobile */}
           <div className="flex items-center gap-2">
-            {/* Alternador de temas (mobile) */}
-            <Button 
-              size="sm" 
-              variant="ghost" 
-              className={`p-2 sm:hidden ${
-                theme === 'light' ? 'text-white hover:bg-green-600' :
-                theme === 'dark' ? 'text-white hover:bg-green-800' :
-                'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
-              }`}
-              title={theme === 'light' ? 'Modo Escuro' : theme === 'dark' ? 'Alto Contraste' : 'Modo Claro'}
-              onClick={toggleTheme}
-            >
-              {theme == 'light' ? (
-                <MoonIcon className="h-5 w-5" />
-              ) : theme == 'dark' ? (
-                <EyeIcon className="h-5 w-5" />
-              ) : (
-                <SunIcon className="h-5 w-5" />
-              )}
-            </Button>
-
             <MobileSideBar />
             <UserButton afterSignOutUrl="/" />
           </div>

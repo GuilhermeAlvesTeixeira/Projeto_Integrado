@@ -41,8 +41,8 @@ export const Header = () => {
                         
                         <SignInButton
                             mode = "modal"
-                            fallbackRedirectUrl= "/learn"
-                            signUpFallbackRedirectUrl="/learn"
+                            fallbackRedirectUrl= "/homepage"
+                            signUpFallbackRedirectUrl="/homepage"
                         >
                             <Button variant = "start" size = "rounded">
                                 Login

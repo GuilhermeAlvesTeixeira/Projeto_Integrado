@@ -15,9 +15,16 @@ type Props = {
     imageAlt?: string;
     href: string;
   }[];
+  horizontalScroll?: boolean; 
 };
 
-export const FiloSection = ({ imgSrc, title, description, cards }: Props) => {
+export const FiloSection = ({ 
+  imgSrc, 
+  title, 
+  description, 
+  cards,
+  horizontalScroll = true 
+}: Props) => {
   const { theme } = useTheme();
   const validCards = cards?.filter(card => 
     card.href && (typeof card.href === 'string' || typeof card.href === 'object')
@@ -31,10 +38,11 @@ export const FiloSection = ({ imgSrc, title, description, cards }: Props) => {
         ? 'border-b border-gray-700' 
         : 'border-b-2 border-white'
     }`}>
-      {/* Cabeçalho */}
+
+      {/* cabeçalho da seção */}
       <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:gap-6">
         <div className={`flex-shrink-0 mx-auto md:mx-0 ${
-          theme === 'high-contrast'
+          theme === 'high-contrast' ? 'outline-2 outline-white' : ''
         }`}>
           <Image
             src={imgSrc}
@@ -75,14 +83,15 @@ export const FiloSection = ({ imgSrc, title, description, cards }: Props) => {
         </div>
       </div>
 
-      {/* Seção de Cards */}
+      {/* seção dos cards dos filos */}
       {validCards && validCards.length > 0 && (
         <div className="mt-6 sm:mt-8 relative">
-          <div className={`overflow-x-auto pb-3 sm:pb-4 -mx-3 sm:-mx-4 px-3 sm:px-4 
+          <div className={`overflow-x-auto pb-3 sm:pb-4 -mx-3 sm:-mx-4 px-3 sm:px-4 ${
+            theme === 'high-contrast' ? 'outline-2 outline-white' : ''
           }`}>
             <FiloCards 
               items={validCards}
-              horizontalScroll={true}
+              horizontalScroll={horizontalScroll} 
             />
           </div>
         </div>

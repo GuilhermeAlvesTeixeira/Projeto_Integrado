@@ -29,8 +29,8 @@ export default function Home() {
               <SignedOut>
                 <SignUpButton
                   mode="modal"
-                  fallbackRedirectUrl="/learn"
-                  signInFallbackRedirectUrl="/learn"
+                  fallbackRedirectUrl="/homepage"
+                  signInFallbackRedirectUrl="/homepage"
                 >
                   <Button size="bordaFina" variant="secondary" className="w-full">
                     Comece já a explorar os filos
@@ -39,7 +39,7 @@ export default function Home() {
 
                 <SignInButton
                   mode="modal"
-                  forceRedirectUrl="/learn"
+                  forceRedirectUrl="/homepage"
                 >
                   <Button size="lg" variant="alreadyAccount" className="w-full">
                     Eu já tenho uma conta
@@ -49,7 +49,7 @@ export default function Home() {
 
               <SignedIn>
                 <Button size="lg" variant="secondary" className="w-full" asChild>
-                  <Link href="/learn">
+                  <Link href="/homepage">
                     Continue a aprender
                   </Link>
                 </Button>

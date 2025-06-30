@@ -12,6 +12,7 @@ Educação, Biologia, Zoologia, Node, React, JavaScript, HTML, CSS.
 - [Como Rodar](#como-rodar)
 - [Licença](#licença)
 - [Requisitos Funcionais](#requisitos-funcionais)
+- [Requisitos Não-Funcionais](#requisitos-não-funcionais)
 
 ## Sobre
 
@@ -22,36 +23,40 @@ O aplicativo será altamente imagético e interativo, oferecendo aos alunos recu
 Todo o conteúdo será disponibilizado localmente no próprio aplicativo, não exigindo conexão com a internet para funcionamento.
 
 
-
-
 ## Equipe
 
 | Nome              | Função                     |
 |-------------------|----------------------------|
-| Aldair Gomes      | Desenvolvedor Fullstack    |
+| Aldair Gomes      | Desenvolvedor Backend      |
 | Felipe Moreira    | Gerente de Projetos        |
 | Gabriel Gois      | Ilustrador/Designer        |
-| Guilherme Alves   | Desenvolvedor Fullstack    |
+| Guilherme Alves   | Desenvolvedor FrontEnd     |
 | João Lucas        | Designer de UI/UX          |
 
 
 ## Tecnologias
 
-O projeto foi desenvolvido com as seguintes tecnologias:
+## Frontend
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Linguagens:** JavaScript e TypeScript
+- **Estilização:** [Tailwind CSS](https://tailwindcss.com/), CSS
+- **Componentes e UI:**
+  - [ShadCN UI](https://ui.shadcn.dev/): Biblioteca de componentes acessíveis e personalizados com Tailwind
+  - [Radix UI](https://www.radix-ui.com/): Base para componentes acessíveis como diálogos, popovers e menus
+  - [Heroicons](https://heroicons.com/): Ícones SVG otimizados para interfaces minimalistas
+  - [Lucide](https://lucide.dev/): Ícones modernos e personalizáveis baseados no Feather
 
-- **Frontend**:
+## Autenticação
+- **[Clerk](https://clerk.com/):** Autenticação com login por e-mail, senha e redes sociais, integrada ao Next.js
 
-  - Framework: NextJS
-  - Linguagem: Javascript e Typescript
-  - Estilização: TailwindCSS, CSS
+## Banco de Dados
+- **[Supabase](https://supabase.com/):** Backend-as-a-Service com autenticação, API e banco de dados em tempo real
+- **PostgreSQL:** Banco de dados relacional utilizado via Supabase
 
-- **Banco de Dados**:
-
-  - PostgreSQL
-
-- **Outros**:
-
-  - Git e GitHub para controle de versão
+## Outros
+- **Controle de versão:** Git e GitHub
+- **Qualidade de código:** ESLint
+- **Gerenciamento de dependências:** npm
 
 ## Como Rodar
 
@@ -100,3 +105,17 @@ Ex: RF00N_F (Requisito funcional relacionado com o FrontEnd).
 | **RF010** | Permitir a visualização das estruturas com destaque ao tocar nas imagens (ex: realce de partes). |Exibir as partes selecionadas em destaque para permitir um estudo detalhado.|Tornar interagível todos os componentes individuais de uma imagem para permitir o destaque.|Média|
 | **RF011** | Manter o progresso local do aluno, como lições visualizadas e acertos em atividades. |Mostrar respostas certas dos quizzes e laboratórios e mostrar o progresso do aluno na homepage.|Armazenar as respostas e conteúdos vistos para disponibilizá-los depois.|Alta|
 | **RF012** | Oferecer opções de acessibilidade, como contraste visual e aumento da fonte. |Exibir botões em todas as páginas que permitem ao usuário mudar o contraste das cores e o tamnho da fonte.|Trocar o esquema de cores e tamanho da fonte no caso de ativação das funções.|Média|
+
+
+##  Requisitos Não-Funcionais
+
+| Código  | Descrição | Prioridade |
+|---------|-----------|-----------|
+|RNF001| Garantir o mínimo de segurança dos dados dos usuários.|Alta|
+|RNF002| Adaptar o layout da tela a diferentes tipos de dispositivos.|Alta|
+|RNF003| Garantir integridade dos dados.|Alta|
+|RNF004| Estar preparado para operar em redes lentas.|Média|
+|RNF005| Responder em 3 segundos ou menos.|Alta|
+|RNF006| Carregar todo o conteúdo de leitura quando selecionado para que possa ser lido offline.|Média|
+|RNF007| Comprimir imagens para minimizar tempo de carregamento.|Média|
+|RNF008| Guardar memória no cachê do navegador para minimizar tempo de carregamento.|Média|

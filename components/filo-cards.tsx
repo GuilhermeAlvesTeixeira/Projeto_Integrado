@@ -27,21 +27,21 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
     <div className={`flex ${
       horizontalScroll 
         ? 'flex-nowrap overflow-x-auto gap-3 sm:gap-4 pb-2' 
-        : 'flex-wrap justify-center gap-4'
+        : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center'
     }`}>
       {validItems.map((item, index) => (
         <Link 
           key={index}
           href={item.href}
-          className={`block min-w-[160px] sm:min-w-[180px] md:min-w-[200px] ${
-            theme === 'high-contrast' ?'m-1' : ''
+          className={`block w-full max-w-[280px] sm:max-w-[300px] ${
+            theme === 'high-contrast' ? 'm-1' : ''
           }`}
           aria-label={`Card: ${item.title}. ${item.content}`}
         >
           <div className={`
-            p-3 sm:p-4 rounded-3xl sm:rounded-4xl 
-            border-b-4 sm:border-b-6 border-l-2 border-t-2 border-r-2 
-            flex flex-col h-full transition-all duration-300 ease-in-out 
+            h-full p-2 sm:p-3 md:p-4 rounded-2xl sm:rounded-3xl 
+            border-b-4 sm:border-b-4 border-l-2 border-t-2 border-r-2 
+            flex flex-col transition-all duration-300 ease-in-out 
             cursor-pointer hover:shadow-md
             ${
               theme === 'light' 
@@ -51,8 +51,11 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
                 : 'bg-black border-none outline-1 outline-yellow-400 hover:outline-yellow-200 hover:shadow-none'
             }
           `}>
+            {/* Container da imagem - altura responsiva */}
             <div className={`
-              mb-2 sm:mb-3 flex justify-center h-24 sm:h-30 w-full overflow-hidden rounded-2xl sm:rounded-3xl
+              flex justify-center items-center 
+              h-20 sm:h-24 md:h-28 lg:h-32 mb-2 sm:mb-3
+              w-full overflow-hidden rounded-xl sm:rounded-2xl
               ${
                 theme === 'high-contrast' 
                   ? 'bg-black' 
@@ -62,9 +65,9 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
               <Image
                 src={item.imageSrc}
                 alt={item.imageAlt || item.title}
-                width={200}
-                height={128}
-                className={`object-cover mt-3 sm:mt-4 w-[70px] h-[70px] sm:w-[80px] sm:h-[80px] md:w-[90px] md:h-[90px] ${
+                width={120}
+                height={120}
+                className={`object-contain w-auto h-3/4 ${
                   theme === 'high-contrast' 
                     ? 'filter contrast-150 brightness-125 saturate-200' 
                     : ''
@@ -73,9 +76,10 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
               />
             </div>
 
-            <div className="flex-1 px-1 sm:px-0">
+            {/* Container do texto - altura responsiva */}
+            <div className="flex flex-col min-h-[60px] sm:min-h-[70px] md:min-h-[80px] px-1">
               <h3 className={`
-                font-bold text-base sm:text-lg text-center line-clamp-2
+                font-bold text-sm sm:text-base md:text-lg text-center line-clamp-2
                 ${
                   theme === 'light' 
                     ? 'text-gray-900' 
@@ -87,7 +91,7 @@ export const FiloCards = ({ items, horizontalScroll = false }: CardProps) => {
                 {item.title}
               </h3>
               <p className={`
-                text-xs sm:text-sm text-center line-clamp-2 mt-1
+                text-xs sm:text-xs md:text-sm text-center line-clamp-2 mt-1
                 ${
                   theme === 'light' 
                     ? 'text-gray-600' 

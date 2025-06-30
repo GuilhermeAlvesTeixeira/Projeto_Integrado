@@ -26,7 +26,8 @@ const LearnPage = () => {
                 <FiloSection
                     imgSrc="/esponja.png"
                     title="Poríferos"
-                    description="Explore os seres mais simples do reino animal que filtram água para viver."
+                    description="Animais filtradores sem tecidos verdadeiros."
+                    horizontalScroll={true} 
                     cards={[
                         {
                             title: "Introdução",
@@ -62,7 +63,7 @@ const LearnPage = () => {
                 <FiloSection
                     imgSrc="/jellyfish.svg"
                     title="Cnidários"
-                    description="Descubra os animais aquáticos com tentáculos e defesa eletrizante."
+                    description="Animais com cnidócitos e simetria radial."
                     cards={[
                         {
                             title: "Introdução",
@@ -81,7 +82,7 @@ const LearnPage = () => {
                         {
                             title: "Ciclo de Vida",
                             content: "Soluções criativas",
-                            imageSrc: "/ciclo-cnidario.png",
+                            imageSrc: "/cnidario-ciclo.png",
                             imageAlt: "Ciclo de vida de cnidário",
                             href: "/cnidario-ciclo",
                         },
@@ -98,7 +99,7 @@ const LearnPage = () => {
                 <FiloSection
                     imgSrc="/planaria.png"
                     title="Platelmintos"
-                    description="Conheça os vermes achatados e suas adaptações parasitárias."
+                    description="Vermes achatados com simetria bilateral."
                     cards={[
                         {
                             title: "Introdução",
@@ -134,7 +135,7 @@ const LearnPage = () => {
                 <FiloSection
                     imgSrc="/nemertea.png"
                     title="Nemerteas"
-                    description="Explore os vermes proboscídeos com sistema circulatório simples."
+                    description="Vermes proboscídeos com sistema circulatório."
                     cards={[
                         {
                             title: "Introdução",
@@ -170,7 +171,7 @@ const LearnPage = () => {
                 <FiloSection
                     imgSrc="/polvo.png"
                     title="Moluscos"
-                    description="Descubra a diversidade de animais com conchas e pés musculares."
+                    description="Animais de corpo mole com concha (ou não)."
                     cards={[
                         {
                             title: "Introdução",
