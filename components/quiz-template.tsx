@@ -36,7 +36,6 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
   const [quizFinalizado, setQuizFinalizado] = useState(false);
   const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
   const [itensArrastados, setItensArrastados] = useState<{ id: string, areaId: string }[]>([]);
-  const [imageSize, setImageSize] = useState({ width: 500, height: 375 }); // Tamanho base da imagem
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -206,47 +205,26 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
     id,
     item,
     opcoes,
-    x,
-    y,
-    scale
   }: {
     id: string;
     item?: { id: string };
     opcoes: Opcao[];
-    x: number;
-    y: number;
-    scale: number;
   }) {
     const { setNodeRef, isOver } = useDroppable({ id });
     const textoItem = item ? opcoes.find(o => o.id === item.id)?.texto : null;
 
-    // Tamanhos ajustados para diminuir mais rapidamente em telas pequenas
-    const width = `${Math.max(40, 80 * Math.sqrt(scale))}px`;
-    const height = `${Math.max(20, 32 * Math.sqrt(scale))}px`;
-    const fontSize = `${Math.max(8, 10 * scale)}px`;
-
     return (
       <div
         ref={setNodeRef}
-        style={{
-          position: 'absolute',
-          left: `calc(50% + ${x * scale}px)`,
-          top: `calc(50% + ${y * scale}px)`,
-          transform: 'translate(-50%, -50%)',
-          width,
-          height,
-        }}
         className={`
-          p-0.5 border-2 rounded-lg flex flex-col transition-colors
+          p-2 border-2 rounded-lg flex flex-col transition-colors min-h-[60px]
           ${isOver ? 'bg-green-100/70 dark:bg-green-900/50' : 'border-dashed border-gray-300 dark:border-gray-500'}
+          ${item ? 'bg-green-100 dark:bg-green-900 border-solid' : ''}
         `}
       >
         {textoItem && (
-          <div className="w-full h-full flex items-center justify-center bg-green-100 dark:bg-green-900 rounded text-center overflow-hidden">
-            <span
-              className="truncate px-0.5"
-              style={{ fontSize }}
-            >
+          <div className="w-full h-full flex items-center justify-center rounded text-center overflow-hidden">
+            <span className="truncate px-0.5 text-sm">
               {textoItem}
             </span>
           </div>
@@ -289,64 +267,36 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
       >
         <h2 className="text-xl font-bold mb-4">{questao.pergunta}</h2>
         {questao.imagem && (
-          <div className="relative w-full flex flex-col items-center p-2 sm:p- rounded-lg overflow-hidden">
-            {/* Container principal que envolve imagem e áreas de drop */}
-            <div
-              className="relative mx-auto bg-red-400 dark:bg-gray-800 rounded-lg overflow-hidden"
-              style={{
-                width: '100%',
-                maxWidth: '500px',
-                aspectRatio: '4/3',
-                margin: '0 auto'
-              }}
-              ref={node => {
-                if (node) {
-                  const width = node.getBoundingClientRect().width;
-                  const height = node.getBoundingClientRect().height;
-                  if (width !== imageSize.width || height !== imageSize.height) {
-                    setImageSize({ width, height });
-                  }
-                }
-              }}
-            >
-              {/* Container da imagem */}
-              <div className="relative w-full h-full">
-                <Image
-                  src={questao.imagem}
-                  alt="Ilustração da pergunta"
-                  fill
-                  className="object-contain p-2 sm:p-4"
-                  sizes="(max-width: 640px) 280px, (max-width: 768px) 340px, (max-width: 1024px) 400px, 500px"
-                  priority={false}
-                />
-              </div>
-
-              {/* Áreas de drop posicionadas ao redor da imagem */}
-              {questao.opcoes.map((opcao) => {
-                if (!opcao.posicao) return null;
-                const scale = imageSize.width / 500; // Fator de escala baseado no tamanho atual vs tamanho base
-                return (
-                  <div
-                    key={opcao.posicao.areaId}
-                    style={{
-                      position: 'absolute',
-                      left: `calc(50% + ${opcao.posicao.x * scale}px)`,
-                      top: `calc(50% + ${opcao.posicao.y * scale}px)`,
-                    }}
-                    className="transform -translate-x-1/2 -translate-y-1/2"
-                  >
-                    <DroppableArea
-                      id={opcao.posicao.areaId}
-                      x={0}
-                      y={0}
-                      scale={scale}
-                      item={itensArrastados.find(item => item.areaId === opcao.posicao?.areaId)}
-                      opcoes={questao.opcoes}
-                    />
-                  </div>
-                );
-              })}
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative w-full md:w-1/2 aspect-[4/3] bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+              <Image
+                src={questao.imagem}
+                alt="Ilustração da pergunta"
+                fill
+                className="object-contain p-4"
+                priority={false}
+              />
             </div>
+
+            {questao.tipo === "drag_and_drop" && (
+              <div className="w-full md:w-1/2 space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  {questao.opcoes.map((opcao) => {
+                    if (!opcao.posicao) return null;
+                    return (
+                      <div key={opcao.posicao.areaId} className="space-y-1">
+                        <div className="text-sm font-medium">{opcao.posicao.areaId}</div>
+                        <DroppableArea
+                          id={opcao.posicao.areaId}
+                          item={itensArrastados.find(item => item.areaId === opcao.posicao?.areaId)}
+                          opcoes={questao.opcoes}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </motion.div>
