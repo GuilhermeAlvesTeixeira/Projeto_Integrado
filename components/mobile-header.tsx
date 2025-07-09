@@ -61,7 +61,7 @@ export const MobileHeader = () => {
   };
 
   return (
-    <nav className={`px-4 sm:px-6 h-[50px] flex items-center border-b fixed top-0 w-full z-50 ${
+    <nav className={`py-2 px-4 sm:px-6 h-[50px] flex items-center border-b fixed top-0 w-full z-50 ${
       theme === 'light' ? 'bg-green-500' : 
       theme === 'dark' ? 'bg-green-700' : 
       'bg-black border-white'
@@ -129,7 +129,7 @@ export const MobileHeader = () => {
                 size="sm" 
                 variant="ghost" 
                 onClick={handleThemeClick}
-                className={`p-2 flex items-center gap-1 ${
+                className={`cursor-pointer p-2 flex items-center gap-1 ${
                   theme === 'light' ? 'text-white hover:bg-green-600' :
                   theme === 'dark' ? 'text-white hover:bg-green-800' :
                   'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
@@ -163,7 +163,7 @@ export const MobileHeader = () => {
                       'hover:bg-gray-900 text-yellow-400'
                     }`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 cursor-pointer ">
                       <SunIcon className="h-4 w-4" />
                       Modo Claro
                     </div>
@@ -179,7 +179,7 @@ export const MobileHeader = () => {
                       'hover:bg-gray-900 text-yellow-400'
                     }`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 cursor-pointer ">
                       <MoonIcon className="h-4 w-4" />
                       Modo Escuro
                     </div>
@@ -195,7 +195,7 @@ export const MobileHeader = () => {
                       'hover:bg-gray-700 text-gray-300'
                     }`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 cursor-pointer ">
                       <EyeIcon className="h-4 w-4" />
                       Alto Contraste
                     </div>

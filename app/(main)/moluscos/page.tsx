@@ -14,6 +14,7 @@ const MoluscosPage = () => {
         icon: '🐚',
         duration: 5,
         completed: true,
+        link: "/moluscos/introdução",
       },
       {
         id: 'anatomy',
@@ -21,7 +22,8 @@ const MoluscosPage = () => {
         level: 1,
         icon: '🔍',
         duration: 8,
-        completed: false,
+        completed: true,
+        link: "/moluscos/anatomia",
       },
       {
         id: 'lifecycle',
@@ -30,6 +32,7 @@ const MoluscosPage = () => {
         icon: '🔄',
         duration: 6,
         completed: false,
+        link: "/moluscos/ciclo-de-vida",
       },
       {
         id: 'classes',
@@ -38,6 +41,7 @@ const MoluscosPage = () => {
         icon: '📊',
         duration: 7,
         completed: false,
+        link: "/moluscos/classes",
       },
       {
         id: 'lab',
@@ -46,6 +50,7 @@ const MoluscosPage = () => {
         icon: '🧪',
         duration: 10,
         completed: false,
+        link: "/moluscos/laboratorio",
       },
     ],
   };
