@@ -64,6 +64,9 @@ Todo o conteúdo será disponibilizado localmente no próprio aplicativo, não e
    ```bash
    git clone https://github.com/GuilhermeAlvesTeixeira/Projeto_Integrado
 
+## Protótipo
+**Figma:** [Figma](https://www.figma.com/design/f8RxmlymAQIInzAciAjpTr/P1--Copy-?node-id=0-1&p=f&t=LGcWhqIifeYn0D11-0)
+
 ## Licença
 
 Este projeto está sob a GNU GPLv3.
