@@ -18,7 +18,8 @@ const MoluscoAnatomia = () => {
   const [playGameOver] = useSound('/game-over.mp3');
 
   // Estados do quiz
-  const [respostas, setRespostas] = useState<Array<{correta: boolean | null}>>(Array(2).fill({correta: null}));
+  const [todasQuestoes, setTodasQuestoes] = useState<Questao[]>([]);
+  const [respostas, setRespostas] = useState<Array<{correta: boolean | null}>>([]);
   const [indiceQuestao, setIndiceQuestao] = useState(0);
   const [quizFinalizado, setQuizFinalizado] = useState(false);
   const [questoesRespondidas, setQuestoesRespondidas] = useState<Array<{
@@ -26,43 +27,39 @@ const MoluscoAnatomia = () => {
     respostaUsuario: any;
     correta: boolean;
   }>>([]);
-  const [vidas, setVidas] = useState(3); // Adicionando estado de vidas
+  const [vidas, setVidas] = useState(3);
+  const [carregando, setCarregando] = useState(true);
+  const [questaoRespondida, setQuestaoRespondida] = useState(false); // Novo estado
 
-  // Questões do quiz
-  const questaoMultiplaEscolha: Questao = {
-    tipo: "multipla_escolha",
-    pergunta: "Qual desses animais pertence ao Filo Mollusca?",
-    opcoes: [
-      { id: "1", texto: "Estrela-do-mar", imagem: "/estrela-do-mar.png", correta: false },
-      { id: "2", texto: "Polvo", imagem: "/polvo.png", correta: true },
-      { id: "3", texto: "Água-viva", imagem: "/jellyfish.svg", correta: false },
-      { id: "4", texto: "Esponja", imagem: "/esponja.png", correta: false },
-    ],
-    explicacao: "O polvo é um molusco cefalópode, enquanto os outros pertencem a filos diferentes."
-  };
+  // Questão atual
+  const [questaoAtual, setQuestaoAtual] = useState<Questao | null>(null);
 
-  const [questaoAtual, setQuestaoAtual] = useState<Questao>(questaoMultiplaEscolha);
+  // Carregar questões do JSON
+  useEffect(() => {
+    const fetchQuestoes = async () => {
+      try {
+        const res = await fetch('../data/moluscos.json');
+        const data = await res.json();
+        setTodasQuestoes(data);
+        setQuestaoAtual(data[0]);
+        setRespostas(Array(data.length).fill({correta: null}));
+        setCarregando(false);
+      } catch (error) {
+        console.error('Erro ao carregar questões:', error);
+        setCarregando(false);
+      }
+    };
 
-  const questaoDragDrop: Questao = {
-    tipo: "drag_and_drop",
-    pergunta: "Arraste os nomes para as partes corretas do polvo:",
-    opcoes: [
-      { id: "1", texto: "Tentáculo", posicao: { areaId: "area1", x: -100, y: 30 } },
-      { id: "2", texto: "Olho", posicao: { areaId: "area2", x: -10, y: 0 } },
-      { id: "3", texto: "Cabeça", posicao: { areaId: "area3", x: 120, y: -10 } },
-      { id: "4", texto: "Sifão", posicao: { areaId: "area4", x: 270, y: 0 } },
-      { id: "5", texto: "Abertura do Sifão", posicao: { areaId: "area5", x: 280, y: 60 } }
-    ],
-    imagem: "/polvo-anatomia.png",
-    explicacao: "Partes básicas de um molusco cefalópode: tentáculos (locomoção e captura), olhos (visão), cabeça (contém os órgãos principais), sifão (propulsão) e abertura do sifão (expulsão de água)."
-  };
-
-  const todasQuestoes: Questao[] = [questaoMultiplaEscolha, questaoDragDrop];
+    fetchQuestoes();
+  }, []);
 
   const handleResposta = (resultado: { correta: boolean; respostaDada: any }, index: number) => {
+    if (!questaoAtual) return;
+
     const novasRespostas = [...respostas];
     novasRespostas[index] = {correta: resultado.correta};
     setRespostas(novasRespostas);
+    setQuestaoRespondida(true); // Marcar questão como respondida
 
     const novasQuestoesRespondidas = [...questoesRespondidas];
     novasQuestoesRespondidas[index] = {
@@ -72,12 +69,10 @@ const MoluscoAnatomia = () => {
     };
     setQuestoesRespondidas(novasQuestoesRespondidas);
 
-    // Reduz vidas se a resposta estiver errada
     if (!resultado.correta) {
       const novasVidas = vidas - 1;
       setVidas(novasVidas);
       
-      // Verifica se perdeu todas as vidas
       if (novasVidas <= 0) {
         setQuizFinalizado(true);
       }
@@ -85,10 +80,11 @@ const MoluscoAnatomia = () => {
   };
 
   const proximaQuestao = () => {
-    if (indiceQuestao < todasQuestoes.length - 1) {
+    if (indiceQuestao < todasQuestoes.length - 1 && questaoRespondida) {
       const novoIndice = indiceQuestao + 1;
       setIndiceQuestao(novoIndice);
       setQuestaoAtual(todasQuestoes[novoIndice]);
+      setQuestaoRespondida(false); // Resetar para a próxima questão
     }
   };
 
@@ -97,11 +93,14 @@ const MoluscoAnatomia = () => {
       const novoIndice = indiceQuestao - 1;
       setIndiceQuestao(novoIndice);
       setQuestaoAtual(todasQuestoes[novoIndice]);
+      setQuestaoRespondida(respostas[novoIndice].correta !== null); // Verificar se a questão anterior foi respondida
     }
   };
 
   const finalizarQuiz = () => {
-    setQuizFinalizado(true);
+    if (questaoRespondida) {
+      setQuizFinalizado(true);
+    }
   };
 
   // Funções da tela de finalização
@@ -109,10 +108,11 @@ const MoluscoAnatomia = () => {
     setQuizFinalizado(false);
     setIndiceQuestao(0);
     setQuestaoAtual(todasQuestoes[0]);
-    setRespostas(Array(2).fill({correta: null}));
+    setRespostas(Array(todasQuestoes.length).fill({correta: null}));
     setQuestoesRespondidas([]);
     setShowConfetti(false);
-    setVidas(3); // Resetar vidas
+    setVidas(3);
+    setQuestaoRespondida(false);
   };
 
   const reverErros = () => {
@@ -121,12 +121,13 @@ const MoluscoAnatomia = () => {
       setQuizFinalizado(false);
       setIndiceQuestao(primeiraErrada);
       setQuestaoAtual(todasQuestoes[primeiraErrada]);
-      setVidas(3); // Resetar vidas
+      setVidas(3);
+      setQuestaoRespondida(true); // Já foi respondida anteriormente
     }
   };
 
   const proximoModulo = () => {
-    router.push('/homepage');
+    router.push('/moluscos');
   };
 
   // Estilos baseados no tema
@@ -141,7 +142,9 @@ const MoluscoAnatomia = () => {
       buttonTertiary: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
       buttonEnabled: 'bg-blue-500 text-white hover:bg-blue-600',
       buttonDisabled: 'bg-gray-300 text-gray-500 cursor-not-allowed',
-      buttonFinalizar: 'bg-purple-600 hover:bg-purple-700 text-white'
+      buttonFinalizar: 'bg-purple-600 hover:bg-purple-700 text-white',
+      buttonAnswered: 'bg-blue-500 text-white hover:bg-blue-600',
+      buttonUnanswered: 'bg-gray-300 text-gray-500 cursor-not-allowed'
     },
     dark: {
       background: 'bg-gray-900',
@@ -153,7 +156,9 @@ const MoluscoAnatomia = () => {
       buttonTertiary: 'bg-gray-700 hover:bg-gray-600 text-gray-100',
       buttonEnabled: 'bg-blue-600 text-white hover:bg-blue-700',
       buttonDisabled: 'bg-gray-700 text-gray-400 cursor-not-allowed',
-      buttonFinalizar: 'bg-purple-700 hover:bg-purple-600 text-white'
+      buttonFinalizar: 'bg-purple-700 hover:bg-purple-600 text-white',
+      buttonAnswered: 'bg-blue-600 text-white hover:bg-blue-700',
+      buttonUnanswered: 'bg-gray-700 text-gray-400 cursor-not-allowed'
     },
     'high-contrast': {
       background: 'bg-black',
@@ -165,7 +170,9 @@ const MoluscoAnatomia = () => {
       buttonTertiary: 'bg-gray-700 hover:bg-gray-600 text-white',
       buttonEnabled: 'bg-yellow-500 text-black hover:bg-yellow-400',
       buttonDisabled: 'bg-gray-700 text-gray-300 cursor-not-allowed',
-      buttonFinalizar: 'bg-purple-500 hover:bg-purple-400 text-black'
+      buttonFinalizar: 'bg-purple-500 hover:bg-purple-400 text-black',
+      buttonAnswered: 'bg-yellow-500 text-black hover:bg-yellow-400',
+      buttonUnanswered: 'bg-gray-700 text-gray-300 cursor-not-allowed'
     }
   };
 
@@ -299,6 +306,33 @@ const MoluscoAnatomia = () => {
     );
   };
 
+  if (carregando) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${currentTheme.background}`}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <p className={`mt-4 ${currentTheme.text}`}>Carregando questões...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!questaoAtual) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${currentTheme.background}`}>
+        <div className="text-center">
+          <p className={`text-xl ${currentTheme.text}`}>Não foi possível carregar as questões.</p>
+          <button
+            onClick={() => window.location.reload()}
+            className={`mt-4 px-4 py-2 rounded-md ${currentTheme.buttonSecondary}`}
+          >
+            Tentar novamente
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Renderização principal
   return (
     <div className="container mx-auto p-4 max-w-4xl">
@@ -311,7 +345,7 @@ const MoluscoAnatomia = () => {
             onResposta={(resultado) => {
               handleResposta(resultado, indiceQuestao);
             }}
-            vidas={vidas} // Passando o estado de vidas para o QuizTemplate
+            vidas={vidas}
           />
           
           <div className="flex justify-between mt-6 items-center">
@@ -344,6 +378,7 @@ const MoluscoAnatomia = () => {
                     onClick={() => {
                       setIndiceQuestao(index);
                       setQuestaoAtual(todasQuestoes[index]);
+                      setQuestaoRespondida(respostas[index].correta !== null);
                     }}
                   />
                 );
@@ -353,14 +388,24 @@ const MoluscoAnatomia = () => {
             {indiceQuestao === todasQuestoes.length - 1 ? (
               <button 
                 onClick={finalizarQuiz}
-                className={`px-4 py-2 rounded-md transition-colors ${currentTheme.buttonFinalizar}`}
+                className={`px-4 py-2 rounded-md transition-colors ${
+                  questaoRespondida 
+                    ? currentTheme.buttonFinalizar 
+                    : currentTheme.buttonUnanswered
+                }`}
+                disabled={!questaoRespondida}
               >
                 Finalizar
               </button>
             ) : (
               <button 
                 onClick={proximaQuestao}
-                className={`px-4 py-2 rounded-md transition-colors ${currentTheme.buttonEnabled}`}
+                className={`px-4 py-2 rounded-md transition-colors ${
+                  questaoRespondida 
+                    ? currentTheme.buttonEnabled 
+                    : currentTheme.buttonUnanswered
+                }`}
+                disabled={!questaoRespondida}
               >
                 Próxima
               </button>

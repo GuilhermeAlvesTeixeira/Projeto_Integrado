@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent, useDraggable, useDroppable } from '@dnd-kit/core';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, DragEndEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -24,29 +24,41 @@ type Questao = {
   explicacao?: string;
 };
 
-// No arquivo onde está definido o tipo QuizTemplateProps (provavelmente em quiz-template.tsx)
 type QuizTemplateProps = {
   questao: Questao;
   onResposta: (resultado: { correta: boolean; respostaDada: any }) => void;
-  vidas: number; // Adicione esta linha
+  vidas: number;
 };
 
-export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps) {
+export default function QuizTemplate({ questao, onResposta, vidas: initialVidas }: QuizTemplateProps) {
   const { theme } = useTheme();
   const [respostaSelecionada, setRespostaSelecionada] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ correta: boolean; mensagem: string } | null>(null);
-  const [vidas, setVidas] = useState(3);
+  const [vidas, setVidas] = useState(initialVidas);
   const [quizFinalizado, setQuizFinalizado] = useState(false);
   const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
   const [itensArrastados, setItensArrastados] = useState<{ id: string, areaId: string }[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [playCorrect] = useSound('/correct.wav');
   const [playWrong] = useSound('/wrong.wav');
 
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.matchMedia('(pointer: coarse)').matches);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(isMobile ? TouchSensor : PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        delay: isMobile ? 150 : 0,
+        tolerance: isMobile ? 5 : 0,
+        distance: isMobile ? 0 : 8,
       },
     }),
     useSensor(KeyboardSensor)
@@ -154,7 +166,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
         break;
     }
 
-    correta ? playCorrect() : vidas > 1? playWrong() : console.log("nada");
+    correta ? playCorrect() : vidas > 1 ? playWrong() : console.log("nada");
 
     if (!correta) {
       setVidas(prev => prev - 1);
@@ -207,7 +219,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
 
   const recomecarQuiz = () => {
     setQuizFinalizado(false);
-    setVidas(3);
+    setVidas(initialVidas);
   };
 
   function DraggableItem({ id, children, disabled }: { id: string; children: React.ReactNode; disabled?: boolean }) {
@@ -219,6 +231,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
     const style = {
       transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
       zIndex: isDragging ? 1000 : 1,
+      touchAction: 'none',
     };
 
     return (
@@ -228,11 +241,13 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
         {...listeners}
         {...attributes}
         className={`
-          p-3 rounded-lg shadow-md cursor-grab active:cursor-grabbing transition-all
+          rounded-lg shadow-md cursor-grab active:cursor-grabbing transition-all
           ${disabled ? currentTheme.draggableDisabled : currentTheme.draggable}
-          active:shadow-lg select-none min-w-[100px] text-center text-sm
+          active:shadow-lg select-none text-center
           ${isDragging ? 'opacity-80 scale-105 shadow-xl' : ''}
           ${disabled ? 'cursor-not-allowed' : ''}
+          touch-none
+          ${isMobile ? 'p-2 text-xs min-w-[70px]' : 'p-3 text-sm min-w-[100px]'}
         `}
       >
         {children}
@@ -247,17 +262,18 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
       <div
         ref={setNodeRef}
         className={`
-          p-4 rounded-lg border-2 border-dashed transition-all duration-200
+          rounded-lg border-2 border-dashed transition-all duration-200
           ${isOver
             ? theme === 'high-contrast'
               ? 'bg-gray-900 border-yellow-400'
               : 'bg-green-100 dark:bg-green-900/20 border-green-400 dark:border-green-500'
             : `${currentTheme.dropzone} ${currentTheme.border}`
           }
+          ${isMobile ? 'p-2 min-h-[40px]' : 'p-4 min-h-[60px]'}
         `}
       >
-        <h3 className="font-medium text-sm mb-3">Itens disponíveis:</h3>
-        <div className="flex flex-wrap gap-3 min-h-[60px]">
+        <h3 className={`font-medium mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Itens disponíveis:</h3>
+        <div className={`flex flex-wrap gap-2 ${isMobile ? 'gap-1' : 'gap-3'}`}>
           {children}
         </div>
       </div>
@@ -279,7 +295,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
       <div
         ref={setNodeRef}
         className={`
-          p-4 rounded-lg border-2 transition-all duration-200 min-h-[120px] flex flex-col items-center justify-center
+          rounded-lg border-2 transition-all duration-200 flex flex-col items-center justify-center
           ${isOver
             ? theme === 'high-contrast'
               ? 'bg-gray-900 border-yellow-400'
@@ -296,13 +312,14 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
                 ? 'border-dashed bg-black border-yellow-500'
                 : `border-dashed ${currentTheme.dropzone} ${currentTheme.border}`
           }
+          ${isMobile ? 'p-2 min-h-[80px] text-xs' : 'p-4 min-h-[120px] text-sm'}
         `}
       >
         {item ? (
           <DraggableItem id={item.id} disabled={!!feedback}>
-            <div className="flex flex-col items-center gap-1">
+            <div className={`flex flex-col items-center ${isMobile ? 'gap-0' : 'gap-1'}`}>
               {opcao?.imagem && (
-                <div className="relative w-6 h-6">
+                <div className={`relative ${isMobile ? 'w-4 h-4' : 'w-6 h-6'}`}>
                   <Image
                     src={opcao.imagem}
                     alt={`Ícone ${opcao.texto}`}
@@ -317,7 +334,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
             </div>
           </DraggableItem>
         ) : (
-          <span className={`text-sm ${theme === 'high-contrast' ? 'text-yellow-400' : 'text-gray-500 dark:text-gray-400'}`}>
+          <span className={`${theme === 'high-contrast' ? 'text-yellow-400' : 'text-gray-500 dark:text-gray-400'}`}>
             {label || `Arraste para cá`}
           </span>
         )}
@@ -326,8 +343,12 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
   }
 
   return (
-    <div className={`max-w-4xl mx-auto p-4 ${currentTheme.background} ${currentTheme.text} rounded-lg shadow-lg`}>
-      <div className="flex justify-between items-center mb-6">
+    <div className={`
+      mx-auto rounded-lg shadow-lg
+      ${currentTheme.background} ${currentTheme.text}
+      ${isMobile && questao.tipo === 'drag_and_drop' ? 'scale-90 -mt-4 p-3 max-w-[95vw]' : 'max-w-4xl p-4'}
+    `}>
+      <div className={`flex justify-between items-center ${isMobile ? 'mb-4' : 'mb-6'}`}>
         <div className="flex space-x-2">
           {[...Array(3)].map((_, i) => (
             <motion.div
@@ -335,7 +356,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
               initial={{ scale: 1 }}
               animate={{ scale: i < vidas ? 1 : 0.8 }}
               transition={{ type: 'spring', stiffness: 500 }}
-              className={`relative w-8 h-8 ${i < vidas ? currentTheme.heartColor : currentTheme.heartEmptyColor}`}
+              className={`relative ${isMobile ? 'w-6 h-6' : 'w-8 h-8'} ${i < vidas ? currentTheme.heartColor : currentTheme.heartEmptyColor}`}
             >
               <Image
                 src={i < vidas ? "/heart.svg" : "/heart-empty.svg"}
@@ -346,7 +367,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
             </motion.div>
           ))}
         </div>
-        <div className="text-sm font-medium">
+        <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>
           {vidas} {vidas === 1 ? 'vida restante' : 'vidas restantes'}
         </div>
       </div>
@@ -355,20 +376,20 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mb-6"
+        className={isMobile ? 'mb-4' : 'mb-6'}
       >
-        <h2 className="text-xl font-bold mb-4">{questao.pergunta}</h2>
+        <h2 className={`font-bold ${isMobile ? 'text-lg mb-3' : 'text-xl mb-4'}`}>{questao.pergunta}</h2>
         {questao.imagem && (
           <div className="space-y-4">
             {questao.tipo === "drag_and_drop" ? (
-              <div className="flex flex-col gap-6">
+              <div className={`flex flex-col ${isMobile ? 'gap-3' : 'gap-6'}`}>
                 <DndContext
                   sensors={sensors}
                   collisionDetection={closestCenter}
                   onDragEnd={handleDragEnd}
                 >
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className={`relative w-full md:w-1/2 aspect-[4/3] ${currentTheme.imageBg} rounded-lg overflow-hidden`}>
+                  <div className={`flex ${isMobile ? 'flex-col gap-3' : 'flex-row gap-6'}`}>
+                    <div className={`relative ${isMobile ? 'w-full aspect-[4/3]' : 'w-1/2 aspect-[4/3]'} ${currentTheme.imageBg} rounded-lg overflow-hidden`}>
                       <Image
                         src={questao.imagem}
                         alt="Ilustração da pergunta"
@@ -378,8 +399,8 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
                       />
                     </div>
 
-                    <div className="w-full md:w-1/2">
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className={isMobile ? 'w-full' : 'w-1/2'}>
+                      <div className={`grid grid-cols-2 ${isMobile ? 'gap-2' : 'gap-4'}`}>
                         {questao.opcoes.map((opcao) => (
                           <DropZone
                             key={`dropzone-${opcao.posicao?.areaId || opcao.id}`}
@@ -396,9 +417,9 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
                       .filter(opcao => !itensArrastados.some(item => item.id === opcao.id))
                       .map((opcao) => (
                         <DraggableItem key={opcao.id} id={opcao.id}>
-                          <div className="flex flex-col items-center gap-1">
+                          <div className={`flex flex-col items-center ${isMobile ? 'gap-0' : 'gap-1'}`}>
                             {opcao.imagem && (
-                              <div className="relative w-6 h-6">
+                              <div className={`relative ${isMobile ? 'w-4 h-4' : 'w-6 h-6'}`}>
                                 <Image
                                   src={opcao.imagem}
                                   alt={`Ícone ${opcao.texto}`}
@@ -417,7 +438,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
                 </DndContext>
               </div>
             ) : (
-              <div className={`relative w-full md:w-1/2 aspect-[4/3] ${currentTheme.imageBg} rounded-lg overflow-hidden`}>
+              <div className={`relative w-full aspect-[4/3] ${currentTheme.imageBg} rounded-lg overflow-hidden`}>
                 <Image
                   src={questao.imagem}
                   alt="Ilustração da pergunta"
@@ -437,11 +458,11 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
           animate={{ opacity: 1 }}
           className={`p-4 mb-6 rounded-lg ${currentTheme.card} ${currentTheme.border} border`}
         >
-          <h3 className="text-lg font-bold mb-2">Quiz finalizado!</h3>
-          <p className="mb-4">Você perdeu todas as vidas. Deseja tentar novamente?</p>
+          <h3 className={`${isMobile ? 'text-md' : 'text-lg'} font-bold mb-2`}>Quiz finalizado!</h3>
+          <p className={`${isMobile ? 'text-sm' : 'mb-4'}`}>Você perdeu todas as vidas. Deseja tentar novamente?</p>
           <Button
             onClick={recomecarQuiz}
-            className={`${currentTheme.button} w-full`}
+            className={`${currentTheme.button} w-full ${isMobile ? 'text-sm py-2' : ''}`}
           >
             Recomeçar Quiz
           </Button>
@@ -456,7 +477,7 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 {questao.opcoes.map((opcao) => (
                   <motion.button
                     key={opcao.id}
@@ -467,14 +488,19 @@ export default function QuizTemplate({ questao, onResposta }: QuizTemplateProps)
                       handleResposta(opcao.id);
                     }}
                     disabled={!!feedback}
-                    className={`p-3 rounded-lg flex flex-col items-center justify-between transition ${currentTheme.border} border ${feedback
-                      ? opcao.correta
-                        ? `${currentTheme.buttonCorrect}`
-                        : opcao.id === respostaSelecionada
-                          ? `${currentTheme.buttonWrong}`
-                          : `${currentTheme.card} opacity-70`
-                      : `${currentTheme.card} hover:bg-opacity-80 cursor-pointer`
-                      } min-h-[120px] sm:min-h-[140px]`}
+                    className={`
+                      p-3 rounded-lg flex flex-col items-center justify-between transition 
+                      ${currentTheme.border} border 
+                      ${feedback
+                        ? opcao.correta
+                          ? `${currentTheme.buttonCorrect}`
+                          : opcao.id === respostaSelecionada
+                            ? `${currentTheme.buttonWrong}`
+                            : `${currentTheme.card} opacity-70`
+                        : `${currentTheme.card} hover:bg-opacity-80 cursor-pointer`
+                      }
+                      min-h-[120px] sm:min-h-[140px]
+                    `}
                   >
                     {opcao.imagem && (
                       <div className="relative w-12 h-16 sm:w-16 sm:h-20 flex-shrink-0">
