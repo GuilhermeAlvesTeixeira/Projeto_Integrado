@@ -1,0 +1,363 @@
+{
+    "poliplacoforo": {
+      "nome": "Poliplacóforo",
+      "descricaoGeral": "Moluscos da classe Polyplacophora, possuem concha formada por oito placas articuladas.",
+      "laminas": [
+        {
+          "label": "Região Ventral",
+          "url": "/lamina-image/poliplacoforo-ventral.jpeg",
+          "pranchaImage": "/prancha-image/poliplacofora-ventral.png",
+          "estrutura": {
+            "nome": "Estruturas Ventrais",
+            "itens": [
+              {"nome": "Cabeça", "descricao": "Região anterior do corpo onde se concentram os órgãos sensoriais."},
+              {"nome": "Boca", "descricao": "Abertura anterior do sistema digestivo."},
+              {"nome": "Pé", "descricao": "Estrutura muscular ventral usada para locomoção e fixação ao substrato."},
+              {"nome": "Manto", "descricao": "Dobra de tecido que secreta a concha e forma a cavidade paleal."},
+              {"nome": "Brânquia", "descricao": "Órgãos respiratórios localizados na cavidade paleal."},
+              {"nome": "Ânus", "descricao": "Abertura posterior do sistema digestivo."},
+              {"nome": "Gonoporo", "descricao": "Abertura do sistema reprodutor."},
+              {"nome": "Nefridioporo", "descricao": "Abertura do sistema excretor."},
+              {"nome": "Corrente de água", "descricao": "Fluxo de água através da cavidade paleal para respiração."}
+            ]
+          }
+        },
+        {
+          "label": "Região Dorsal",
+          "url": "/lamina-image/poliplacoforo-dorsal.jpeg",
+          "pranchaImage": "/prancha-image/poliplacofora-externo.png",
+          "estrutura": {
+            "nome": "Estruturas Dorsais",
+            "itens": [
+              {"nome": "Concha (Placa)", "descricao": "Oito placas calcárias articuladas que protegem o dorso do animal."},
+              {"nome": "Cinturão", "descricao": "Estrutura periostracal que circunda as placas da concha."}
+            ]
+          }
+        }
+      ]
+    },
+    "bivalve": {
+      "nome": "Moluscos Bivalves",
+      "descricaoGeral": "Classe Bivalvia, moluscos com concha dividida em duas valvas articuladas.",
+      "laminas": [
+        {
+          "label": "Enterrado em substrato",
+          "url": "/lamina-image/bivalve-enterrado.jpeg",
+          "pranchaImage": "/prancha-image/bivalve-enterrado.png",
+          "estrutura": {
+            "nome": "Estruturas em Substrato",
+            "itens": [
+              {"nome": "Sifão inalante", "descricao": "Estrutura tubular que conduz água para dentro da cavidade do manto."},
+              {"nome": "Sifão exalante", "descricao": "Estrutura tubular que conduz água para fora da cavidade do manto."},
+              {"nome": "Concha", "descricao": "Estrutura calcária dividida em duas valvas que protegem o corpo mole."},
+              {"nome": "Pé", "descricao": "Estrutura muscular usada para escavação e locomoção."}
+            ]
+          }
+        },
+        {
+          "label": "Estruturas internas",
+          "url": "/lamina-image/bivalve-interno.jpeg",
+          "pranchaImage": "/prancha-image/bivalve-interno.png",
+          "estrutura": {
+            "nome": "Anatomia Interna",
+            "itens": [
+              {"nome": "Ligamento", "descricao": "Estrutura elástica que une as valvas dorsalmente."},
+              {"nome": "Dentição", "descricao": "Projeções nas valvas que garantem o alinhamento preciso."},
+              {"nome": "Cicatriz do músculo adutor anterior", "descricao": "Ponto de inserção do músculo adutor anterior."},
+              {"nome": "Cicatriz da linha paleal", "descricao": "Marcas de inserção dos músculos do manto."},
+              {"nome": "Cicatriz do sinus paleal", "descricao": "Indentação na linha paleal para o sifão."},
+              {"nome": "Cicatriz do músculo adutor posterior", "descricao": "Ponto de inserção do músculo adutor posterior."},
+              {"nome": "Músculo Adutor Anterior", "descricao": "Músculo que fecha as valvas na região anterior."},
+              {"nome": "Boca", "descricao": "Abertura do sistema digestivo."},
+              {"nome": "Palpo labial", "descricao": "Estruturas que auxiliam na alimentação."},
+              {"nome": "Manto", "descricao": "Dobra de tecido que secreta a concha."},
+              {"nome": "Brânquia", "descricao": "Órgãos respiratórios e também envolvidos na alimentação."},
+              {"nome": "Corrente de água", "descricao": "Fluxo de água através da cavidade do manto."}
+            ]
+          }
+        }
+      ]
+    },
+    "aplysia": {
+      "nome": "Aplysia sp.",
+      "descricaoGeral": "Gastrópodes marinhos da ordem Aplysiida, conhecidos como lebres-do-mar.",
+      "laminas": [
+        {
+          "label": "Estrutura externa",
+          "url": "/lamina-image/aplysia-externa.jpeg",
+          "pranchaImage": "/prancha-image/aplysia-externa.png",
+          "estrutura": {
+            "nome": "Anatomia Externa",
+            "itens": [
+              {"nome": "Tentáculos", "descricao": "Estruturas sensoriais localizadas na cabeça."},
+              {"nome": "Pênis", "descricao": "Órgão copulador em indivíduos machos."},
+              {"nome": "Olho", "descricao": "Órgão fotossensorial localizado na base dos tentáculos."},
+              {"nome": "Rinóforo", "descricao": "Tentáculos especializados na quimiorrecepção."},
+              {"nome": "Sulco espermático", "descricao": "Canal que conduz os espermatozoides durante a cópula."},
+              {"nome": "Gonoporo", "descricao": "Abertura do sistema reprodutor."},
+              {"nome": "Concha", "descricao": "Estrutura calcária reduzida e interna."},
+              {"nome": "Parapódio", "descricao": "Expansões laterais do pé usadas para natação."},
+              {"nome": "Abertura da concha", "descricao": "Espaço por onde emerge o manto."},
+              {"nome": "Ânus", "descricao": "Abertura do sistema digestivo."},
+              {"nome": "Pé", "descricao": "Estrutura muscular ventral para locomoção."}
+            ]
+          }
+        }
+      ]
+    },
+    "gastropode": {
+      "nome": "Gastrópode",
+      "descricaoGeral": "Classe Gastropoda, moluscos com concha espiralada (quando presente) e pé ventral.",
+      "laminas": [
+        {
+          "label": "Anatomia externa (perfil)",
+          "url": "/lamina-image/gastropode-perfil.jpeg",
+          "pranchaImage": "/prancha-image/gastropode-perfil.png",
+          "estrutura": {
+            "nome": "Estruturas Externas",
+            "itens": [
+              {"nome": "Concha", "descricao": "Estrutura calcária espiralada que protege o corpo mole."},
+              {"nome": "Tentáculo", "descricao": "Estruturas sensoriais cefálicas."},
+              {"nome": "Pé", "descricao": "Estrutura muscular ventral para locomoção."},
+              {"nome": "Boca", "descricao": "Abertura anterior do sistema digestivo."}
+            ]
+          }
+        },
+        {
+          "label": "Anatomia externa (superior)",
+          "url": "/lamina-image/gastropode-superior.jpeg",
+          "pranchaImage": "/prancha-image/gastropode-perfil.png",
+          "estrutura": {
+            "nome": "Estruturas Dorsais",
+            "itens": [
+              {"nome": "Concha", "descricao": "Vista superior da espiral da concha."},
+              {"nome": "Tentáculo", "descricao": "Estruturas sensoriais em vista dorsal."},
+              {"nome": "Pé", "descricao": "Região dorsal do pé muscular."},
+              {"nome": "Boca", "descricao": "Abertura bucal em vista superior."}
+            ]
+          }
+        }
+      ]
+    },
+    "concha": {
+      "nome": "Anatomia de Concha",
+      "descricaoGeral": "Estrutura calcária secretada pelo manto dos moluscos.",
+      "laminas": [
+        {
+          "label": "Concha 01",
+          "url": "/lamina-image/concha-1.jpeg",
+          "pranchaImage": "/prancha-image/concha.png",
+          "estrutura": {
+            "nome": "Partes da Concha",
+            "itens": [
+              {"nome": "Protoconcha", "descricao": "Parte inicial da concha, formada durante o estágio larval."},
+              {"nome": "Abertura", "descricao": "Orifício por onde o animal emerge."},
+              {"nome": "Columela", "descricao": "Eixo central da espiral da concha."},
+              {"nome": "Volta", "descricao": "Cada uma das espirais completas da concha."}
+            ]
+          }
+        },
+        {
+          "label": "Concha 02",
+          "url": "/lamina-image/concha-2.jpeg",
+          "pranchaImage": "/prancha-image/concha.png",
+          "estrutura": {
+            "nome": "Partes da Concha",
+            "itens": [
+              {"nome": "Protoconcha", "descricao": "Parte inicial da concha, formada durante o estágio larval."},
+              {"nome": "Abertura", "descricao": "Orifício por onde o animal emerge."},
+              {"nome": "Columela", "descricao": "Eixo central da espiral da concha."},
+              {"nome": "Volta", "descricao": "Cada uma das espirais completas da concha."}
+            ]
+          }
+        },
+        {
+          "label": "Concha 3",
+          "url": "/lamina-image/concha-3.jpeg",
+          "pranchaImage": "/prancha-image/concha.png",
+          "estrutura": {
+            "nome": "Partes da Concha",
+            "itens": [
+              {"nome": "Protoconcha", "descricao": "Parte inicial da concha, formada durante o estágio larval."},
+              {"nome": "Abertura", "descricao": "Orifício por onde o animal emerge."},
+              {"nome": "Columela", "descricao": "Eixo central da espiral da concha."},
+              {"nome": "Volta", "descricao": "Cada uma das espirais completas da concha."}
+            ]
+          }
+        }
+      ]
+    },
+    "lula": {
+      "nome": "Lula",
+      "descricaoGeral": "Cefalópodes da ordem Teuthida, com corpo alongado e concha interna reduzida (pena).",
+      "laminas": [
+        {
+          "label": "Ventral",
+          "url": "/lamina-image/lula-ventral.jpeg",
+          "pranchaImage": "/prancha-image/lula-ventral.png",
+          "estrutura": {
+            "nome": "Estruturas Ventrais",
+            "itens": [
+              {"nome": "Nadadeira", "descricao": "Estruturas laterais usadas para natação e estabilização."},
+              {"nome": "Colar do Manto", "descricao": "Região de união entre o manto e o funil."},
+              {"nome": "Crista olfatória", "descricao": "Estrutura sensorial química na região ventral."},
+              {"nome": "Sifão", "descricao": "Estrutura tubular para locomoção a jato."},
+              {"nome": "Olho", "descricao": "Órgão visual bem desenvolvido."},
+              {"nome": "Tentáculo", "descricao": "Apêndices longos com ventosas para captura de presas."}
+            ]
+          }
+        },
+        {
+          "label": "Dorsal",
+          "url": "/lamina-image/lula-dorsal.jpeg",
+          "pranchaImage": "/prancha-image/lula-dorsal.png",
+          "estrutura": {
+            "nome": "Estruturas Dorsais",
+            "itens": [
+              {"nome": "Nadadeira", "descricao": "Estruturas laterais em vista dorsal."},
+              {"nome": "Colar do manto", "descricao": "Região de união entre o manto e o funil."},
+              {"nome": "Crista Olfatória", "descricao": "Estrutura sensorial química na região dorsal."},
+              {"nome": "Ponta da pena", "descricao": "Extremidade da concha interna (gládio)."},
+              {"nome": "Olho", "descricao": "Órgão visual em vista dorsal."},
+              {"nome": "Tentáculo", "descricao": "Apêndices em vista dorsal."}
+            ]
+          }
+        },
+        {
+          "label": "Anatomia Interna (Macho)",
+          "url": "/lamina-image/lula-macho.jpg",
+          "pranchaImage": "/prancha-image/lula-macho.png",
+          "estrutura": {
+            "nome": "Anatomia do Macho",
+            "itens": [
+              {"nome": "Ceco", "descricao": "Parte do sistema digestivo para absorção de nutrientes."},
+              {"nome": "Testículo", "descricao": "Órgão produtor de espermatozoides."},
+              {"nome": "Metanefrídia", "descricao": "Órgão excretor."},
+              {"nome": "Saco de tinta", "descricao": "Glândula que produz melanina para defesa."},
+              {"nome": "Reto", "descricao": "Parte final do sistema digestivo."},
+              {"nome": "Músculo retrator do sifão", "descricao": "Controla o movimento do sifão."},
+              {"nome": "Cartilagem paleal", "descricao": "Estrutura de sustentação."},
+              {"nome": "Abertura do sifão", "descricao": "Saída do sifão para locomoção."},
+              {"nome": "Colar do manto", "descricao": "Região de união entre o manto e o funil."},
+              {"nome": "Ânus", "descricao": "Abertura do sistema digestivo."},
+              {"nome": "Brânquia", "descricao": "Órgão respiratório."},
+              {"nome": "Coração Branquial", "descricao": "Coração que irriga as brânquias."},
+              {"nome": "Veia cava direita", "descricao": "Vaso sanguíneo principal."}
+            ]
+          }
+        },
+        {
+          "label": "Anatomia Interna (Fêmea)",
+          "url": "/lamina-image/lula-femea.jpg",
+          "pranchaImage": "/prancha-image/lula-femea.png",
+          "estrutura": {
+            "nome": "Anatomia da Fêmea",
+            "itens": [
+              {"nome": "Ceco", "descricao": "Parte do sistema digestivo para absorção de nutrientes."},
+              {"nome": "Gônoda", "descricao": "Glândula sexual feminina (ovário)."},
+              {"nome": "Glândula nidamental", "descricao": "Produz envoltórios para os ovos."},
+              {"nome": "Metanefrídia", "descricao": "Órgão excretor."},
+              {"nome": "Oviduto", "descricao": "Conduz os ovos para o exterior."},
+              {"nome": "Brânquia", "descricao": "Órgão respiratório."},
+              {"nome": "Ânus", "descricao": "Abertura do sistema digestivo."},
+              {"nome": "Colar do Manto", "descricao": "Região de união entre o manto e o funil."},
+              {"nome": "Válvula", "descricao": "Controla o fluxo de água no sifão."},
+              {"nome": "Cartilagem paleal", "descricao": "Estrutura de sustentação."},
+              {"nome": "Órgão de Verril", "descricao": "Estrutura sensorial especializada."},
+              {"nome": "Músculo retrator do sifão", "descricao": "Controla o movimento do sifão."},
+              {"nome": "Reto", "descricao": "Parte final do sistema digestivo."},
+              {"nome": "Saco de Tinta", "descricao": "Glândula que produz melanina para defesa."},
+              {"nome": "Veia cava direita", "descricao": "Vaso sanguíneo principal."}
+            ]
+          }
+        },
+        {
+          "label": "Tentáculo",
+          "url": "/lamina-image/lula-tentaculo.jpeg",
+          "pranchaImage": "/prancha-image/lula-tentaculo.png",
+          "estrutura": {
+            "nome": "Estruturas do Tentáculo",
+            "itens": [
+              {"nome": "Ventosa", "descricao": "Estruturas de adesão pedunculadas e córneas para captura de presas."}
+            ]
+          }
+        }
+      ]
+    },
+    "polvo": {
+      "nome": "Polvo",
+      "descricaoGeral": "Cefalópodes da ordem Octopoda, com oito braços e corpo mole sem concha interna.",
+      "laminas": [
+        {
+          "label": "Anatomia Externa",
+          "url": "/lamina-image/polvo-externo.jpeg",
+          "pranchaImage": "/prancha-image/polvo-externo.png",
+          "estrutura": {
+            "nome": "Estruturas Externas",
+            "itens": [
+              {"nome": "Cabeça", "descricao": "Região central que contém os órgãos principais."},
+              {"nome": "Tentáculo", "descricao": "Oito braços musculares com ventosas."},
+              {"nome": "Olho", "descricao": "Órgão visual bem desenvolvido."},
+              {"nome": "Ventosa muscular", "descricao": "Estruturas de adesão nos tentáculos."},
+              {"nome": "Abertura do Sifão", "descricao": "Estrutura para locomoção a jato."}
+            ]
+          }
+        },
+        {
+          "label": "Tentáculo",
+          "url": "/lamina-image/polvo-tentaculo.jpeg",
+          "pranchaImage": "/prancha-image/polvo-tentaculo.png",
+          "estrutura": {
+            "nome": "Estruturas do Tentáculo",
+            "itens": [
+              {"nome": "Ventosas Sésseis", "descricao": "Estruturas de adesão não-pedunculadas e não-córneas, diretamente fixadas aos braços."}
+            ]
+          }
+        },
+        {
+          "label": "Sistema Excretor e Circulatório",
+          "url": "/lamina-image/polvo-excretor.jpeg",
+          "pranchaImage": "/prancha-image/polvo-excretor.png",
+          "estrutura": {
+            "nome": "Sistemas Internos",
+            "itens": [
+              {"nome": "Manto", "descricao": "Estrutura muscular que envolve os órgãos internos."},
+              {"nome": "Brânquia", "descricao": "Órgãos respiratórios."},
+              {"nome": "Coração Branquial", "descricao": "Coração que irriga as brânquias."},
+              {"nome": "Coração Sistêmico", "descricao": "Coração principal que irriga o corpo."},
+              {"nome": "Canal renopericardial", "descricao": "Conecta o sistema excretor ao pericárdio."},
+              {"nome": "Veia cava lateral", "descricao": "Vasos sanguíneos laterais."},
+              {"nome": "Vaso branquial aferente", "descricao": "Conduz sangue para as brânquias."},
+              {"nome": "Aorta cefálica", "descricao": "Principal artéria para a cabeça."},
+              {"nome": "Veia cava anterior", "descricao": "Vaso sanguíneo anterior."},
+              {"nome": "Apêndices renais", "descricao": "Parte do sistema excretor."},
+              {"nome": "Metanefrídia", "descricao": "Órgão excretor principal."},
+              {"nome": "Veia abdominal", "descricao": "Vaso sanguíneo abdominal."},
+              {"nome": "Vaso branquial eferente", "descricao": "Conduz sangue oxigenado das brânquias."},
+              {"nome": "Apêndice do coração branquial", "descricao": "Extensão do coração branquial."}
+            ]
+          }
+        },
+        {
+          "label": "Sistema Digestivo",
+          "url": "/lamina-image/polvo-digestivo.jpeg",
+          "pranchaImage": "/prancha-image/polvo-digestivo.png",
+          "estrutura": {
+            "nome": "Sistema Digestivo",
+            "itens": [
+              {"nome": "Ceco", "descricao": "Parte do sistema digestivo para absorção de nutrientes."},
+              {"nome": "Estômago", "descricao": "Órgão principal da digestão."},
+              {"nome": "Papo", "descricao": "Armazena alimento antes da digestão."},
+              {"nome": "Ducto da glândula digestiva", "descricao": "Conduz enzimas digestivas."},
+              {"nome": "Glândula digestiva", "descricao": "Produz enzimas digestivas."},
+              {"nome": "Glândula salivar", "descricao": "Produz saliva com enzimas e toxinas."},
+              {"nome": "Esôfago", "descricao": "Conduz alimento da boca ao estômago."},
+              {"nome": "Massa bucal", "descricao": "Estrutura muscular contendo o bico quitinoso."},
+              {"nome": "Intestino", "descricao": "Parte final do sistema digestivo."},
+              {"nome": "Ânus", "descricao": "Abertura do sistema digestivo."}
+            ]
+          }
+        }
+      ]
+    }
+  }
