@@ -56,7 +56,7 @@
         },
         {
           "label": "Estruturas internas",
-          "url": "/lamina-image/bivalve-interno.jpeg",
+          "url": "/lamina-image/bivalve-interno.png",
           "pranchaImage": "/prancha-image/bivalve-interno.png",
           "estrutura": {
             "nome": "Anatomia Interna",
@@ -73,6 +73,18 @@
               {"nome": "Manto", "descricao": "Dobra de tecido que secreta a concha."},
               {"nome": "Brânquia", "descricao": "Órgãos respiratórios e também envolvidos na alimentação."},
               {"nome": "Corrente de água", "descricao": "Fluxo de água através da cavidade do manto."}
+            ]
+          }
+        },
+        {
+          "label": "Estrutura externa",
+          "url": "/lamina-image/bivalve-externo.jpg",
+          "pranchaImage": "/prancha-image/bivalve-externo.png",
+          "estrutura": {
+            "nome": "Estruturas em Substrato",
+            "itens": [
+              {"nome": "Ligamento", "descricao": "Estrutura elástica que une as valvas dorsalmente."},
+              {"nome": "Pé", "descricao": "Estrutura muscular usada para escavação e locomoção."}
             ]
           }
         }
@@ -315,8 +327,19 @@
           }
         },
         {
+          "label": "Hectocótilo",
+          "url": "/lamina-image/polvo-hectocotilo.jpeg",
+          "pranchaImage": "/prancha-image/polvo-tentaculo.png",
+          "estrutura": {
+            "nome": "Estruturas do Hectocótilo",
+            "itens": [
+              {"nome": "Hectocótilo", "descricao": "Braços modificados para função reprodutiva (encontrada apenas em machos). "}
+            ]
+          }
+        },
+        {
           "label": "Sistema Excretor e Circulatório",
-          "url": "/lamina-image/polvo-excretor.jpeg",
+          "url": "/lamina-image/polvo-excretor.png",
           "pranchaImage": "/prancha-image/polvo-excretor.png",
           "estrutura": {
             "nome": "Sistemas Internos",
@@ -340,7 +363,7 @@
         },
         {
           "label": "Sistema Digestivo",
-          "url": "/lamina-image/polvo-digestivo.jpeg",
+          "url": "/lamina-image/polvo-digestivo.png",
           "pranchaImage": "/prancha-image/polvo-digestivo.png",
           "estrutura": {
             "nome": "Sistema Digestivo",

@@ -43,6 +43,23 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
   const [playCorrect] = useSound('/correct.wav');
   const [playWrong] = useSound('/wrong.wav');
 
+  // Funções para manipular o localStorage
+  const salvarRespostaNoStorage = (pergunta: string, dados: {
+    respostaDada: string | { id: string, areaId: string }[];
+    correta: boolean;
+    feedback: { correta: boolean, mensagem: string };
+  }) => {
+    const chave = `quiz-resposta-${pergunta}`;
+    localStorage.setItem(chave, JSON.stringify(dados));
+  };
+
+  const carregarRespostaDoStorage = (pergunta: string) => {
+    const chave = `quiz-resposta-${pergunta}`;
+    const dados = localStorage.getItem(chave);
+    return dados ? JSON.parse(dados) : null;
+  };
+
+  // Verifica se é mobile
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.matchMedia('(pointer: coarse)').matches);
@@ -52,6 +69,33 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
     window.addEventListener('resize', checkIfMobile);
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
+
+  // Carrega resposta salva ao montar o componente ou mudar a questão
+  useEffect(() => {
+    const respostaSalva = carregarRespostaDoStorage(questao.pergunta);
+    
+    if (respostaSalva) {
+      if (questao.tipo === 'multipla_escolha') {
+        setRespostaSelecionada(respostaSalva.respostaDada as string);
+      } else if (questao.tipo === 'drag_and_drop') {
+        setItensArrastados(respostaSalva.respostaDada as { id: string, areaId: string }[]);
+      }
+      
+      setFeedback(respostaSalva.feedback);
+    } else {
+      setRespostaSelecionada(null);
+      setFeedback(null);
+      setItensArrastados([]);
+    }
+  }, [questao.pergunta, questao.tipo]);
+
+  // Resetar estados quando a questão muda
+  useEffect(() => {
+    setMostrarExplicacao(false);
+    if (quizFinalizado) {
+      setQuizFinalizado(true);
+    }
+  }, [questao, quizFinalizado]);
 
   const sensors = useSensors(
     useSensor(isMobile ? TouchSensor : PointerSensor, {
@@ -132,16 +176,6 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
 
   const currentTheme = themeStyles[theme];
 
-  useEffect(() => {
-    setRespostaSelecionada(null);
-    setFeedback(null);
-    setMostrarExplicacao(false);
-    setItensArrastados([]);
-    if (quizFinalizado) {
-      setQuizFinalizado(true);
-    }
-  }, [questao, quizFinalizado]);
-
   const handleResposta = (resposta: any) => {
     let correta = false;
 
@@ -175,9 +209,18 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
       }
     }
 
-    setFeedback({
+    const novoFeedback = {
       correta,
       mensagem: correta ? "Resposta correta! 🎉" : "Resposta incorreta. Tente novamente!"
+    };
+
+    setFeedback(novoFeedback);
+
+    // Salva no localStorage
+    salvarRespostaNoStorage(questao.pergunta, {
+      respostaDada: questao.tipo === 'multipla_escolha' ? resposta : itensArrastados,
+      correta,
+      feedback: novoFeedback
     });
 
     onResposta({ correta, respostaDada: resposta });
@@ -220,6 +263,14 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
   const recomecarQuiz = () => {
     setQuizFinalizado(false);
     setVidas(initialVidas);
+  };
+
+  const resetarQuestao = () => {
+    setRespostaSelecionada(null);
+    setFeedback(null);
+    setItensArrastados([]);
+    localStorage.removeItem(`quiz-resposta-${questao.pergunta}`);
+    setMostrarExplicacao(false);
   };
 
   function DraggableItem({ id, children, disabled }: { id: string; children: React.ReactNode; disabled?: boolean }) {
