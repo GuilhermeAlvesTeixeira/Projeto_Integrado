@@ -399,15 +399,22 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
       ${currentTheme.background} ${currentTheme.text}
       ${isMobile && questao.tipo === 'drag_and_drop' ? 'scale-90 -mt-4 p-3 max-w-[95vw]' : 'max-w-4xl p-4'}
     `}>
-      <div className={`flex justify-between items-center ${isMobile ? 'mb-4' : 'mb-6'}`}>
-        <div className="flex space-x-2">
+      {/* Layout modificado - Título à esquerda e corações à direita */}
+      <div className="flex justify-between items-start mb-4">
+        {/* Título alinhado à esquerda */}
+        <div className="flex-1 pr-4">
+          <h2 className={`font-bold ${isMobile ? 'text-lg' : 'text-xl'}`}>{questao.pergunta}</h2>
+        </div>
+        
+        {/* Corações alinhados à direita */}
+        <div className="flex space-x-1">
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ scale: 1 }}
               animate={{ scale: i < vidas ? 1 : 0.8 }}
               transition={{ type: 'spring', stiffness: 500 }}
-              className={`relative ${isMobile ? 'w-6 h-6' : 'w-8 h-8'} ${i < vidas ? currentTheme.heartColor : currentTheme.heartEmptyColor}`}
+              className={`relative ${isMobile ? 'w-5 h-5' : 'w-6 h-6'} ${i < vidas ? currentTheme.heartColor : currentTheme.heartEmptyColor}`}
             >
               <Image
                 src={i < vidas ? "/heart.svg" : "/heart-empty.svg"}
@@ -418,9 +425,6 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
             </motion.div>
           ))}
         </div>
-        <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>
-          {vidas} {vidas === 1 ? 'vida restante' : 'vidas restantes'}
-        </div>
       </div>
 
       <motion.div
@@ -429,7 +433,6 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
         transition={{ duration: 0.5 }}
         className={isMobile ? 'mb-4' : 'mb-6'}
       >
-        <h2 className={`font-bold ${isMobile ? 'text-lg mb-3' : 'text-xl mb-4'}`}>{questao.pergunta}</h2>
         {questao.imagem && (
           <div className="space-y-4">
             {questao.tipo === "drag_and_drop" ? (

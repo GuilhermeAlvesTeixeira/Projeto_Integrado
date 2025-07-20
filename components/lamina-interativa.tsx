@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Circle, Square, Type, FileX2Icon, Save, Minus, Pencil, Trash2, MousePointer2, Move, ZoomIn, ZoomOut } from 'lucide-react';
 import { fabric } from 'fabric';
+import { useTheme } from '@/components/theme-context';
 
 interface LaminaInterativaProps {
   imageSrc: string;
 }
 
 const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
+  const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const [activeTool, setActiveTool] = useState<string | null>(null);
@@ -33,21 +35,22 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     const container = canvasContainerRef.current;
     const initCanvas = new fabric.Canvas(canvasRef.current, {
       isDrawingMode: false,
-      backgroundColor: '#f8fafc',
+      backgroundColor: theme === 'light' ? '#f8fafc' : 
+                      theme === 'dark' ? '#1e293b' : '#000000',
       width: container.clientWidth,
       height: container.clientHeight,
     });
 
-    // Event listeners for object selection
+    // Event listeners para seleção de objetos
     initCanvas.on('selection:created', (e) => {
       if (e.selected && e.selected.length === 1) {
         const obj = e.selected[0];
         setSelectedObject(obj);
         if (obj instanceof fabric.Textbox) {
-          setObjectColor(obj.fill as string || '#000000');
+          setObjectColor(obj.fill as string || (theme === 'light' ? '#000000' : '#ffffff'));
           setTextBgColor(obj.backgroundColor as string || 'transparent');
         } else {
-          setObjectColor(obj.stroke as string || '#000000');
+          setObjectColor(obj.stroke as string || (theme === 'light' ? '#000000' : '#ffffff'));
           setStrokeWidth(obj.strokeWidth as number || 2);
         }
       }
@@ -58,10 +61,10 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
         const obj = e.selected[0];
         setSelectedObject(obj);
         if (obj instanceof fabric.Textbox) {
-          setObjectColor(obj.fill as string || '#000000');
+          setObjectColor(obj.fill as string || (theme === 'light' ? '#000000' : '#ffffff'));
           setTextBgColor(obj.backgroundColor as string || 'transparent');
         } else {
-          setObjectColor(obj.stroke as string || '#000000');
+          setObjectColor(obj.stroke as string || (theme === 'light' ? '#000000' : '#ffffff'));
           setStrokeWidth(obj.strokeWidth as number || 2);
         }
       }
@@ -76,7 +79,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     return () => {
       initCanvas.dispose();
     };
-  }, []);
+  }, [theme]);
 
   // Configuração do panning
   useEffect(() => {
@@ -303,7 +306,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     }
   }, [activeTool, canvas, objectColor, strokeWidth]);
 
-  // Update object properties when they change
+  // Atualiza propriedades dos objetos quando mudam
   useEffect(() => {
     if (!canvas || !selectedObject) return;
 
@@ -396,22 +399,40 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <div className={`p-4 rounded-lg shadow-md border ${
+      theme === 'light' ? 'bg-white border-gray-200' :
+      theme === 'dark' ? 'bg-gray-800 border-gray-700' :
+      'bg-black border-amber-400'
+    }`}>
       {/* Modal de confirmação para apagar anotações */}
       {showClearConfirmation && (
         <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md z-55">
-            <h3 className="text-lg font-medium mb-4">Você deseja apagar todas as anotações?</h3>
+          <div className={`p-6 rounded-lg shadow-xl max-w-md ${
+            theme === 'light' ? 'bg-white' :
+            theme === 'dark' ? 'bg-gray-800' :
+            'bg-black border border-amber-300'
+          }`}>
+            <h3 className={`text-lg font-medium mb-4 ${
+              theme === 'high-contrast' ? 'text-amber-300' : ''
+            }`}>Você deseja apagar todas as anotações?</h3>
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setShowClearConfirmation(false)}
-                className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition cursor-pointer"
+                className={`px-4 py-2 rounded-lg font-medium ${
+                  theme === 'light' ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' :
+                  'bg-black border border-amber-300 text-amber-300 hover:border-amber-500 hover:text-amber-500'
+                }`}
               >
                 Não
               </button>
               <button
                 onClick={clearCanvas}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition cursor-pointer"
+                className={`px-4 py-2 rounded-lg font-medium ${
+                  theme === 'light' ? 'bg-red-500 text-white hover:bg-red-600' :
+                  theme === 'dark' ? 'bg-red-600 text-white hover:bg-red-700' :
+                  'bg-amber-300 text-black hover:bg-amber-500'
+                }`}
               >
                 Sim, apagar
               </button>
@@ -422,78 +443,162 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
       <div className="flex gap-4 relative">
         {/* Barra de ferramentas vertical */}
-        <div className="flex flex-col gap-2 p-2 bg-gray-100 rounded w-12">
+        <div className={`flex flex-col gap-2 p-2 rounded w-12 border ${
+          theme === 'light' ? 'bg-gray-100 border-gray-200' :
+          theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+          'bg-black border-amber-300'
+        }`}>
           <button
             onClick={handleSelectTool}
-            className={`p-2 rounded flex items-center justify-center hover:cursor-pointer ${activeTool === 'select' ? 'bg-blue-200' : 'bg-white'}`}
+            className={`p-2 rounded flex items-center justify-center ${
+              activeTool === 'select' ? 
+                theme === 'light' ? 'bg-blue-200' :
+                theme === 'dark' ? 'bg-blue-800' :
+                'bg-amber-300' :
+              theme === 'light' ? 'bg-white hover:bg-gray-200' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+              'bg-black hover:border hover:border-amber-300'
+            }`}
             title="Selecionar"
             disabled={!isImageLoaded}
           >
-            <MousePointer2 size={20} />
+            <MousePointer2 size={20} className={
+              theme === 'high-contrast' && activeTool !== 'select' ? 'text-amber-300' : ''
+            } />
           </button>
+          
           <button
             onClick={() => { setActiveTool('arrow'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center hover:cursor-pointer ${activeTool === 'arrow' ? 'bg-blue-200' : 'bg-white'}`}
+            className={`p-2 rounded flex items-center justify-center ${
+              activeTool === 'arrow' ? 
+                theme === 'light' ? 'bg-blue-200' :
+                theme === 'dark' ? 'bg-blue-800' :
+                'bg-amber-300' :
+              theme === 'light' ? 'bg-white hover:bg-gray-200' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+              'bg-black hover:border hover:border-amber-300'
+            }`}
             title="Linha"
             disabled={!isImageLoaded}
           >
-            <Minus size={20} />
+            <Minus size={20} className={
+              theme === 'high-contrast' && activeTool !== 'arrow' ? 'text-amber-300' : ''
+            } />
           </button>
+
           <button
             onClick={() => { setActiveTool('circle'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center hover:cursor-pointer ${activeTool === 'circle' ? 'bg-blue-200' : 'bg-white'}`}
+            className={`p-2 rounded flex items-center justify-center ${
+              activeTool === 'circle' ? 
+                theme === 'light' ? 'bg-blue-200' :
+                theme === 'dark' ? 'bg-blue-800' :
+                'bg-amber-300' :
+              theme === 'light' ? 'bg-white hover:bg-gray-200' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+              'bg-black hover:border hover:border-amber-300'
+            }`}
             title="Círculo"
             disabled={!isImageLoaded}
           >
-            <Circle size={20} />
+            <Circle size={20} className={
+              theme === 'high-contrast' && activeTool !== 'circle' ? 'text-amber-300' : ''
+            } />
           </button>
+
           <button
             onClick={() => { setActiveTool('rectangle'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center hover:cursor-pointer ${activeTool === 'rectangle' ? 'bg-blue-200' : 'bg-white'}`}
+            className={`p-2 rounded flex items-center justify-center ${
+              activeTool === 'rectangle' ? 
+                theme === 'light' ? 'bg-blue-200' :
+                theme === 'dark' ? 'bg-blue-800' :
+                'bg-amber-300' :
+              theme === 'light' ? 'bg-white hover:bg-gray-200' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+              'bg-black hover:border hover:border-amber-300'
+            }`}
             title="Retângulo"
             disabled={!isImageLoaded}
           >
-            <Square size={20} />
+            <Square size={20} className={
+              theme === 'high-contrast' && activeTool !== 'rectangle' ? 'text-amber-300' : ''
+            } />
           </button>
+
           <button
             onClick={() => { handleFreehandTool(); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center hover:cursor-pointer ${activeTool === 'freehand' ? 'bg-blue-200' : 'bg-white'}`}
+            className={`p-2 rounded flex items-center justify-center ${
+              activeTool === 'freehand' ? 
+                theme === 'light' ? 'bg-blue-200' :
+                theme === 'dark' ? 'bg-blue-800' :
+                'bg-amber-300' :
+              theme === 'light' ? 'bg-white hover:bg-gray-200' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+              'bg-black hover:border hover:border-amber-300'
+            }`}
             title="Desenho livre"
             disabled={!isImageLoaded}
           >
-            <Pencil size={20} />
+            <Pencil size={20} className={
+              theme === 'high-contrast' && activeTool !== 'freehand' ? 'text-amber-300' : ''
+            } />
           </button>
+
           <button
             onClick={() => { setActiveTool('text'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center hover:cursor-pointer ${activeTool === 'text' ? 'bg-blue-200' : 'bg-white'}`}
+            className={`p-2 rounded flex items-center justify-center ${
+              activeTool === 'text' ? 
+                theme === 'light' ? 'bg-blue-200' :
+                theme === 'dark' ? 'bg-blue-800' :
+                'bg-amber-300' :
+              theme === 'light' ? 'bg-white hover:bg-gray-200' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+              'bg-black hover:border hover:border-amber-300'
+            }`}
             title="Texto"
             disabled={!isImageLoaded}
           >
-            <Type size={20} />
+            <Type size={20} className={
+              theme === 'high-contrast' && activeTool !== 'text' ? 'text-amber-300' : ''
+            } />
           </button>
+
           <button
             onClick={() => setShowClearConfirmation(true)}
-            className="p-2 bg-white rounded text-red-600 flex items-center justify-center hover:cursor-pointer group relative"
-            disabled={!isImageLoaded}
+            className={`p-2 rounded flex items-center justify-center ${
+              theme === 'light' ? 'bg-white hover:bg-gray-200 text-red-600' :
+              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500 text-red-400' :
+              'bg-black hover:border hover:border-amber-300 text-purple-600'
+            }`}
             title="Apagar Anotações"
+            disabled={!isImageLoaded}
           >
             <FileX2Icon size={20} />
           </button>
+
           <button
             onClick={handleExport}
-            className="p-2 bg-green-600 text-white rounded flex items-center justify-center mt-auto hover:cursor-pointer group relative"
-            disabled={!isImageLoaded}
+            className={`p-2 rounded flex items-center justify-center mt-auto ${
+              theme === 'light' ? 'bg-green-600 hover:bg-green-700 text-white' :
+              theme === 'dark' ? 'bg-green-700 hover:bg-green-800 text-white' :
+              'bg-amber-400 hover:bg-amber-500'
+            } text-black`}
             title="Salvar Lâmina"
+            disabled={!isImageLoaded}
           >
             <Save size={20} />
           </button>
         </div>
 
         {/* Canvas container */}
-        <div className="flex-1 relative bg-black">
-          {/* Painel de propriedades (posicionado absolutamente) */}
+        <div className={`flex-1 relative bg-black
+        }`}>
+          {/* Painel de propriedades */}
           {selectedObject && (
-            <div className="absolute top-0 left-0 right-0 z-10 mb-4 p-3 bg-gray-100 rounded-lg flex flex-wrap items-center gap-4">
+            <div className={`absolute top-0 left-0 right-0 z-10 mb-4 p-3 rounded-lg flex flex-wrap items-center gap-4 border ${
+              theme === 'light' ? 'bg-gray-100 border-gray-200' :
+              theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+              'bg-black border-amber-300 text-amber-500'
+            }`}>
               <div className="flex items-center">
                 <span className="mr-2 text-sm">Cor:</span>
                 <input
@@ -530,7 +635,9 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
                   />
                   <button
                     onClick={() => setTextBgColor('transparent')}
-                    className="ml-1 p-1 text-xs border rounded hover:cursor-pointer"
+                    className={`ml-1 p-1 text-xs border rounded hover:opacity-90 ${
+                      theme === 'high-contrast' ? 'border-black' : ''
+                    }`}
                     title="Remover fundo"
                   >
                     X
@@ -540,7 +647,11 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
               
               <button
                 onClick={handleDeleteObject}
-                className="ml-auto p-2 bg-red-100 text-red-600 rounded flex items-center hover:cursor-pointer"
+                className={`ml-auto p-2 rounded flex items-center hover:opacity-90 ${
+                  theme === 'light' ? 'bg-gray-200 hover:bg-gray-300 text-red-600' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500 text-red-400' :
+                  'bg-black hover:border hover:border-amber-300 text-red-600'
+                }`}
                 title="Deletar objeto"
               >
                 <Trash2 size={16} className="mr-1" />
@@ -549,40 +660,70 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
             </div>
           )}
 
-          {/* Painel de navegação (posicionado absolutamente) */}
+          {/* Painel de navegação */}
           <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
             <button
               onClick={handlePanTool}
-              className={`p-2 rounded-full shadow flex items-center justify-center hover:cursor-pointer ${isPanning ? 'bg-blue-200' : 'bg-white'}`}
+              className={`p-2 rounded-full shadow flex items-center justify-center ${
+                isPanning ?
+                  theme === 'light' ? 'bg-blue-200' :
+                  theme === 'dark' ? 'bg-blue-800' :
+                  'bg-amber-300' :
+                  theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                  'bg-amber-50 hover:bg-amber-200'
+              }`}
               title="Mover"
               disabled={!isImageLoaded}
             >
-              <Move size={20} />
+              <Move size={20} className={
+                theme === 'high-contrast' && !isPanning ? 'text-black' : ''
+              } />
             </button>
             <button
               onClick={() => handleZoom('in')}
-              className="p-2 bg-white rounded-full shadow flex items-center justify-center hover:cursor-pointer"
+              className={`p-2 rounded-full shadow flex items-center justify-center ${
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                'bg-amber-50 hover:bg-amber-200'
+              }`}
               title="Ampliar"
               disabled={!isImageLoaded}
             >
-              <ZoomIn size={20} />
+              <ZoomIn size={20} className={
+                theme === 'high-contrast' ? 'text-black' : ''
+              } />
             </button>
             <button
               onClick={() => handleZoom('out')}
-              className="p-2 bg-white rounded-full shadow flex items-center justify-center hover:cursor-pointer"
+              className={`p-2 rounded-full shadow flex items-center justify-center ${
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                'bg-amber-50 hover:bg-amber-200'
+              }`}
               title="Reduzir"
               disabled={!isImageLoaded}
             >
-              <ZoomOut size={20} />
+              <ZoomOut size={20} className={
+                theme === 'high-contrast' ? 'text-black' : ''
+              } />
             </button>
-            <div className="text-center text-white text-sm bg-black bg-opacity-50 rounded px-2 py-1">
+            <div className={`text-center text-sm shadow rounded px-2 py-1 ${
+              theme === 'light' ? 'bg-gray-100 text-gray-800' :
+              theme === 'dark' ? 'bg-gray-700 text-gray-200' :
+              'bg-amber-100 text-black'
+            }`}>
               {Math.round(zoomLevel * 100)}%
             </div>
           </div>
 
           {/* Painel de propriedades do desenho livre */}
           {showFreehandPanel && (
-            <div className="absolute top-4 right-4 z-10 p-3 bg-gray-100 rounded-lg flex flex-wrap items-center gap-4">
+            <div className={`absolute top-4 right-4 z-10 p-3 rounded-lg flex flex-wrap items-center gap-4 border ${
+              theme === 'light' ? 'bg-gray-100 border-gray-200' :
+              theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+              'bg-amber-100 border-amber-300'
+            }`}>
               <div className="flex items-center">
                 <span className="mr-2 text-sm">Cor:</span>
                 <input
@@ -621,13 +762,25 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
           {/* Canvas para a lâmina */}
           <div 
             ref={canvasContainerRef}
-            className="border rounded overflow-hidden"
+            className={`border rounded overflow-hidden ${
+              theme === 'light' ? 'border-gray-200' :
+              theme === 'dark' ? 'border-gray-600' :
+              'border-amber-400'
+            }`}
             style={{ height: '600px', width: '100%' }}
           >
             <canvas ref={canvasRef} />
             {!isImageLoaded && (
-              <div className="flex items-center justify-center h-full bg-gray-100">
-                <p className="text-gray-500">Carregando imagem...</p>
+              <div className={`flex items-center justify-center h-full ${
+                theme === 'light' ? 'bg-gray-50' :
+                theme === 'dark' ? 'bg-gray-900' :
+                'bg-black'
+              }`}>
+                <p className={
+                  theme === 'light' ? 'text-gray-500' :
+                  theme === 'dark' ? 'text-gray-300' :
+                  'text-amber-400'
+                }>Carregando imagem...</p>
               </div>
             )}
           </div>

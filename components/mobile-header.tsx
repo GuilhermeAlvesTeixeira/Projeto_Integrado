@@ -62,7 +62,7 @@ export const MobileHeader = () => {
 
   return (
     <nav className={`py-2 px-4 sm:px-6 h-[50px] flex items-center border-b fixed top-0 w-full z-50 ${
-      theme === 'light' ? 'bg-green-500' : 
+      theme === 'light' ? 'bg-green-600' : 
       theme === 'dark' ? 'bg-green-700' : 
       'bg-black border-white'
     }`}>

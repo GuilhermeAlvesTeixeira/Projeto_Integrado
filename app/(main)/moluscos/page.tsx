@@ -14,7 +14,7 @@ const MoluscosPage = () => {
         image: '/molusco-intro.jpg', // Imagem para o card central
         duration: 5,
         completed: true,
-        link: "/moluscos/introducao",
+        link: "/moluscos/intro",
       },
       {
         id: 'anatomy',

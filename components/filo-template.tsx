@@ -69,12 +69,12 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
     },
     'high-contrast': {
       bg: 'bg-black',
-      cardBg: 'bg-gray-900',
+      cardBg: 'bg-black border border-amber-500',
       text: 'text-white',
       secondaryText: 'text-gray-300',
       progressBg: 'bg-yellow-500',
       progressTrack: 'bg-gray-700',
-      moduleBg: 'bg-gray-800',
+      moduleBg: 'bg-black',
       moduleBorder: 'border-yellow-500 hover:border-yellow-300',
       selectedModuleBg: 'bg-yellow-900',
       selectedModuleBorder: 'border-yellow-500',
@@ -178,7 +178,8 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
               {/* Div separada para o botão */}
               <div className="mt-6">
                 <Link href={selectedModule.link} passHref>
-                  <button className={`w-full py-3 lg:py-4 ${colors.buttonBg} text-white font-bold rounded-lg shadow-md transition duration-200 cursor-pointer`}>
+                  <button className={`w-full py-3 lg:py-4 ${colors.buttonBg} font-bold rounded-lg shadow-md transition duration-200 cursor-pointer ${
+                    theme === 'high-contrast' ? 'text-black' : 'text-white'}`}>
                     Começar
                   </button>
                 </Link>

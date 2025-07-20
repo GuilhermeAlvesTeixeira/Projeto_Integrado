@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 3rem;
+}
+
+/* Seção Introdução isolada */
+.introBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  max-width: 600px;
+  width: 100%;
+  border: 2px solid #2D56AE;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.introTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2D56AE;
+}
+
+.compartiment {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #2D56AE;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 3200px;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: #2D56AE;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.text {
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: justify;
+
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+}
+
+
+.imageHorizontal {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.imageVertical {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.textRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0;
+}
+
+.compartiment:nth-child(3) {
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .compartiment {
+    width: 60%;
+  }
+
+  .imageVertical {
+    width: 40%;
+  }
+
+  .compartiment:nth-child(3) {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .textRight {
+    padding-left: 1.5rem;
+  }
+}
+
+.navigationButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  padding-bottom: 2.5rem;
+  width: 100%;
+  max-width: 800px;
+  gap: 42rem;
+}

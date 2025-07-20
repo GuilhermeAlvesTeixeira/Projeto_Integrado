@@ -9,6 +9,16 @@ import Image from 'next/image';
 import Confetti from 'react-confetti';
 import useSound from 'use-sound';
 
+type RespostaUsuario = {
+  correta: boolean | null;
+};
+
+type QuestaoRespondida = {
+  questao: Questao;
+  respostaUsuario: any;
+  correta: boolean;
+};
+
 const MoluscoAnatomia = () => {
   const { theme } = useTheme();
   const router = useRouter();
@@ -19,20 +29,46 @@ const MoluscoAnatomia = () => {
 
   // Estados do quiz
   const [todasQuestoes, setTodasQuestoes] = useState<Questao[]>([]);
-  const [respostas, setRespostas] = useState<Array<{correta: boolean | null}>>([]);
+  const [respostas, setRespostas] = useState<RespostaUsuario[]>([]);
   const [indiceQuestao, setIndiceQuestao] = useState(0);
   const [quizFinalizado, setQuizFinalizado] = useState(false);
-  const [questoesRespondidas, setQuestoesRespondidas] = useState<Array<{
-    questao: Questao;
-    respostaUsuario: any;
-    correta: boolean;
-  }>>([]);
-  const [vidas, setVidas] = useState(3);
+  const [questoesRespondidas, setQuestoesRespondidas] = useState<QuestaoRespondida[]>([]);
+  const initialVidas = 3;
+  const [vidas, setVidas] = useState(initialVidas);
   const [carregando, setCarregando] = useState(true);
-  const [questaoRespondida, setQuestaoRespondida] = useState(false); // Novo estado
 
   // Questão atual
   const [questaoAtual, setQuestaoAtual] = useState<Questao | null>(null);
+
+  // Carregar estado salvo do localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedState = localStorage.getItem('moluscos-quiz-state');
+      if (savedState) {
+        const parsedState = JSON.parse(savedState);
+        setRespostas(parsedState.respostas || []);
+        setQuestoesRespondidas(parsedState.questoesRespondidas || []);
+        setIndiceQuestao(parsedState.indiceQuestao || 0);
+        setVidas(parsedState.vidas || initialVidas);
+        setQuizFinalizado(parsedState.quizFinalizado || false);
+      }
+    }
+  }, []);
+
+  // Salvar estado no localStorage quando mudar
+  useEffect(() => {
+    if (typeof window !== 'undefined' && todasQuestoes.length > 0) {
+      const stateToSave = {
+        respostas,
+        questoesRespondidas,
+        indiceQuestao,
+        vidas,
+        quizFinalizado,
+        todasQuestoes
+      };
+      localStorage.setItem('moluscos-quiz-state', JSON.stringify(stateToSave));
+    }
+  }, [respostas, questoesRespondidas, indiceQuestao, vidas, quizFinalizado, todasQuestoes]);
 
   // Carregar questões do JSON
   useEffect(() => {
@@ -41,13 +77,33 @@ const MoluscoAnatomia = () => {
         const res = await fetch('../data/moluscos.json');
         const data = await res.json();
         setTodasQuestoes(data);
-        setQuestaoAtual(data[0]);
-        setRespostas(Array(data.length).fill({correta: null}));
+        
+        const savedState = localStorage.getItem('moluscos-quiz-state');
+        if (savedState) {
+          const parsedState = JSON.parse(savedState);
+          if (parsedState.todasQuestoes && JSON.stringify(parsedState.todasQuestoes) === JSON.stringify(data)) {
+            setQuestaoAtual(data[parsedState.indiceQuestao || 0]);
+          } else {
+            resetarEstadoQuiz(data);
+          }
+        } else {
+          resetarEstadoQuiz(data);
+        }
+        
         setCarregando(false);
       } catch (error) {
         console.error('Erro ao carregar questões:', error);
         setCarregando(false);
       }
+    };
+
+    const resetarEstadoQuiz = (questoes: Questao[]) => {
+      setRespostas(Array(questoes.length).fill({ correta: null }));
+      setQuestoesRespondidas([]);
+      setIndiceQuestao(0);
+      setVidas(initialVidas);
+      setQuizFinalizado(false);
+      setQuestaoAtual(questoes[0]);
     };
 
     fetchQuestoes();
@@ -57,9 +113,8 @@ const MoluscoAnatomia = () => {
     if (!questaoAtual) return;
 
     const novasRespostas = [...respostas];
-    novasRespostas[index] = {correta: resultado.correta};
+    novasRespostas[index] = { correta: resultado.correta };
     setRespostas(novasRespostas);
-    setQuestaoRespondida(true); // Marcar questão como respondida
 
     const novasQuestoesRespondidas = [...questoesRespondidas];
     novasQuestoesRespondidas[index] = {
@@ -80,11 +135,10 @@ const MoluscoAnatomia = () => {
   };
 
   const proximaQuestao = () => {
-    if (indiceQuestao < todasQuestoes.length - 1 && questaoRespondida) {
+    if (indiceQuestao < todasQuestoes.length - 1) {
       const novoIndice = indiceQuestao + 1;
       setIndiceQuestao(novoIndice);
       setQuestaoAtual(todasQuestoes[novoIndice]);
-      setQuestaoRespondida(false); // Resetar para a próxima questão
     }
   };
 
@@ -93,36 +147,62 @@ const MoluscoAnatomia = () => {
       const novoIndice = indiceQuestao - 1;
       setIndiceQuestao(novoIndice);
       setQuestaoAtual(todasQuestoes[novoIndice]);
-      setQuestaoRespondida(respostas[novoIndice].correta !== null); // Verificar se a questão anterior foi respondida
     }
   };
 
   const finalizarQuiz = () => {
-    if (questaoRespondida) {
-      setQuizFinalizado(true);
-    }
+    setQuizFinalizado(true);
+  };
+
+  const limparTodoEstado = () => {
+    localStorage.removeItem('moluscos-quiz-state');
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('quiz-resposta-')) {
+        localStorage.removeItem(key);
+      }
+    });
+  };
+
+  const limparQuestoesErradas = () => {
+    const novasRespostas = [...respostas];
+    const novasQuestoesRespondidas = [...questoesRespondidas];
+    
+    respostas.forEach((resposta, index) => {
+      if (resposta.correta === false) {
+        novasRespostas[index] = { correta: null };
+        novasQuestoesRespondidas[index] = undefined as any;
+        
+        const questao = todasQuestoes[index];
+        if (questao) {
+          localStorage.removeItem(`quiz-resposta-${questao.pergunta}`);
+        }
+      }
+    });
+    
+    setRespostas(novasRespostas.filter(r => r !== undefined));
+    setQuestoesRespondidas(novasQuestoesRespondidas.filter(q => q !== undefined));
   };
 
   // Funções da tela de finalização
   const refazerQuiz = () => {
-    setQuizFinalizado(false);
+    limparTodoEstado();
+    setRespostas(Array(todasQuestoes.length).fill({ correta: null }));
+    setQuestoesRespondidas([]);
     setIndiceQuestao(0);
     setQuestaoAtual(todasQuestoes[0]);
-    setRespostas(Array(todasQuestoes.length).fill({correta: null}));
-    setQuestoesRespondidas([]);
+    setQuizFinalizado(false);
     setShowConfetti(false);
-    setVidas(3);
-    setQuestaoRespondida(false);
+    setVidas(initialVidas);
   };
-
+  
   const reverErros = () => {
+    limparQuestoesErradas();
     const primeiraErrada = respostas.findIndex(r => r.correta === false);
     if (primeiraErrada >= 0) {
       setQuizFinalizado(false);
       setIndiceQuestao(primeiraErrada);
       setQuestaoAtual(todasQuestoes[primeiraErrada]);
-      setVidas(3);
-      setQuestaoRespondida(true); // Já foi respondida anteriormente
+      setVidas(initialVidas);
     }
   };
 
@@ -143,8 +223,6 @@ const MoluscoAnatomia = () => {
       buttonEnabled: 'bg-blue-500 text-white hover:bg-blue-600',
       buttonDisabled: 'bg-gray-300 text-gray-500 cursor-not-allowed',
       buttonFinalizar: 'bg-purple-600 hover:bg-purple-700 text-white',
-      buttonAnswered: 'bg-blue-500 text-white hover:bg-blue-600',
-      buttonUnanswered: 'bg-gray-300 text-gray-500 cursor-not-allowed'
     },
     dark: {
       background: 'bg-gray-900',
@@ -157,8 +235,6 @@ const MoluscoAnatomia = () => {
       buttonEnabled: 'bg-blue-600 text-white hover:bg-blue-700',
       buttonDisabled: 'bg-gray-700 text-gray-400 cursor-not-allowed',
       buttonFinalizar: 'bg-purple-700 hover:bg-purple-600 text-white',
-      buttonAnswered: 'bg-blue-600 text-white hover:bg-blue-700',
-      buttonUnanswered: 'bg-gray-700 text-gray-400 cursor-not-allowed'
     },
     'high-contrast': {
       background: 'bg-black',
@@ -171,8 +247,6 @@ const MoluscoAnatomia = () => {
       buttonEnabled: 'bg-yellow-500 text-black hover:bg-yellow-400',
       buttonDisabled: 'bg-gray-700 text-gray-300 cursor-not-allowed',
       buttonFinalizar: 'bg-purple-500 hover:bg-purple-400 text-black',
-      buttonAnswered: 'bg-yellow-500 text-black hover:bg-yellow-400',
-      buttonUnanswered: 'bg-gray-700 text-gray-300 cursor-not-allowed'
     }
   };
 
@@ -182,29 +256,30 @@ const MoluscoAnatomia = () => {
   useEffect(() => {
     if (quizFinalizado) {
       const acertos = respostas.filter(r => r.correta).length;
-      const percentual = (acertos / respostas.length) * 100;
+      const total = respostas.length;
+      const percentual = total > 0 ? (acertos / total) * 100 : 0;
       
       if (percentual >= 70) {
         setShowConfetti(true);
         playSuccess();
       } else if (percentual > 0) {
         playNotBad();
-      } else if(percentual == 0){
+      } else {
         playGameOver();
       }
     }
-  }, [quizFinalizado, respostas, playSuccess, playNotBad]);
+  }, [quizFinalizado, respostas, playSuccess, playNotBad, playGameOver]);
 
   // Componente de Finalização incorporado
   const TelaFinalizacao = () => {
     const acertos = respostas.filter(r => r.correta).length;
     const total = respostas.length;
-    const percentual = Math.round((acertos / total) * 100);
+    const percentual = total > 0 ? Math.round((acertos / total) * 100) : 0;
 
     const getFeedbackConfig = () => {
       if (percentual >= 80) return { emoji: '⭐', mensagem: 'Excelente! Você conhece bem os moluscos!', cor: 'text-green-500' };
       if (percentual >= 50) return { emoji: '👍', mensagem: 'Bom trabalho! Algumas partes ainda podem ser revisadas.', cor: 'text-yellow-500' };
-      return {emoji: '💔',mensagem: 'Você perdeu todas as vidas, mas não se preocupe você está no caminho certo!', cor: 'text-red-500' };
+      return {emoji: '💔',mensagem: 'Você perdeu todas as vidas, mas não se preocupe você pode tentar de novo!', cor: 'text-red-500' };
     };
 
     const feedback = getFeedbackConfig();
@@ -239,41 +314,43 @@ const MoluscoAnatomia = () => {
             
             <div className="space-y-4">
               {questoesRespondidas.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`p-4 rounded-lg ${currentTheme.card} ${currentTheme.border} border`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`text-xl ${item.correta ? 'text-green-500' : 'text-red-500'}`}>
-                      {item.correta ? '✅' : '❌'}
-                    </div>
-                    
-                    <div className="flex-1">
-                      <h3 className="font-medium mb-2">
-                        Questão {index + 1}: {item.questao.pergunta}
-                      </h3>
+                item && (
+                  <div 
+                    key={index} 
+                    className={`p-4 rounded-lg ${currentTheme.card} ${currentTheme.border} border`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`text-xl ${item.correta ? 'text-green-500' : 'text-red-500'}`}>
+                        {item.correta ? '✅' : '❌'}
+                      </div>
                       
-                      {!item.correta && (
-                        <div className="mt-3 space-y-2">
-                          <div className="text-sm">
-                            <span className="font-semibold">Resposta correta:</span> {item.questao.explicacao}
+                      <div className="flex-1">
+                        <h3 className="font-medium mb-2">
+                          Questão {index + 1}: {item.questao.pergunta}
+                        </h3>
+                        
+                        {!item.correta && item.questao.explicacao && (
+                          <div className="mt-3 space-y-2">
+                            <div className="text-sm">
+                              <span className="font-semibold">Resposta correta:</span> {item.questao.explicacao}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      
-                      {item.questao.imagem && (
-                        <div className="mt-3 relative w-full h-32">
-                          <Image
-                            src={item.questao.imagem}
-                            alt="Ilustração da questão"
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                      )}
+                        )}
+                        
+                        {item.questao.imagem && (
+                          <div className="mt-3 relative w-full h-32">
+                            <Image
+                              src={item.questao.imagem}
+                              alt="Ilustração da questão"
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )
               ))}
             </div>
           </div>
@@ -333,7 +410,9 @@ const MoluscoAnatomia = () => {
     );
   }
 
-  // Renderização principal
+  // Verificar se a questão atual já foi respondida (acertada ou errada)
+  const questaoJaRespondida = respostas[indiceQuestao]?.correta !== null;
+
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       {quizFinalizado ? (
@@ -374,11 +453,10 @@ const MoluscoAnatomia = () => {
                     className={`w-4 h-4 rounded-full ${circleColor} ${
                       index === indiceQuestao ? 'ring-2 ring-offset-2 ' + 
                       (theme === 'high-contrast' ? 'ring-yellow-500' : 'ring-blue-500') : ''
-                    }`}
+                    } cursor-pointer`}
                     onClick={() => {
                       setIndiceQuestao(index);
                       setQuestaoAtual(todasQuestoes[index]);
-                      setQuestaoRespondida(respostas[index].correta !== null);
                     }}
                   />
                 );
@@ -389,11 +467,8 @@ const MoluscoAnatomia = () => {
               <button 
                 onClick={finalizarQuiz}
                 className={`px-4 py-2 rounded-md transition-colors ${
-                  questaoRespondida 
-                    ? currentTheme.buttonFinalizar 
-                    : currentTheme.buttonUnanswered
+                  currentTheme.buttonFinalizar
                 }`}
-                disabled={!questaoRespondida}
               >
                 Finalizar
               </button>
@@ -401,11 +476,8 @@ const MoluscoAnatomia = () => {
               <button 
                 onClick={proximaQuestao}
                 className={`px-4 py-2 rounded-md transition-colors ${
-                  questaoRespondida 
-                    ? currentTheme.buttonEnabled 
-                    : currentTheme.buttonUnanswered
+                  currentTheme.buttonEnabled
                 }`}
-                disabled={!questaoRespondida}
               >
                 Próxima
               </button>
