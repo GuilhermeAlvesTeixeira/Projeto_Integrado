@@ -30,6 +30,16 @@ type QuizTemplateProps = {
   vidas: number;
 };
 
+// Função para embaralhar array (Fisher-Yates algorithm)
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
 export default function QuizTemplate({ questao, onResposta, vidas: initialVidas }: QuizTemplateProps) {
   const { theme } = useTheme();
   const [respostaSelecionada, setRespostaSelecionada] = useState<string | null>(null);
@@ -39,9 +49,25 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
   const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
   const [itensArrastados, setItensArrastados] = useState<{ id: string, areaId: string }[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [ordemItensDisponiveis, setOrdemItensDisponiveis] = useState<Opcao[]>([]);
 
   const [playCorrect] = useSound('/correct.wav');
   const [playWrong] = useSound('/wrong.wav');
+
+  // Inicializar ordem aleatória dos itens quando a questão mudar ou quando resetar
+  useEffect(() => {
+    if (questao.tipo === 'drag_and_drop') {
+      const respostaSalva = carregarRespostaDoStorage(questao.pergunta);
+      
+      if (!respostaSalva) {
+        // Só embaralha se não houver resposta salva
+        setOrdemItensDisponiveis(shuffleArray([...questao.opcoes]));
+      } else {
+        // Se houver resposta salva, mantém a ordem original (já que o usuário já respondeu)
+        setOrdemItensDisponiveis([...questao.opcoes]);
+      }
+    }
+  }, [questao.pergunta, questao.tipo, questao.opcoes]);
 
   // Funções para manipular o localStorage
   const salvarRespostaNoStorage = (pergunta: string, dados: {
@@ -144,7 +170,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
       feedbackCorrect: 'bg-green-900/30 text-green-100',
       feedbackWrong: 'bg-red-900/30 text-red-100',
       explanation: 'bg-gray-800 text-gray-100',
-      imageBg: 'bg-gray-800',
+      imageBg: 'bg-gray-400',
       heartColor: 'text-red-500',
       heartEmptyColor: 'text-gray-600',
       draggable: 'bg-green-700 hover:bg-green-600 text-white border-green-600',
@@ -165,7 +191,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
       feedbackCorrect: 'bg-green-900 text-white',
       feedbackWrong: 'bg-red-900 text-white',
       explanation: 'bg-gray-900 text-white',
-      imageBg: 'bg-gray-900',
+      imageBg: 'bg-amber-200',
       heartColor: 'text-yellow-500',
       heartEmptyColor: 'text-gray-700',
       draggable: 'bg-yellow-500 hover:bg-yellow-400 text-black border-yellow-600',
@@ -263,6 +289,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
   const recomecarQuiz = () => {
     setQuizFinalizado(false);
     setVidas(initialVidas);
+    resetarQuestao();
   };
 
   const resetarQuestao = () => {
@@ -271,6 +298,11 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
     setItensArrastados([]);
     localStorage.removeItem(`quiz-resposta-${questao.pergunta}`);
     setMostrarExplicacao(false);
+    
+    // Quando resetar, embaralha os itens novamente
+    if (questao.tipo === 'drag_and_drop') {
+      setOrdemItensDisponiveis(shuffleArray([...questao.opcoes]));
+    }
   };
 
   function DraggableItem({ id, children, disabled }: { id: string; children: React.ReactNode; disabled?: boolean }) {
@@ -408,7 +440,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
         
         {/* Corações alinhados à direita */}
         <div className="flex space-x-1">
-          {[...Array(3)].map((_, i) => (
+          {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ scale: 1 }}
@@ -443,7 +475,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
                   onDragEnd={handleDragEnd}
                 >
                   <div className={`flex ${isMobile ? 'flex-col gap-3' : 'flex-row gap-6'}`}>
-                    <div className={`relative ${isMobile ? 'w-full aspect-[4/3]' : 'w-1/2 aspect-[4/3]'} ${currentTheme.imageBg} rounded-lg overflow-hidden`}>
+                    <div className={`relative ${isMobile ? 'w-full aspect-[4/3]' : 'w-full aspect-[4/3]'} ${currentTheme.imageBg} rounded-lg overflow-hidden`}>
                       <Image
                         src={questao.imagem}
                         alt="Ilustração da pergunta"
@@ -459,7 +491,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
                           <DropZone
                             key={`dropzone-${opcao.posicao?.areaId || opcao.id}`}
                             id={opcao.posicao?.areaId || `area-${opcao.id}`}
-                            label={`Área ${opcao.posicao?.areaId || opcao.id}`}
+                            label={`${opcao.posicao?.areaId || opcao.id}`}
                           />
                         ))}
                       </div>
@@ -467,7 +499,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
                   </div>
 
                   <ItensDisponiveisArea>
-                    {questao.opcoes
+                    {ordemItensDisponiveis
                       .filter(opcao => !itensArrastados.some(item => item.id === opcao.id))
                       .map((opcao) => (
                         <DraggableItem key={opcao.id} id={opcao.id}>

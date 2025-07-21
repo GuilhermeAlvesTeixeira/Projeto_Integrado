@@ -1,16 +1,131 @@
 [
-
-    {
-      "tipo": "drag_and_drop",
-      "pergunta": "Arraste os nomes para as partes corretas do polvo:",
-      "opcoes": [
-        { "id": "1", "texto": "Tentáculo", "posicao": { "areaId": "area1", "x": -100, "y": 30 } },
-        { "id": "2", "texto": "Olho", "posicao": { "areaId": "area2", "x": -10, "y": 0 } },
-        { "id": "3", "texto": "Cabeça", "posicao": { "areaId": "area3", "x": 120, "y": -10 } },
-        { "id": "4", "texto": "Sifão", "posicao": { "areaId": "area4", "x": 270, "y": 0 } },
-        { "id": "5", "texto": "Abertura do Sifão", "posicao": { "areaId": "area5", "x": 280, "y": 60 } }
-      ],
-      "imagem": "/polvo-anatomia.png",
-      "explicacao": "Partes básicas de um molusco cefalópode: tentáculos (locomoção e captura), olhos (visão), cabeça (contém os órgãos principais), sifão (propulsão) e abertura do sifão (expulsão de água)."
-    }
-  ]
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas da Concha:",
+    "opcoes": [
+      { "id": "1", "texto": "Protoconcha", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Volta", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Columela", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Abertura", "posicao": { "areaId": "D", "x": 270, "y": 0 } }
+    ],
+    "imagem": "/concha-anatomia.png",
+    "explicacao": "A - Protoconcha ; B - Volta ; C - Columela ; D - Abertura"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas do Gastrópode:",
+    "opcoes": [
+      { "id": "1", "texto": "Boca", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Rádula", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Tentáculo", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Concha", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Pé", "posicao": { "areaId": "E", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/gastropode-anatomia.png",
+    "explicacao": "A - Boca ; B - Rádula ; C - Tentáculo ; D - Concha ; E - Pé"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas da Lula (dorsal):",
+    "opcoes": [
+      { "id": "1", "texto": "Nadeira", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Colar do Manto", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Crista Olfatória", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Olho", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Sifão", "posicao": { "areaId": "E", "x": 280, "y": 60 } },
+      { "id": "6", "texto": "Tentáculo", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/lula-dorsal.png",
+    "explicacao": "A - Nadeira ; B - Colar do Manto ; C - Crista Olfatória ; D - Olho ; E - Sifão ; F - Tentáculo"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas da Lula (ventral):",
+    "opcoes": [
+      { "id": "1", "texto": "Nadeira", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Ponta da Pena", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Colar do Manto", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Olho", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Crista Olfatória", "posicao": { "areaId": "E", "x": 280, "y": 60 } },
+      { "id": "6", "texto": "Tentáculo", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/lula-ventral.png",
+    "explicacao": "A - Nadeira ; B - Ponta da Pena ; C - Colar do Manto ; D - Olho ; E - Crista Olfatória ; F - Tentáculo"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas do tentáculo da Lula:",
+    "opcoes": [
+      { "id": "1", "texto": "Extremidade Copulatória", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Sulco do Espermatóforo", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Ventosas", "posicao": { "areaId": "C", "x": 120, "y": -10 } }
+    ],
+    "imagem": "/tentaculo-lula.png",
+    "explicacao": "A - Extremidade Copulatória ; B - Sulco do Espermatóforo ; C - Ventosas"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas do Poliplacóforo (dorsal):",
+    "opcoes": [
+      { "id": "1", "texto": "Concha (Placas)", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Cinturão", "posicao": { "areaId": "B", "x": -10, "y": 0 } }
+    ],
+    "imagem": "/poliplacoforo-dorsal.png",
+    "explicacao": "A - Concha (Placas) ; B - Cinturão"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas do Poliplacóforo (ventral):",
+    "opcoes": [
+      { "id": "1", "texto": "Cabeça", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Brânquias", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Pé", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Gonoporo", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Cinturão", "posicao": { "areaId": "E", "x": 280, "y": 60 } },
+      { "id": "6", "texto": "Nefridioporo", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/poliplacoforo-ventral.png",
+    "explicacao": "A - Cabeça ; B - Brânquias ; C - Pé ; D - Gonoporo ; E - Cinturão ; F - Nefridioporo"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas do polvo:",
+    "opcoes": [
+      { "id": "1", "texto": "Cabeça", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Olho", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Sifão", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Tentáculo", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Abertura do Sifão", "posicao": { "areaId": "E", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/polvo-anatomia-ext.png",
+    "explicacao": "A - Cabeça ; B - Olho ; C - Sifão ; D - Tentáculo ; E - Abertura do Sifão"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas da Aplysia:",
+    "opcoes": [
+      { "id": "1", "texto": "Tentáculo", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Rinóforo", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Concha", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Abertura da Concha", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Parapódio", "posicao": { "areaId": "E", "x": 280, "y": 60 } },
+      { "id": "6", "texto": "Pé", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/alypsia-ext.png",
+    "explicacao": "A - Tentáculo ; B - Rinóforo ; C - Concha ; D - Abertura da Concha ; E - Parapódio ; F - Pé"
+  },
+  {
+    "tipo": "drag_and_drop",
+    "pergunta": "Arraste os nomes das estruturas para as partes corretas do Bivalve:",
+    "opcoes": [
+      { "id": "1", "texto": "Cicatriz do músculo adutor anterior", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "2", "texto": "Brânquia", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
+      { "id": "3", "texto": "Sifão Inalante", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
+      { "id": "4", "texto": "Músculo Adutor Anterior", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
+      { "id": "5", "texto": "Manto", "posicao": { "areaId": "E", "x": 280, "y": 60 } },
+      { "id": "6", "texto": "Pé", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
+    ],
+    "imagem": "/Bivalve-int.png",
+    "explicacao": "A - Cicatriz do músculo adutor anterior ; B - Brânquia ; C - Sifão Inalante ; D - Músculo Adutor Anterior ; E - Manto ; F - Pé"
+  }
+]

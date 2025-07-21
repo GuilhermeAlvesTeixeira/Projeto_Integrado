@@ -69,7 +69,7 @@ export const MobileHeader = () => {
       <div className="flex items-center justify-between w-full max-w-[1056px] mx-auto">
         
         {/* seção de logo e nome */}
-        <Link href="/" className={`flex items-center gap-2 ${
+        <Link href="/homepage" className={`flex items-center gap-2 ${
           theme === 'high-contrast' ? 'p-1' : ''
         }`}>
           <Image
@@ -106,7 +106,8 @@ export const MobileHeader = () => {
                 <span className="sr-only md:not-sr-only lg:not-sr-only">Home</span>
               </Link>
             </Button>
-
+            
+            {/*
             <Button 
               size="sm" 
               variant="ghost" 
@@ -121,7 +122,7 @@ export const MobileHeader = () => {
                 <AcademicCapIcon className="h-5 w-5" />
                 <span className="sr-only md:not-sr-only lg:not-sr-only">Cursos</span>
               </Link>
-            </Button>
+            </Button>*/}
 
             {/* botões e Dropdown de temas */}
             <div className="relative" ref={dropdownRef}>

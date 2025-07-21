@@ -33,7 +33,7 @@ const MoluscoSistematica = () => {
   const [indiceQuestao, setIndiceQuestao] = useState(0);
   const [quizFinalizado, setQuizFinalizado] = useState(false);
   const [questoesRespondidas, setQuestoesRespondidas] = useState<QuestaoRespondida[]>([]);
-  const initialVidas = 3;
+  const initialVidas = 5;
   const [vidas, setVidas] = useState(initialVidas);
   const [carregando, setCarregando] = useState(true);
 
@@ -46,14 +46,24 @@ const MoluscoSistematica = () => {
       const savedState = localStorage.getItem('moluscos-quiz-state');
       if (savedState) {
         const parsedState = JSON.parse(savedState);
-        setRespostas(parsedState.respostas || []);
-        setQuestoesRespondidas(parsedState.questoesRespondidas || []);
-        setIndiceQuestao(parsedState.indiceQuestao || 0);
-        setVidas(parsedState.vidas || initialVidas);
-        setQuizFinalizado(parsedState.quizFinalizado || false);
+        // Verificar se as questões salvas são as mesmas que serão carregadas
+        if (parsedState.todasQuestoes) {
+          // Se já tivermos carregado as questões, verificar se são iguais
+          if (todasQuestoes.length > 0 && JSON.stringify(parsedState.todasQuestoes) === JSON.stringify(todasQuestoes)) {
+            setRespostas(parsedState.respostas || Array(todasQuestoes.length).fill({ correta: null }));
+            setQuestoesRespondidas(parsedState.questoesRespondidas || []);
+            setIndiceQuestao(parsedState.indiceQuestao || 0);
+            setVidas(parsedState.vidas || initialVidas);
+            setQuizFinalizado(parsedState.quizFinalizado || false);
+          }
+          // Se não tivermos carregado ainda, vamos esperar pelo fetch
+        } else {
+          // Estado antigo sem as questões, vamos resetar
+          resetarEstadoQuiz();
+        }
       }
     }
-  }, []);
+  }, [todasQuestoes]);
 
   // Salvar estado no localStorage quando mudar
   useEffect(() => {
@@ -64,7 +74,7 @@ const MoluscoSistematica = () => {
         indiceQuestao,
         vidas,
         quizFinalizado,
-        todasQuestoes
+        todasQuestoes // Agora salvamos também as questões para verificar depois
       };
       localStorage.setItem('moluscos-quiz-state', JSON.stringify(stateToSave));
     }
@@ -78,15 +88,24 @@ const MoluscoSistematica = () => {
         const data = await res.json();
         setTodasQuestoes(data);
         
+        // Verificar se há estado salvo compatível
         const savedState = localStorage.getItem('moluscos-quiz-state');
         if (savedState) {
           const parsedState = JSON.parse(savedState);
           if (parsedState.todasQuestoes && JSON.stringify(parsedState.todasQuestoes) === JSON.stringify(data)) {
+            // Estado compatível, usar os dados salvos
+            setRespostas(parsedState.respostas || Array(data.length).fill({ correta: null }));
+            setQuestoesRespondidas(parsedState.questoesRespondidas || []);
+            setIndiceQuestao(parsedState.indiceQuestao || 0);
+            setVidas(parsedState.vidas || initialVidas);
+            setQuizFinalizado(parsedState.quizFinalizado || false);
             setQuestaoAtual(data[parsedState.indiceQuestao || 0]);
           } else {
+            // Estado incompatível, resetar
             resetarEstadoQuiz(data);
           }
         } else {
+          // Nenhum estado salvo, iniciar novo quiz
           resetarEstadoQuiz(data);
         }
         
@@ -97,13 +116,16 @@ const MoluscoSistematica = () => {
       }
     };
 
-    const resetarEstadoQuiz = (questoes: Questao[]) => {
-      setRespostas(Array(questoes.length).fill({ correta: null }));
+    const resetarEstadoQuiz = (questoes?: Questao[]) => {
+      const q = questoes || todasQuestoes;
+      setRespostas(Array(q.length).fill({ correta: null }));
       setQuestoesRespondidas([]);
       setIndiceQuestao(0);
       setVidas(initialVidas);
       setQuizFinalizado(false);
-      setQuestaoAtual(questoes[0]);
+      if (q.length > 0) {
+        setQuestaoAtual(q[0]);
+      }
     };
 
     fetchQuestoes();
@@ -277,7 +299,7 @@ const MoluscoSistematica = () => {
     const percentual = total > 0 ? Math.round((acertos / total) * 100) : 0;
 
     const getFeedbackConfig = () => {
-      if (percentual >= 80) return { emoji: '⭐', mensagem: 'Excelente! Você conhece bem os moluscos!', cor: 'text-green-500' };
+      if (percentual >= 70) return { emoji: '⭐', mensagem: 'Excelente! Você conhece bem os moluscos!', cor: 'text-green-500' };
       if (percentual >= 50) return { emoji: '👍', mensagem: 'Bom trabalho! Algumas partes ainda podem ser revisadas.', cor: 'text-yellow-500' };
       return {emoji: '💔',mensagem: 'Você perdeu todas as vidas, mas não se preocupe você pode tentar de novo!', cor: 'text-red-500' };
     };
@@ -493,3 +515,7 @@ const MoluscoSistematica = () => {
 };
 
 export default MoluscoSistematica;
+
+function resetarEstadoQuiz() {
+  throw new Error('Function not implemented.');
+}
