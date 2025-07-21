@@ -1,16 +1,5 @@
 [
-    {
-      "tipo": "multipla_escolha",
-      "pergunta": "Qual desses animais pertence ao Filo Mollusca?",
-      "opcoes": [
-        { "id": "1", "texto": "Estrela-do-mar", "imagem": "/estrela-do-mar.png", "correta": false },
-        { "id": "2", "texto": "Polvo", "imagem": "/polvo.png", "correta": true },
-        { "id": "3", "texto": "Água-viva", "imagem": "/jellyfish.svg", "correta": false },
-        { "id": "4", "texto": "Esponja", "imagem": "/esponja.png", "correta": false }
-      ],
-      "explicacao": "O polvo é um molusco cefalópode, enquanto os outros pertencem a filos diferentes."
-    },
-    
+
     {
       "tipo": "drag_and_drop",
       "pergunta": "Arraste os nomes para as partes corretas do polvo:",

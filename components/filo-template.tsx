@@ -1,9 +1,3 @@
-/*
-   COMPONENTE (NÃO SERÁ UTILIZADO NO PROJETO FINAL)
-   
-   Gerado por Deepseek para fins de TESTES.
-*/
-
 import { useState } from 'react';
 import { useTheme } from '@/components/theme-context';
 import Link from "next/link";

@@ -1,0 +1,101 @@
+[   
+    {
+        "tipo": "multipla_escolha",
+        "pergunta": "Qual desses animais pertence ao Filo Mollusca?",
+        "opcoes": [
+          { "id": "1", "texto": "Estrela-do-mar", "imagem": "/estrela-do-mar.png", "correta": false },
+          { "id": "2", "texto": "Polvo", "imagem": "/polvo.png", "correta": true },
+          { "id": "3", "texto": "Água-viva", "imagem": "/jellyfish.svg", "correta": false },
+          { "id": "4", "texto": "Esponja", "imagem": "/esponja.png", "correta": false }
+        ],
+        "explicacao": "O polvo é um molusco cefalópode, enquanto os outros pertencem a filos diferentes."
+      },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "Qual classe apresenta conchas compostas por oito placas articuladas e embutidas em um cinturão?",
+      "opcoes": [
+        { "id": "1", "texto": "Bivalvia", "imagem": "/bivalve.svg", "correta": false },
+        { "id": "2", "texto": "Polyplacophora", "imagem": "/chiton.png", "correta": true },
+        { "id": "3", "texto": "Monoplacophora", "imagem": "/monoplacophora.svg", "correta": false },
+        { "id": "4", "texto": "Aplacophora","imagem": "/aplacophora.png", "correta": false }
+      ],
+      "explicacao": "A classe Polyplacophora inclui os quitons, que possuem oito placas calcáreas articuladas embutidas em um cinto muscular."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "A ausência de concha e presença de escleritos cuticulares é uma característica comum de qual grupo?",
+      "opcoes": [
+        { "id": "1", "texto": "Aplacophora", "imagem": "/aplacophora.png" ,"correta": true },
+        { "id": "2", "texto": "Cephalopoda", "imagem": "/polvo.png", "correta": false },
+        { "id": "3", "texto": "Gastropoda", "imagem": "/snail.svg", "correta": false },
+        { "id": "4", "texto": "Bivalvia", "imagem": "/oyster.svg", "correta": false }
+      ],
+      "explicacao": "Os Aplacophora são moluscos vermiformes que não possuem concha verdadeira, apenas espículas calcáreas (escleritos) incorporadas no manto."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "O náutilo, a lula e o polvo são membros da classe:",
+      "opcoes": [
+        { "id": "1", "texto": "Scaphopoda", "imagem": "/long-shell.png", "correta": false },
+        { "id": "2", "texto": "Monoplacophora", "imagem": "/monoplacophora.svg", "correta": false },
+        { "id": "3", "texto": "Gastropoda", "imagem": "/snail.svg", "correta": false },
+        { "id": "4", "texto": "Cephalopoda", "imagem": "/polvo.png", "correta": true }
+      ],
+      "explicacao": "Todos são cefalópodes, a classe mais especializada dos moluscos, caracterizada por ter o pé modificado em tentáculos."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "O processo de torção da massa visceral é, até então, característica exclusivo de qual classe?",
+      "opcoes": [
+        { "id": "1", "texto": "Aplacophora", "imagem": "/aplacophora.png", "correta": false },
+        { "id": "2", "texto": "Bivalvia", "imagem": "/oyster.svg", "correta": false },
+        { "id": "3", "texto": "Gastropoda", "imagem": "/snail.svg","correta": true },
+        { "id": "4", "texto": "Polyplacophora", "imagem": "/chiton.png",  "correta": false }
+      ],
+      "explicacao": "A torção de 180° da massa visceral é uma sinapomorfia exclusiva dos gastrópodes, ocorrendo durante seu desenvolvimento larval."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "Os moluscos monoplacóforos se caracterizam por:",
+      "opcoes": [
+        { "id": "1", "texto": "Conchas de duas valvas ligadas por um ligamento", "imagem": "/open-oyster.png", "correta": false },
+        { "id": "2", "texto": "Conchas simples em forma de escudo, sem segmentação aparente", "imagem": "/shell-sharp.svg", "correta": true },
+        { "id": "3", "texto": "Tentáculos com ventosas para captura de presas", "imagem": "/tentacle.png", "correta": false },
+        { "id": "4", "texto": "Um corpo alongado com formato cilíndrico", "imagem": "/long-shell.png", "correta": false }
+      ],
+      "explicacao": "Os Monoplacophora possuem uma única concha em forma de escudo/capuz, sem segmentação visível externamente."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "Dentro do filo Mollusca, os organismos são tradicionalmente divididos em classes com base em:",
+      "opcoes": [
+        { "id": "1", "texto": "Tipo de alimentação e pigmentação da concha", "imagem": "/hot-pot.png", "correta": false },
+        { "id": "2", "texto": "Habitat e presença de esqueleto interno", "imagem": "/habitat.png","correta": false },
+        { "id": "3", "texto": "Organização do corpo, concha e estruturas sensoriais", "imagem": "/shell-sharp.svg", "correta": true },
+        { "id": "4", "texto": "Tempo de vida e tipo de fecundação", "imagem": "/heart.svg", "correta": false }
+      ],
+      "explicacao": "A classificação dos moluscos considera principalmente características morfológicas como organização corporal, tipo de concha e estruturas sensoriais específicas."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "A divisão entre os moluscos Aculifera e Conchifera se baseia principalmente em:",
+      "opcoes": [
+        { "id": "1", "texto": "Presença ou ausência de rádula", "imagem": "/radula.png","correta": false },
+        { "id": "2", "texto": "Formação de larva véliger", "imagem": "/larva-veliger.png", "correta": false },  
+        { "id": "3", "texto": "Presença de concha única ou múltiplas valvas", "imagem": "/shell-sharp.svg", "correta": false },
+        { "id": "4", "texto": "Presença de conchas versus presença de escleritos", "imagem": "/concha-placa.png", "correta": true }
+      ],
+      "explicacao": "Aculifera (Polyplacophora + Aplacophora) possuem escleritos, enquanto Conchifera (demais classes) apresentam conchas verdadeiras."
+    },
+    {
+      "tipo": "multipla_escolha",
+      "pergunta": "Os Scaphopoda são conhecidos por:",
+      "opcoes": [
+        { "id": "1", "texto": "Possuírem oito tentáculos com ventosas", "imagem": "/tentacle.png", "correta": false },
+        { "id": "2", "texto": "Terem um corpo alongado e concha cilíndrica, vivendo enterrados em sedimentos marinhos", "imagem": "/long-shell.png", "correta": true },
+        { "id": "3", "texto": "Apresentarem brânquias bem desenvolvidas na cavidade paleal", "imagem": "/gill.png", "correta": false },
+        { "id": "4", "texto": "Possuírem Conchas de duas valvas conectadas por um ligamento", "imagem": "/open-oyster.png", "correta": false }
+      ],
+      "explicacao": "Os escafópodes têm concha tubular cônica e vivem enterrados em substratos marinhos, alimentando-se de microorganismos através de suas captáculas."
+    }
+  ]

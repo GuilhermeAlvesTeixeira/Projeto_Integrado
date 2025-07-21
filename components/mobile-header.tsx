@@ -51,12 +51,12 @@ export const MobileHeader = () => {
     };
   }, [showThemeDropdown]);
 
-  // Função para lidar com o clique no botão de tema
+  
   const handleThemeClick = () => {
     if (isMobile) {
-      toggleTheme(); // permite alternancia de temas no mobile
+      toggleTheme(); 
     } else {
-      setShowThemeDropdown(!showThemeDropdown); // Mostra/oculta dropdown em desktop
+      setShowThemeDropdown(!showThemeDropdown);
     }
   };
 
@@ -97,7 +97,7 @@ export const MobileHeader = () => {
               className={`p-2 ${
                 theme === 'light' ? 'text-white hover:bg-green-600' :
                 theme === 'dark' ? 'text-white hover:bg-green-800' :
-                'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
+                'text-yellow-400 hover:bg-gray-800 border-b-2 border-yellow-400 rounded-none'
               }`}
               asChild
             >
@@ -113,7 +113,7 @@ export const MobileHeader = () => {
               className={`p-2 ${
                 theme === 'light' ? 'text-white hover:bg-green-600' :
                 theme === 'dark' ? 'text-white hover:bg-green-800' :
-                'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
+                'text-yellow-400 hover:bg-gray-800 border-b-2 rounded-none border-yellow-400'
               }`}
               asChild
             >
@@ -132,7 +132,7 @@ export const MobileHeader = () => {
                 className={`cursor-pointer p-2 flex items-center gap-1 ${
                   theme === 'light' ? 'text-white hover:bg-green-600' :
                   theme === 'dark' ? 'text-white hover:bg-green-800' :
-                  'text-yellow-400 hover:bg-gray-800 border-2 border-yellow-400'
+                  'text-yellow-400 hover:bg-gray-800 border-b-2 rounded-none border-yellow-400'
                 }`}
               >
                 {theme == 'light' ? (

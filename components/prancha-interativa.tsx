@@ -10,9 +10,9 @@ interface PranchaInformativaProps {
   selectedImageIndex: number;
 }
 
-const PranchaInformativa: React.FC<PranchaInformativaProps> = ({ 
-  specimenData, 
-  laminas, 
+const PranchaInformativa: React.FC<PranchaInformativaProps> = ({
+  specimenData,
+  laminas,
   onImageChange,
   selectedImageIndex
 }) => {
@@ -30,76 +30,73 @@ const PranchaInformativa: React.FC<PranchaInformativaProps> = ({
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className={`text-xl font-bold ${
-        theme === 'light' ? 'text-gray-800' :
-        theme === 'dark' ? 'text-white' :
-        'text-white'
-      }`}>
+    <div className="bgspace-y-4">
+      <h2 className={`text-xl font-bold ${theme === 'light' ? 'text-gray-800' :
+          theme === 'dark' ? 'text-white' :
+            'text-white'
+        }`}>
         {specimenData.nome}
       </h2>
-      
+
       <p className={
         theme === 'light' ? 'text-gray-600' :
-        theme === 'dark' ? 'text-gray-300' :
-        'text-amber-400'
+          theme === 'dark' ? 'text-gray-300' :
+            'text-amber-400'
       }>
         {specimenData.descricaoGeral}
       </p>
-      
+
       {currentLamina.pranchaImage && (
         <>
-          <h2 className={`text-xl font-bold ${
-            theme === 'light' ? 'text-gray-800' :
-            theme === 'dark' ? 'text-white' :
-            'text-white'
-          }`}>
+          <h2 className={`text-xl font-bold ${theme === 'light' ? 'text-gray-800' :
+              theme === 'dark' ? 'text-white' :
+                'text-white'
+            }`}>
             Esquema Anatômico
           </h2>
-          
-          <div 
-            className={`border rounded p-2 cursor-zoom-in ${
-              theme === 'light' ? 'bg-white border-gray-200' :
-              theme === 'dark' ? 'bg-gray-700 border-gray-600' :
-              'bg-black border-amber-300'
-            }`} 
+
+          <div
+            className={`border rounded p-2 cursor-zoom-in ${theme === 'light' ? 'bg-white border-gray-200' :
+                theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+                  'bg-black border-amber-300'
+              }`}
             onClick={() => setIsImageModalOpen(true)}
           >
-            <img 
-              src={currentLamina.pranchaImage} 
-              alt="Esquema anatômico" 
+            <img
+              src={currentLamina.pranchaImage}
+              alt="Esquema anatômico"
               className="w-full h-auto"
             />
           </div>
-          
+
           {isImageModalOpen && (
-            <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
-              <div className="relative max-w-6xl max-h-screen">
-                <button 
-                  onClick={() => setIsImageModalOpen(false)}
-                  className={`absolute -top-10 right-0 ${
-                    theme === 'high-contrast' ? 'text-amber-400' : 'text-white'
-                  } hover:opacity-80`}
-                >
-                  <X size={30} />
-                </button>
-                <img 
-                  src={currentLamina.pranchaImage} 
-                  alt="Esquema anatômico ampliado" 
-                  className="max-w-full max-h-[90vh] object-contain"
-                />
+            <div className="fixed inset-0 bg-black/70 z-50 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-screen p-4">
+                <div className="relative max-w-full max-h-full">
+                  <button
+                    onClick={() => setIsImageModalOpen(false)}
+                    className={`fixed top-4 right-4 ${theme === 'high-contrast' ? 'text-amber-400' : 'text-white'
+                      } hover:opacity-80 z-50 p-2 bg-black/50 rounded-full`}
+                  >
+                    <X size={30} />
+                  </button>
+                  <img
+                    src={currentLamina.pranchaImage}
+                    alt="Esquema anatômico ampliado"
+                    className="max-w-[90vw] max-h-[90vh] object-contain"
+                  />
+                </div>
               </div>
             </div>
           )}
         </>
       )}
-      
+
       <div className="space-y-2">
-        <h3 className={`font-semibold text-lg ${
-          theme === 'light' ? 'text-gray-800' :
-          theme === 'dark' ? 'text-white' :
-          'text-white'
-        }`}>
+        <h3 className={`font-semibold text-lg ${theme === 'light' ? 'text-gray-800' :
+            theme === 'dark' ? 'text-white' :
+              'text-white'
+          }`}>
           Seleção de Lâminas
         </h3>
         <div className="grid grid-cols-3 gap-2">
@@ -107,67 +104,61 @@ const PranchaInformativa: React.FC<PranchaInformativaProps> = ({
             <button
               key={index}
               onClick={() => onImageChange(index)}
-              className={`p-2 rounded-md text-sm ${
-                selectedImageIndex === index
+              className={`p-2 rounded-md text-sm ${selectedImageIndex === index
                   ? theme === 'light' ? 'bg-green-600 text-white' :
                     theme === 'dark' ? 'bg-green-700 text-white' :
-                    'bg-amber-500 text-black'
+                      'bg-amber-500 text-black'
                   : theme === 'light' ? 'bg-gray-200 text-gray-800 hover:bg-gray-300' :
                     theme === 'dark' ? 'bg-gray-600 text-white hover:bg-gray-500' :
-                    'bg-black border border-amber-400 text-amber hover:border-amber-600'
-              }`}
+                      'bg-black border border-amber-400 text-amber hover:border-amber-600'
+                }`}
             >
               {lamina.label}
             </button>
           ))}
         </div>
       </div>
-      
+
       <div className="space-y-2">
-        <h3 className={`font-semibold text-lg ${
-          theme === 'light' ? 'text-gray-800' :
-          theme === 'dark' ? 'text-white' :
-          'text-white'
-        }`}>
+        <h3 className={`font-semibold text-lg ${theme === 'light' ? 'text-gray-800' :
+            theme === 'dark' ? 'text-white' :
+              'text-white'
+          }`}>
           {currentLamina.estrutura.nome}
         </h3>
-        
+
         <div className="space-y-1">
           {currentLamina.estrutura.itens.map((item, index) => (
-            <div key={index} className={`border rounded overflow-hidden ${
-              theme === 'light' ? 'border-gray-200' :
-              theme === 'dark' ? 'border-gray-600' :
-              'border-amber-300'
-            }`}>
+            <div key={index} className={`border rounded overflow-hidden ${theme === 'light' ? 'border-gray-200' :
+                theme === 'dark' ? 'border-gray-600' :
+                  'border-amber-300'
+              }`}>
               <button
                 onClick={() => toggleItem(index)}
-                className={`w-full flex justify-between items-center p-3 ${
-                  theme === 'light' ? 'bg-gray-100 hover:bg-gray-200' :
-                  theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600' :
-                  'bg-amber-400 hover:bg-amber-500'
-                }`}
+                className={`w-full flex justify-between items-center p-3 ${theme === 'light' ? 'bg-gray-100 hover:bg-gray-200' :
+                    theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600' :
+                      'bg-amber-400 hover:bg-amber-500'
+                  }`}
               >
-                <span className={`font-medium ${
-                  theme === 'high-contrast' ? 'text-black' : ''
-                }`}>
+                <span className={`font-medium ${theme === 'high-contrast' ? 'text-black' : ''
+                  }`}>
                   {item.nome}
                 </span>
-                {expandedItems[index] ? 
+                {expandedItems[index] ?
                   <ChevronUp size={18} className={
                     theme === 'high-contrast' ? 'text-black' : ''
-                  } /> : 
+                  } /> :
                   <ChevronDown size={18} className={
                     theme === 'high-contrast' ? 'text-black' : ''
                   } />
                 }
               </button>
-              
+
               {expandedItems[index] && (
-                <div className={`p-3 ${
-                  theme === 'light' ? 'bg-white text-gray-700' :
-                  theme === 'dark' ? 'bg-gray-800 text-gray-300' :
-                  'bg-black text-amber-300'
-                }`}>
+                <div className={`p-3 ${theme === 'light' ? 'bg-white text-gray-700' :
+                    theme === 'dark' ? 'bg-gray-800 text-gray-300' :
+                      'bg-black text-amber-300'
+                  }`}>
                   <p>{item.descricao}</p>
                 </div>
               )}

@@ -42,7 +42,7 @@
       "laminas": [
         {
           "label": "Enterrado em substrato",
-          "url": "/lamina-image/bivalve-enterrado.jpeg",
+          "url": "/lamina-image/bivalve-enterrado.jpeg", 
           "pranchaImage": "/prancha-image/bivalve-enterrado.png",
           "estrutura": {
             "nome": "Estruturas em Substrato",
@@ -138,7 +138,7 @@
         {
           "label": "Anatomia externa (superior)",
           "url": "/lamina-image/gastropode-superior.jpeg",
-          "pranchaImage": "/prancha-image/gastropode-perfil.png",
+          "pranchaImage": "/prancha-image/gastropode-superior.png",
           "estrutura": {
             "nome": "Estruturas Dorsais",
             "itens": [

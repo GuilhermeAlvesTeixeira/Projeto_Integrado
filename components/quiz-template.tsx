@@ -403,7 +403,7 @@ export default function QuizTemplate({ questao, onResposta, vidas: initialVidas 
       <div className="flex justify-between items-start mb-4">
         {/* Título alinhado à esquerda */}
         <div className="flex-1 pr-4">
-          <h2 className={`font-bold ${isMobile ? 'text-lg' : 'text-xl'}`}>{questao.pergunta}</h2>
+          <h2 className={`pb-8 font-bold ${isMobile ? 'text-lg' : 'text-xl'}`}>{questao.pergunta}</h2>
         </div>
         
         {/* Corações alinhados à direita */}

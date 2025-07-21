@@ -19,7 +19,7 @@ type QuestaoRespondida = {
   correta: boolean;
 };
 
-const MoluscoAnatomia = () => {
+const MoluscoSistematica = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const [showConfetti, setShowConfetti] = useState(false);
@@ -74,7 +74,7 @@ const MoluscoAnatomia = () => {
   useEffect(() => {
     const fetchQuestoes = async () => {
       try {
-        const res = await fetch('../data/anatomia-quiz/moluscos.json');
+        const res = await fetch('../data/sistematica-quiz/sistematica.json');
         const data = await res.json();
         setTodasQuestoes(data);
         
@@ -262,7 +262,7 @@ const MoluscoAnatomia = () => {
       if (percentual >= 70) {
         setShowConfetti(true);
         playSuccess();
-      } else if (percentual > 0) {
+      } else if (percentual >= 30) {
         playNotBad();
       } else {
         playGameOver();
@@ -492,4 +492,4 @@ const MoluscoAnatomia = () => {
   );
 };
 
-export default MoluscoAnatomia;
+export default MoluscoSistematica;
