@@ -28,7 +28,7 @@
     "tipo": "drag_and_drop",
     "pergunta": "Arraste os nomes das estruturas para as partes corretas da Lula (dorsal):",
     "opcoes": [
-      { "id": "1", "texto": "Nadeira", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "1", "texto": "Nadadeira", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
       { "id": "2", "texto": "Colar do Manto", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
       { "id": "3", "texto": "Crista Olfatória", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
       { "id": "4", "texto": "Olho", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
@@ -36,13 +36,13 @@
       { "id": "6", "texto": "Tentáculo", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
     ],
     "imagem": "/lula-dorsal.png",
-    "explicacao": "A - Nadeira ; B - Colar do Manto ; C - Crista Olfatória ; D - Olho ; E - Sifão ; F - Tentáculo"
+    "explicacao": "A - Nadadeira ; B - Colar do Manto ; C - Crista Olfatória ; D - Olho ; E - Sifão ; F - Tentáculo"
   },
   {
     "tipo": "drag_and_drop",
     "pergunta": "Arraste os nomes das estruturas para as partes corretas da Lula (ventral):",
     "opcoes": [
-      { "id": "1", "texto": "Nadeira", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
+      { "id": "1", "texto": "Nadadeira", "posicao": { "areaId": "A", "x": -100, "y": 30 } },
       { "id": "2", "texto": "Ponta da Pena", "posicao": { "areaId": "B", "x": -10, "y": 0 } },
       { "id": "3", "texto": "Colar do Manto", "posicao": { "areaId": "C", "x": 120, "y": -10 } },
       { "id": "4", "texto": "Olho", "posicao": { "areaId": "D", "x": 270, "y": 0 } },
@@ -50,7 +50,7 @@
       { "id": "6", "texto": "Tentáculo", "posicao": { "areaId": "F", "x": 280, "y": 60 } }
     ],
     "imagem": "/lula-ventral.png",
-    "explicacao": "A - Nadeira ; B - Ponta da Pena ; C - Colar do Manto ; D - Olho ; E - Crista Olfatória ; F - Tentáculo"
+    "explicacao": "A - Nadadeira ; B - Ponta da Pena ; C - Colar do Manto ; D - Olho ; E - Crista Olfatória ; F - Tentáculo"
   },
   {
     "tipo": "drag_and_drop",
