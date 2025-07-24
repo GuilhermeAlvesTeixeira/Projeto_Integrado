@@ -52,10 +52,10 @@ Este projeto consiste no desenvolvimento de um aplicativo móvel educativo, volt
 
 ## Como Rodar
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/GuilhermeAlvesTeixeira/Projeto_Integrado
-   cd Projeto_Integrado
-   ```
+  ```bash
+    git clone https://github.com/GuilhermeAlvesTeixeira/Projeto_Integrado
+    cd Projeto_Integrado
+  ```
 
 2.  instale as dependências:
   ```bash
