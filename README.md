@@ -55,17 +55,18 @@ Este projeto consiste no desenvolvimento de um aplicativo móvel educativo, volt
    ```bash
    git clone https://github.com/GuilhermeAlvesTeixeira/Projeto_Integrado
    cd Projeto_Integrado
+   ```
 
 2.  instale as dependências:
   ```bash
     npm install next react react-dom
-
+  ```
 3. No terminal, digite:
   ```bash
     npm run dev
+  ```
 
 4. Acesse localhost:3000
-
 
 ## Protótipo
 
