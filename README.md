@@ -1,29 +1,22 @@
 # Repositório da Equipe: Austrália Renascentista
 
 ## Palavras-chave
-
 Educação, Biologia, Zoologia, NextJS, React, JavaScript, Typescript
 
 ## Índice
-
 - [Sobre](#sobre)
 - [Equipe](#equipe)
 - [Tecnologias](#tecnologias)
 - [Como Rodar](#como-rodar)
 - [Licença](#licença)
 - [Requisitos Funcionais](#requisitos-funcionais)
+- [Protótipo](#protótipo)
+- [Quadro Kanban](#link-para-o-quadro-kanban)
 
 ## Sobre
-
 Este projeto consiste no desenvolvimento de um aplicativo móvel educativo, voltado para alunos da disciplina Invertebrados I da Universidade Federal do Ceará (UFC). O principal objetivo é auxiliar no reforço do conteúdo teórico-prático da disciplina, com foco na visualização das estruturas anatômicas dos invertebrados.
 
-O aplicativo será altamente imagético e interativo, oferecendo aos alunos recursos que estimulem a memorização e o reconhecimento das principais características morfológicas dos diferentes filos de invertebrados.
-
-Todo o conteúdo será disponibilizado localmente no próprio aplicativo, não exigindo conexão com a internet para funcionamento.
-
-
 ## Equipe
-
 | Nome              | Função                     |
 |-------------------|----------------------------|
 | Aldair Gomes      | Desenvolvedor Backend      |
@@ -32,36 +25,47 @@ Todo o conteúdo será disponibilizado localmente no próprio aplicativo, não e
 | Guilherme Alves   | Desenvolvedor FrontEnd     |
 | João Lucas        | Designer de UI/UX          |
 
-
 ## Tecnologias
 
-## Frontend
-- **Framework:** [Next.js](https://nextjs.org/)
-- **Linguagens:** JavaScript e TypeScript
-- **Estilização:** [Tailwind CSS](https://tailwindcss.com/), CSS
-- **Componentes e UI:**
-  - [ShadCN UI](https://ui.shadcn.dev/): Biblioteca de componentes acessíveis e personalizados com Tailwind
-  - [Radix UI](https://www.radix-ui.com/): Base para componentes acessíveis como diálogos, popovers e menus
-  - [Heroicons](https://heroicons.com/): Ícones SVG otimizados para interfaces minimalistas
-  - [Lucide](https://lucide.dev/): Ícones modernos e personalizáveis baseados no Feather
+### Core
+- **Next.js 15.3.3** (com Turbopack)
+- **React 19**
+- **TypeScript 5**
 
-## Autenticação
-- **[Clerk](https://clerk.com/):** Autenticação com login por e-mail, senha e redes sociais, integrada ao Next.js
+### UI/Design
+- **Tailwind CSS** (com plugins: tailwind-merge, tw-animate-css)
+- **ShadCN UI** (componentes acessíveis)
+- **Radix UI** (primitivos acessíveis)
+- **Heroicons & Lucide** (bibliotecas de ícones)
+- **Framer Motion 12** (animações)
+- **React Confetti** (efeitos visuais)
 
-## Banco de Dados
-- **[Supabase](https://supabase.com/):** Backend-as-a-Service com autenticação, API e banco de dados em tempo real
-- **PostgreSQL:** Banco de dados relacional utilizado via Supabase
+### Interatividade
+- **DnD Kit** (drag-and-drop para laboratório virtual)
+- **Fabric.js 4.6** (manipulação de imagens/canvas)
+- **use-sound** (efeitos sonoros)
 
-## Outros
-- **Controle de versão:** Git e GitHub
-- **Qualidade de código:** ESLint
-- **Gerenciamento de dependências:** npm
+### Autenticação & Dados
+- **Clerk** (autenticação moderna)
+- **Supabase** (banco de dados PostgreSQL + APIs)
+  - @supabase/supabase-js
 
 ## Como Rodar
-
 1. Clone o repositório:
    ```bash
    git clone https://github.com/GuilhermeAlvesTeixeira/Projeto_Integrado
+   cd Projeto_Integrado
+
+2.  instale as dependências:
+  ```bash
+    npm install next react react-dom
+
+3. No terminal, digite:
+  ```bash
+    npm run dev
+
+4. Acesse localhost:3000
+
 
 ## Protótipo
 
