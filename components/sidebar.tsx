@@ -29,25 +29,34 @@ export const SideBar = ({className}: Props) => {
             </Link>    
             <div className="flex flex-col gap-y-2 flex-1">
                 <SidebarItem 
-                    label={"Conteúdo 1"} 
-                    iconSrc={"/learn.svg"} 
-                    href={"/learn"}/>
+                    label={"Poríferos"} 
+                    iconSrc={"/esponja.png"} 
+                    href={"#"}
+                    disabled
+                />
                 <SidebarItem 
-                    label={"Conteúdo 2"} 
-                    iconSrc={"/learn.svg"} 
-                    href={"/learn"}/>
+                    label={"Cnidários"} 
+                    iconSrc={"/jellyfish.svg"} 
+                    href={"#"}
+                    disabled
+                />
                 <SidebarItem 
-                    label={"Conteúdo 3"} 
-                    iconSrc={"/learn.svg"} 
-                    href={"/learn"}/>
+                    label={"Platelmintos"} 
+                    iconSrc={"/planaria.png"} 
+                    href={"#"}
+                    disabled
+                />
                 <SidebarItem 
-                    label={"Conteúdo 4"} 
-                    iconSrc={"/learn.svg"} 
-                    href={"/learn"}/>
+                    label={"Nemertea"} 
+                    iconSrc={"/nemertea.png"} 
+                    href={"#"}
+                    disabled
+                />
                 <SidebarItem 
-                    label={"Conteúdo 5"} 
-                    iconSrc={"/learn.svg"} 
-                    href={"/learn"}/>
+                    label={"Moluscos"} 
+                    iconSrc={"/polvo.png"} 
+                    href={"/moluscos"}
+                />
             </div>
             <div className="p-4">
                 <ClerkLoading>
