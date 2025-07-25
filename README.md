@@ -47,8 +47,7 @@ Este projeto consiste no desenvolvimento de um aplicativo móvel educativo, volt
 
 ### Autenticação & Dados
 - **Clerk** (autenticação moderna)
-- **Supabase** (banco de dados PostgreSQL + APIs)
-  - @supabase/supabase-js
+- **localStorage** 
 
 ## Como Rodar
 1. Clone o repositório:
@@ -100,13 +99,13 @@ Ex: RF00N_F (Requisito funcional relacionado com o FrontEnd).
 
 | Código  | Descrição | Front End | Back End | Prioridade | Link |
 |---------|-----------|-----------|-----------|-----------|-----------|
-| **RF001** | Autenticar usuário por meio de login e senha. |Disponibilizar botões que forneçam uma tela de criação de conta ou login quando pressionados.|Enviar os emails e senhas fornecidos ao banco de dados para armazená-los.|Alta|
+| **RF001** | Autenticar usuário por meio de login e senha. |Disponibilizar botões que forneçam uma tela de criação de conta ou login quando pressionados.|Enviar os emails e senhas fornecidos ao Clerk Dashboard para armazená-los.|Alta|
 | **RF002** | Navegar pelos filos de invertebrados por meio de um menu organizado. |Exibir tela principal que mostre todos os filos disponíveis.|Direcionar o usuário ao filo selecionado.|Alta|
-| **RF003** | Exibir imagens ilustrativas dos invertebrados. |Fornecer imagens necessárias para estudos.|Puxar imagens do banco de dados.|Alta|
+| **RF003** | Exibir imagens ilustrativas dos invertebrados. |Fornecer imagens necessárias para estudos.|Puxar imagens da pasta pública do projeto.|Alta|
 | **RF004** | Oferecer textos explicativos sobre o conteúdo abordado. |Exibir conteúdo expositivo sobre o filo e tema selecionados.|Fornecer os conteúdos carregados do código.|Alta|
 | **RF005** | Disponibilizar uma trilha de conteúdos práticos organizados por filo. |Exibir temas selecionáveis em ordem compreensiva.|Levar os usuários aos conteúdos e laboratórios selecionados.|Alta|
 | **RF006** | Permitir que o aluno realize atividades de identificação de estruturas em imagens. |Mostrar imagens ilustrativas e reais dos seres sendo estudados.|Garantir a interação e responsividade dos quizzes e laboratórios.|Alta|
-| **RF007** | Fornecer feedback imediato sobre a resposta do aluno em atividades de identificação. |Exibir resultados dos quizzes e laboratórios.|Armazenar as respostas dos alunos e compará-las com as respostas do banco de dados para retorná-las como certas ou erradas.|Alta|
+| **RF007** | Fornecer feedback imediato sobre a resposta do aluno em atividades de identificação. |Exibir resultados dos quizzes e laboratórios.|Armazenar as respostas dos alunos e compará-las com as respostas do arquivo .json para retorná-las como certas ou erradas.|Alta|
 | **RF008** | Disponibilizar um laboratório virtual com exemplos visuais do conteúdo estudado. | Exibir um laboratório virtual para que o usuário escolha o espécime a ser estudado.|Usar uma biblioteca que permite a exibição de imagens reais dos animais estudados para auxiliar a identificação de estruturas anatômicas e ainteração com essas imagens.|Alta|
 | **RF009** | Ampliar imagens para visualizar detalhes anatômicos no laboratório.|Exibir opção para ampliar a imagem no laboratório.|Ativar uma função que amplia a imagem por meio de biblioteca especial.|Média|
 | **RF010** | Permitir a comparação entre imagens reais e imagens ilustrativas dos animais estudados. |Exibir imagens reais e imagens ilustrativas lado a lado para auxiliar os estudos dos alunos.|Buscar ambas as imagens reais e ilustrativas do código.|Alta|
