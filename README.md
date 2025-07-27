@@ -69,7 +69,12 @@ Este projeto consiste no desenvolvimento de um aplicativo móvel educativo, volt
 
 ## Protótipo
 
-**Figma:** [Figma](https://www.figma.com/design/f8RxmlymAQIInzAciAjpTr/P1--Copy-?node-id=0-1&p=f&t=LGcWhqIifeYn0D11-0)
+**Figma:** 
+
+Protótipos das Telas: [Figma](https://www.figma.com/design/f8RxmlymAQIInzAciAjpTr/P1--Copy-?node-id=0-1&p=f&t=LGcWhqIifeYn0D11-0)
+
+Protótipo das Telas de Laboratório e Leitura: [Laboratório_e_Leitura] (https://www.figma.com/design/jqAalI35ph9coXkFKCm0r2/remake-intro-e-lab?node-id=0-1&p=f&t=mEBIll5SY2eV1Wcg-0)
+
 
 ## Licença
 
