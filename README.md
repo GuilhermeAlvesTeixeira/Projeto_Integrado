@@ -85,6 +85,10 @@ Este projeto está sob a GNU GPLv3.
 ## Link para o Quadro Kanban
 https://github.com/users/GuilhermeAlvesTeixeira/projects/3/views/1
 
+## Link para o vídeo de teste no Youtube
+[![Assista ao vídeo](https://github.com/user-attachments/assets/d1b63bbe-0530-48f1-a731-5f1ab7f0e87e)](https://youtu.be/vPLKpO77Opc?si=1gPUQaD68PeP4UTA)
+
+
 ## Legenda de Codificação
 
 | Tipo de item                 | Nome comum              | Código          | 
