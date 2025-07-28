@@ -80,11 +80,11 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
 
   return (
     <div className={`flex flex-col lg:flex-row flex-1 ${colors.bg}`}>
-      {/* Painel esquerdo - Progresso (visível apenas em desktop) */}
+      {/* Painel esquerdo */}
       <div className={`hidden mt-8 rounded-md lg:block w-72 ${colors.cardBg} p-10 shadow-md`}>
         <h2 className={`text-xl font-bold ${colors.text} mb-6`}>Seu Progresso</h2>
 
-        {/* Círculo de progresso aumentado */}
+        {/* Círculo de progresso*/}
         <div className="relative w-48 h-48 mx-auto mb-6">
           <svg className="w-full h-full" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="45" fill="none" stroke={theme === 'high-contrast' ? '#4d4d4d' : '#e5e7eb'} strokeWidth="8" />
@@ -135,7 +135,6 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
       {/* Conteúdo principal */}
       <div className="flex-1 p-4 lg:p-8">
         <div className="max-w-3xl mx-auto">
-          {/* Card central com layout dividido */}
           <div className={`${colors.cardBg} rounded-xl shadow-md overflow-hidden mb-6 lg:mb-8`}>
             <div className="p-6 lg:p-8">
               <div className="flex flex-col md:flex-row-reverse gap-8">
@@ -149,8 +148,6 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
                     />
                   </div>
                 </div>
-
-                {/* Div do conteúdo (60% width em desktop) */}
                 <div className="w-full md:w-3/5">
                   <div className="mb-4">
                     <span className={`inline-block px-3 py-1 ${theme === 'high-contrast' ? 'bg-yellow-100 text-yellow-900' : 'bg-green-100 text-green-800'} text-xs font-semibold rounded-full mb-2`}>
@@ -169,7 +166,7 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
                 </div>
               </div>
 
-              {/* Div separada para o botão */}
+              {/* Div botão*/}
               <div className="mt-6">
                 <Link href={selectedModule.link} passHref>
                   <button className={`w-full py-3 lg:py-4 ${colors.buttonBg} font-bold rounded-lg shadow-md transition duration-200 cursor-pointer ${
@@ -208,12 +205,13 @@ export default function FiloTemplate({ phylum }: FiloTemplateProps) {
             ))}
           </div>
 
-          {/* Progresso mobile (agora posicionado abaixo de tudo) */}
+          {/* Progresso mobile */}
           <div className="lg:hidden mt-6">
             <div className={`${colors.cardBg}p-4 rounded-lg shadow-md`}>
               <h2 className={`text-lg font-bold ${colors.text} mb-4`}>Seu Progresso</h2>
               
               <div className="flex items-center gap-4">
+                
                 {/* Círculo de progresso mobile */}
                 <div className="relative w-20 h-20">
                   <svg className="w-full h-full" viewBox="0 0 100 100">

@@ -6,6 +6,7 @@ import PranchaInformativa from '@/components/prancha-interativa';
 import { Specimens } from '@/interfaces/types';
 import { useTheme } from '@/components/theme-context';
 
+//Dados dos espécimes (Futuramente mudar para o formato de json)
 const specimenNames = {
   poliplacoforo: "Poliplacóforo",
   bivalve: "Moluscos Bivalves",
@@ -16,6 +17,15 @@ const specimenNames = {
   polvo: "Polvo"
 };
 
+/*
+  Componentes principais:
+
+  - specimensData: Armazena todos os dados dos espécimes carregados do JSON;
+  - selectedSpecimen: Controla qual espécime está sendo visualizado;
+  - isPranchaVisible: Gerencia a visibilidade do painel de informações;
+  - selectedImageIndex: Controla qual imagem do espécime está sendo exibida;
+  - loading: Indica se os dados estão sendo carregados.
+*/
 const LaboratorioLayout = () => {
   const { theme } = useTheme();
   const [specimensData, setSpecimensData] = useState<Specimens | null>(null);
@@ -28,6 +38,8 @@ const LaboratorioLayout = () => {
     setSelectedImageIndex(index);
   };
 
+
+  //Carregar os dados dos espécimes do arquivo json (/data/pranchas/specimens.json) quando o componente é montado
   useEffect(() => {
     fetch('/data/pranchas/specimens.json')
       .then(response => response.json())
@@ -41,6 +53,7 @@ const LaboratorioLayout = () => {
       });
   }, []);
 
+  // estado de carregamento
   if (loading) {
     return (
       <div className={`flex flex-col items-center justify-center h-screen gap-4 ${
@@ -60,6 +73,7 @@ const LaboratorioLayout = () => {
     );
   }
 
+  // caso ocorra algum erro no carregamento
   if (!specimensData) {
     return (
       <div className={`flex items-center justify-center h-screen ${
@@ -74,12 +88,14 @@ const LaboratorioLayout = () => {
 
   const currentSpecimen = specimensData[selectedSpecimen];
 
+  //Layout principal
   return (
     <div className={`flex shadow flex-col h-screen ${
       theme === 'light' ? 'bg-gray-50' :
       theme === 'dark' ? 'bg-gray-900' :
       'bg-black'
     }`}>
+      {/* Cabeçalho */}
       <header className={`p-4 ${
         theme === 'light' ? 'bg-white' :
         theme === 'dark' ? 'bg-gray-900' :

@@ -5,10 +5,13 @@ import { Circle, Square, Type, FileX2Icon, Save, Minus, Pencil, Trash2, MousePoi
 import { fabric } from 'fabric';
 import { useTheme } from '@/components/theme-context';
 
+//Interface da lâmina  da pasta ../interfaces
+
 interface LaminaInterativaProps {
   imageSrc: string;
 }
 
+// definição dos estados
 const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
   const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,27 +38,30 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     const container = canvasContainerRef.current;
     const initCanvas = new fabric.Canvas(canvasRef.current, {
       isDrawingMode: false,
-      backgroundColor: theme === 'light' ? '#f8fafc' : 
-                      theme === 'dark' ? '#1e293b' : '#000000',
+      backgroundColor: theme === 'light' ? '#f8fafc' :
+        theme === 'dark' ? '#1e293b' : '#000000',
       width: container.clientWidth,
       height: container.clientHeight,
     });
 
-    // Event listeners para seleção de objetos
+    // Configuração dos listeners para seleção dos objetos
+
+    //dispara quando um objeto for selcionado no canvas
     initCanvas.on('selection:created', (e) => {
       if (e.selected && e.selected.length === 1) {
         const obj = e.selected[0];
         setSelectedObject(obj);
-        if (obj instanceof fabric.Textbox) {
+        if (obj instanceof fabric.Textbox) {    // se for um texto
           setObjectColor(obj.fill as string || (theme === 'light' ? '#000000' : '#ffffff'));
           setTextBgColor(obj.backgroundColor as string || 'transparent');
-        } else {
+        } else {                                // se for outro tipo de objeto
           setObjectColor(obj.stroke as string || (theme === 'light' ? '#000000' : '#ffffff'));
           setStrokeWidth(obj.strokeWidth as number || 2);
         }
       }
     });
 
+    // Configuração para update
     initCanvas.on('selection:updated', (e) => {
       if (e.selected && e.selected.length === 1) {
         const obj = e.selected[0];
@@ -70,18 +76,20 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
       }
     });
 
+    //Configuração para quando a seleção é removida
     initCanvas.on('selection:cleared', () => {
       setSelectedObject(null);
     });
 
     setCanvas(initCanvas);
 
+    // Retorno da limpeza
     return () => {
       initCanvas.dispose();
     };
   }, [theme]);
 
-  // Configuração do panning
+    // Configuração do panning
   useEffect(() => {
     if (!canvas) return;
 
@@ -106,9 +114,9 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
         const mouseEvent = options.e as MouseEvent;
         const deltaX = mouseEvent.clientX - lastX;
         const deltaY = mouseEvent.clientY - lastY;
-        
+
         canvas.relativePan(new fabric.Point(deltaX, deltaY));
-        
+
         lastX = mouseEvent.clientX;
         lastY = mouseEvent.clientY;
       }
@@ -134,14 +142,14 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     };
   }, [canvas, isPanning]);
 
-  // Desativa o panning quando outra ferramenta é selecionada
+  // desabilidta o panning quando outra ferramenta é selecionada
   useEffect(() => {
     if (activeTool && activeTool !== 'pan') {
       setIsPanning(false);
     }
   }, [activeTool]);
 
-  // Carregamento da imagem
+  // carregamento da imagem
   useEffect(() => {
     if (!canvas) return;
 
@@ -185,10 +193,11 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     });
   }, [canvas, imageSrc]);
 
-  // Criação automática de formas quando a ferramenta é ativada
+  // criação automática de formas quando a ferramenta é ativada
   useEffect(() => {
     if (!canvas || !isImageLoaded || !activeTool) return;
-
+    
+    // desenho a mão livre
     if (activeTool !== 'freehand') {
       canvas.isDrawingMode = false;
       setShowFreehandPanel(false);
@@ -202,6 +211,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     let newObject: fabric.Object;
 
     switch (activeTool) {
+      // desenhanod linha a partir do centro
       case 'arrow':
         newObject = new fabric.Line(
           [centerX - 50, centerY, centerX + 50, centerY],
@@ -217,8 +227,9 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
           }
         );
         break;
-      
+
       case 'circle':
+        // desenhano circulo a partir do centro
         newObject = new fabric.Circle({
           left: centerX,
           top: centerY,
@@ -231,8 +242,9 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
           originY: 'center',
         });
         break;
-      
+
       case 'rectangle':
+        // desenhano retangulo a partir do centro
         newObject = new fabric.Rect({
           left: centerX,
           top: centerY,
@@ -246,7 +258,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
           originY: 'center',
         });
         break;
-      
+
       default:
         return;
     }
@@ -257,7 +269,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     setActiveTool(null);
   }, [activeTool, canvas, isImageLoaded, objectColor, strokeWidth]);
 
-  // Configuração das ferramentas (apenas para texto e desenho livre)
+  // configuração das ferramentas (apenas para texto e desenho livre)
   useEffect(() => {
     if (!canvas || !isImageLoaded) return;
 
@@ -265,7 +277,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
       if (!activeTool || !e.pointer) return;
 
       const pointer = e.pointer;
-      
+
       if (activeTool === 'text') {
         const text = new fabric.Textbox(textInput || 'Texto', {
           left: pointer.x,
@@ -294,7 +306,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
   // Ativa/desativa o modo de desenho livre
   useEffect(() => {
     if (!canvas) return;
-    
+
     if (activeTool === 'freehand') {
       canvas.isDrawingMode = true;
       canvas.freeDrawingBrush.color = objectColor;
@@ -328,27 +340,27 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
     updateObject();
   }, [objectColor, strokeWidth, textBgColor, canvas, selectedObject]);
 
-  // Handle zoom
+  // zoom
   const handleZoom = (direction: 'in' | 'out') => {
     if (!canvas || !backgroundImage) return;
-    
+
     const zoomFactor = direction === 'in' ? 1.2 : 0.8;
     const newZoom = zoomLevel * zoomFactor;
-    
+
     if (newZoom < 0.1 || newZoom > 5) return;
-    
+
     setZoomLevel(newZoom);
     canvas.setZoom(newZoom);
     canvas.renderAll();
   };
 
-  // Handle pan tool activation
+  // ativiação da ferramenta de pan
   const handlePanTool = () => {
     setIsPanning(!isPanning);
     setActiveTool(isPanning ? null : 'pan');
   };
 
-  // Handle select tool
+  // ferramenta de seleção
   const handleSelectTool = () => {
     setIsPanning(false);
     setActiveTool('select');
@@ -372,12 +384,12 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
   const handleExport = () => {
     if (!canvas) return;
-    
+
     const dataURL = canvas.toDataURL({
       format: 'png',
       quality: 1,
     });
-    
+
     const link = document.createElement('a');
     link.download = 'lamina-anotada.png';
     link.href = dataURL;
@@ -388,7 +400,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
   const clearCanvas = () => {
     if (!canvas) return;
-    
+
     const objects = canvas.getObjects();
     if (objects.length > 1) {
       objects.slice(1).forEach(obj => canvas.remove(obj));
@@ -399,40 +411,35 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
   };
 
   return (
-    <div className={`p-4 rounded-lg shadow-md border ${
-      theme === 'light' ? 'bg-white border-gray-200' :
-      theme === 'dark' ? 'bg-gray-800 border-gray-700' :
-      'bg-black border-amber-400'
-    }`}>
-      {/* Modal de confirmação para apagar anotações */}
+    <div className={`p-4 rounded-lg shadow-md border ${theme === 'light' ? 'bg-white border-gray-200' :
+        theme === 'dark' ? 'bg-gray-800 border-gray-700' :
+          'bg-black border-amber-400'
+      }`}>
+      {/* confirmação para apagar anotações */}
       {showClearConfirmation && (
         <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-50">
-          <div className={`p-6 rounded-lg shadow-xl max-w-md ${
-            theme === 'light' ? 'bg-white' :
-            theme === 'dark' ? 'bg-gray-800' :
-            'bg-black border border-amber-300'
-          }`}>
-            <h3 className={`text-lg font-medium mb-4 ${
-              theme === 'high-contrast' ? 'text-amber-300' : ''
-            }`}>Você deseja apagar todas as anotações?</h3>
+          <div className={`p-6 rounded-lg shadow-xl max-w-md ${theme === 'light' ? 'bg-white' :
+              theme === 'dark' ? 'bg-gray-800' :
+                'bg-black border border-amber-300'
+            }`}>
+            <h3 className={`text-lg font-medium mb-4 ${theme === 'high-contrast' ? 'text-amber-300' : ''
+              }`}>Você deseja apagar todas as anotações?</h3>
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setShowClearConfirmation(false)}
-                className={`px-4 py-2 rounded-lg font-medium ${
-                  theme === 'light' ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' :
-                  theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' :
-                  'bg-black border border-amber-300 text-amber-300 hover:border-amber-500 hover:text-amber-500'
-                }`}
+                className={`px-4 py-2 rounded-lg font-medium ${theme === 'light' ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' :
+                    theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' :
+                      'bg-black border border-amber-300 text-amber-300 hover:border-amber-500 hover:text-amber-500'
+                  }`}
               >
                 Não
               </button>
               <button
                 onClick={clearCanvas}
-                className={`px-4 py-2 rounded-lg font-medium ${
-                  theme === 'light' ? 'bg-red-500 text-white hover:bg-red-600' :
-                  theme === 'dark' ? 'bg-red-600 text-white hover:bg-red-700' :
-                  'bg-amber-300 text-black hover:bg-amber-500'
-                }`}
+                className={`px-4 py-2 rounded-lg font-medium ${theme === 'light' ? 'bg-red-500 text-white hover:bg-red-600' :
+                    theme === 'dark' ? 'bg-red-600 text-white hover:bg-red-700' :
+                      'bg-amber-300 text-black hover:bg-amber-500'
+                  }`}
               >
                 Sim, apagar
               </button>
@@ -443,22 +450,20 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
       <div className="flex gap-4 relative">
         {/* Barra de ferramentas vertical */}
-        <div className={`flex flex-col gap-2 p-2 rounded w-12 border ${
-          theme === 'light' ? 'bg-gray-100 border-gray-200' :
-          theme === 'dark' ? 'bg-gray-700 border-gray-600' :
-          'bg-black border-amber-300'
-        }`}>
+        <div className={`flex flex-col gap-2 p-2 rounded w-12 border ${theme === 'light' ? 'bg-gray-100 border-gray-200' :
+            theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+              'bg-black border-amber-300'
+          }`}>
           <button
             onClick={handleSelectTool}
-            className={`p-2 rounded flex items-center justify-center ${
-              activeTool === 'select' ? 
+            className={`p-2 rounded flex items-center justify-center ${activeTool === 'select' ?
                 theme === 'light' ? 'bg-blue-200' :
-                theme === 'dark' ? 'bg-blue-800' :
-                'bg-amber-300' :
-              theme === 'light' ? 'bg-white hover:bg-gray-200' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-              'bg-black hover:border hover:border-amber-300'
-            }`}
+                  theme === 'dark' ? 'bg-blue-800' :
+                    'bg-amber-300' :
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-black hover:border hover:border-amber-300'
+              }`}
             title="Selecionar"
             disabled={!isImageLoaded}
           >
@@ -466,18 +471,17 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
               theme === 'high-contrast' && activeTool !== 'select' ? 'text-amber-300' : ''
             } />
           </button>
-          
+
           <button
             onClick={() => { setActiveTool('arrow'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center ${
-              activeTool === 'arrow' ? 
+            className={`p-2 rounded flex items-center justify-center ${activeTool === 'arrow' ?
                 theme === 'light' ? 'bg-blue-200' :
-                theme === 'dark' ? 'bg-blue-800' :
-                'bg-amber-300' :
-              theme === 'light' ? 'bg-white hover:bg-gray-200' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-              'bg-black hover:border hover:border-amber-300'
-            }`}
+                  theme === 'dark' ? 'bg-blue-800' :
+                    'bg-amber-300' :
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-black hover:border hover:border-amber-300'
+              }`}
             title="Linha"
             disabled={!isImageLoaded}
           >
@@ -488,15 +492,14 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
           <button
             onClick={() => { setActiveTool('circle'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center ${
-              activeTool === 'circle' ? 
+            className={`p-2 rounded flex items-center justify-center ${activeTool === 'circle' ?
                 theme === 'light' ? 'bg-blue-200' :
-                theme === 'dark' ? 'bg-blue-800' :
-                'bg-amber-300' :
-              theme === 'light' ? 'bg-white hover:bg-gray-200' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-              'bg-black hover:border hover:border-amber-300'
-            }`}
+                  theme === 'dark' ? 'bg-blue-800' :
+                    'bg-amber-300' :
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-black hover:border hover:border-amber-300'
+              }`}
             title="Círculo"
             disabled={!isImageLoaded}
           >
@@ -507,15 +510,14 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
           <button
             onClick={() => { setActiveTool('rectangle'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center ${
-              activeTool === 'rectangle' ? 
+            className={`p-2 rounded flex items-center justify-center ${activeTool === 'rectangle' ?
                 theme === 'light' ? 'bg-blue-200' :
-                theme === 'dark' ? 'bg-blue-800' :
-                'bg-amber-300' :
-              theme === 'light' ? 'bg-white hover:bg-gray-200' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-              'bg-black hover:border hover:border-amber-300'
-            }`}
+                  theme === 'dark' ? 'bg-blue-800' :
+                    'bg-amber-300' :
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-black hover:border hover:border-amber-300'
+              }`}
             title="Retângulo"
             disabled={!isImageLoaded}
           >
@@ -526,15 +528,14 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
           <button
             onClick={() => { handleFreehandTool(); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center ${
-              activeTool === 'freehand' ? 
+            className={`p-2 rounded flex items-center justify-center ${activeTool === 'freehand' ?
                 theme === 'light' ? 'bg-blue-200' :
-                theme === 'dark' ? 'bg-blue-800' :
-                'bg-amber-300' :
-              theme === 'light' ? 'bg-white hover:bg-gray-200' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-              'bg-black hover:border hover:border-amber-300'
-            }`}
+                  theme === 'dark' ? 'bg-blue-800' :
+                    'bg-amber-300' :
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-black hover:border hover:border-amber-300'
+              }`}
             title="Desenho livre"
             disabled={!isImageLoaded}
           >
@@ -545,15 +546,14 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
           <button
             onClick={() => { setActiveTool('text'); setIsPanning(false); }}
-            className={`p-2 rounded flex items-center justify-center ${
-              activeTool === 'text' ? 
+            className={`p-2 rounded flex items-center justify-center ${activeTool === 'text' ?
                 theme === 'light' ? 'bg-blue-200' :
-                theme === 'dark' ? 'bg-blue-800' :
-                'bg-amber-300' :
-              theme === 'light' ? 'bg-white hover:bg-gray-200' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-              'bg-black hover:border hover:border-amber-300'
-            }`}
+                  theme === 'dark' ? 'bg-blue-800' :
+                    'bg-amber-300' :
+                theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-black hover:border hover:border-amber-300'
+              }`}
             title="Texto"
             disabled={!isImageLoaded}
           >
@@ -564,11 +564,10 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
           <button
             onClick={() => setShowClearConfirmation(true)}
-            className={`p-2 rounded flex items-center justify-center ${
-              theme === 'light' ? 'bg-white hover:bg-gray-200 text-red-600' :
-              theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500 text-red-400' :
-              'bg-black hover:border hover:border-amber-300 text-purple-600'
-            }`}
+            className={`p-2 rounded flex items-center justify-center ${theme === 'light' ? 'bg-white hover:bg-gray-200 text-red-600' :
+                theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500 text-red-400' :
+                  'bg-black hover:border hover:border-amber-300 text-purple-600'
+              }`}
             title="Apagar Anotações"
             disabled={!isImageLoaded}
           >
@@ -577,11 +576,10 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
 
           <button
             onClick={handleExport}
-            className={`p-2 rounded flex items-center justify-center mt-auto ${
-              theme === 'light' ? 'bg-green-600 hover:bg-green-700 text-white' :
-              theme === 'dark' ? 'bg-green-700 hover:bg-green-800 text-white' :
-              'bg-amber-400 hover:bg-amber-500'
-            } text-black`}
+            className={`p-2 rounded flex items-center justify-center mt-auto ${theme === 'light' ? 'bg-green-600 hover:bg-green-700 text-white' :
+                theme === 'dark' ? 'bg-green-700 hover:bg-green-800 text-white' :
+                  'bg-amber-400 hover:bg-amber-500'
+              } text-black`}
             title="Salvar Lâmina"
             disabled={!isImageLoaded}
           >
@@ -589,16 +587,14 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
           </button>
         </div>
 
-        {/* Canvas container */}
         <div className={`flex-1 relative bg-black
         }`}>
-          {/* Painel de propriedades */}
+          {/* painel de propriedades */}
           {selectedObject && (
-            <div className={`absolute top-0 left-0 right-0 z-10 mb-4 p-3 rounded-lg flex flex-wrap items-center gap-4 border ${
-              theme === 'light' ? 'bg-gray-100 border-gray-200' :
-              theme === 'dark' ? 'bg-gray-700 border-gray-600' :
-              'bg-black border-amber-300 text-amber-500'
-            }`}>
+            <div className={`absolute top-0 left-0 right-0 z-10 mb-4 p-3 rounded-lg flex flex-wrap items-center gap-4 border ${theme === 'light' ? 'bg-gray-100 border-gray-200' :
+                theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+                  'bg-black border-amber-300 text-amber-500'
+              }`}>
               <div className="flex items-center">
                 <span className="mr-2 text-sm">Cor:</span>
                 <input
@@ -608,7 +604,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
                   className="w-8 h-8 cursor-pointer"
                 />
               </div>
-              
+
               {!(selectedObject instanceof fabric.Textbox) && (
                 <div className="flex items-center">
                   <span className="mr-2 text-sm">Espessura:</span>
@@ -623,7 +619,7 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
                   <span className="ml-2 text-sm w-4">{strokeWidth}</span>
                 </div>
               )}
-              
+
               {selectedObject instanceof fabric.Textbox && (
                 <div className="flex items-center">
                   <span className="mr-2 text-sm">Fundo:</span>
@@ -635,23 +631,21 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
                   />
                   <button
                     onClick={() => setTextBgColor('transparent')}
-                    className={`ml-1 p-1 text-xs border rounded hover:opacity-90 ${
-                      theme === 'high-contrast' ? 'border-black' : ''
-                    }`}
+                    className={`ml-1 p-1 text-xs border rounded hover:opacity-90 ${theme === 'high-contrast' ? 'border-black' : ''
+                      }`}
                     title="Remover fundo"
                   >
                     X
                   </button>
                 </div>
               )}
-              
+
               <button
                 onClick={handleDeleteObject}
-                className={`ml-auto p-2 rounded flex items-center hover:opacity-90 ${
-                  theme === 'light' ? 'bg-gray-200 hover:bg-gray-300 text-red-600' :
-                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500 text-red-400' :
-                  'bg-black hover:border hover:border-amber-300 text-red-600'
-                }`}
+                className={`ml-auto p-2 rounded flex items-center hover:opacity-90 ${theme === 'light' ? 'bg-gray-200 hover:bg-gray-300 text-red-600' :
+                    theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500 text-red-400' :
+                      'bg-black hover:border hover:border-amber-300 text-red-600'
+                  }`}
                 title="Deletar objeto"
               >
                 <Trash2 size={16} className="mr-1" />
@@ -660,19 +654,18 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
             </div>
           )}
 
-          {/* Painel de navegação */}
+          {/* painel de navegação */}
           <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
             <button
               onClick={handlePanTool}
-              className={`p-2 rounded-full shadow flex items-center justify-center ${
-                isPanning ?
+              className={`p-2 rounded-full shadow flex items-center justify-center ${isPanning ?
                   theme === 'light' ? 'bg-blue-200' :
-                  theme === 'dark' ? 'bg-blue-800' :
-                  'bg-amber-300' :
+                    theme === 'dark' ? 'bg-blue-800' :
+                      'bg-amber-300' :
                   theme === 'light' ? 'bg-white hover:bg-gray-200' :
-                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-                  'bg-amber-50 hover:bg-amber-200'
-              }`}
+                    theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                      'bg-amber-50 hover:bg-amber-200'
+                }`}
               title="Mover"
               disabled={!isImageLoaded}
             >
@@ -682,11 +675,10 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
             </button>
             <button
               onClick={() => handleZoom('in')}
-              className={`p-2 rounded-full shadow flex items-center justify-center ${
-                theme === 'light' ? 'bg-white hover:bg-gray-200' :
-                theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-                'bg-amber-50 hover:bg-amber-200'
-              }`}
+              className={`p-2 rounded-full shadow flex items-center justify-center ${theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-amber-50 hover:bg-amber-200'
+                }`}
               title="Ampliar"
               disabled={!isImageLoaded}
             >
@@ -696,11 +688,10 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
             </button>
             <button
               onClick={() => handleZoom('out')}
-              className={`p-2 rounded-full shadow flex items-center justify-center ${
-                theme === 'light' ? 'bg-white hover:bg-gray-200' :
-                theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
-                'bg-amber-50 hover:bg-amber-200'
-              }`}
+              className={`p-2 rounded-full shadow flex items-center justify-center ${theme === 'light' ? 'bg-white hover:bg-gray-200' :
+                  theme === 'dark' ? 'bg-gray-600 hover:bg-gray-500' :
+                    'bg-amber-50 hover:bg-amber-200'
+                }`}
               title="Reduzir"
               disabled={!isImageLoaded}
             >
@@ -708,22 +699,20 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
                 theme === 'high-contrast' ? 'text-black' : ''
               } />
             </button>
-            <div className={`text-center text-sm shadow rounded px-2 py-1 ${
-              theme === 'light' ? 'bg-gray-100 text-gray-800' :
-              theme === 'dark' ? 'bg-gray-700 text-gray-200' :
-              'bg-amber-100 text-black'
-            }`}>
+            <div className={`text-center text-sm shadow rounded px-2 py-1 ${theme === 'light' ? 'bg-gray-100 text-gray-800' :
+                theme === 'dark' ? 'bg-gray-700 text-gray-200' :
+                  'bg-amber-100 text-black'
+              }`}>
               {Math.round(zoomLevel * 100)}%
             </div>
           </div>
 
-          {/* Painel de propriedades do desenho livre */}
+          {/* painel de propriedades do desenho livre */}
           {showFreehandPanel && (
-            <div className={`absolute top-4 right-4 z-10 p-3 rounded-lg flex flex-wrap items-center gap-4 border ${
-              theme === 'light' ? 'bg-gray-100 border-gray-200' :
-              theme === 'dark' ? 'bg-gray-700 border-gray-600' :
-              'bg-amber-100 border-amber-300'
-            }`}>
+            <div className={`absolute top-4 right-4 z-10 p-3 rounded-lg flex flex-wrap items-center gap-4 border ${theme === 'light' ? 'bg-gray-100 border-gray-200' :
+                theme === 'dark' ? 'bg-gray-700 border-gray-600' :
+                  'bg-amber-100 border-amber-300'
+              }`}>
               <div className="flex items-center">
                 <span className="mr-2 text-sm">Cor:</span>
                 <input
@@ -759,27 +748,25 @@ const LaminaInterativa: React.FC<LaminaInterativaProps> = ({ imageSrc }) => {
             </div>
           )}
 
-          {/* Canvas para a lâmina */}
-          <div 
+          {/* canvas para a lâmina */}
+          <div
             ref={canvasContainerRef}
-            className={`border rounded overflow-hidden ${
-              theme === 'light' ? 'border-gray-200' :
-              theme === 'dark' ? 'border-gray-600' :
-              'border-amber-400'
-            }`}
+            className={`border rounded overflow-hidden ${theme === 'light' ? 'border-gray-200' :
+                theme === 'dark' ? 'border-gray-600' :
+                  'border-amber-400'
+              }`}
             style={{ height: '600px', width: '100%' }}
           >
             <canvas ref={canvasRef} />
             {!isImageLoaded && (
-              <div className={`flex items-center justify-center h-full ${
-                theme === 'light' ? 'bg-gray-50' :
-                theme === 'dark' ? 'bg-gray-900' :
-                'bg-black'
-              }`}>
+              <div className={`flex items-center justify-center h-full ${theme === 'light' ? 'bg-gray-50' :
+                  theme === 'dark' ? 'bg-gray-900' :
+                    'bg-black'
+                }`}>
                 <p className={
                   theme === 'light' ? 'text-gray-500' :
-                  theme === 'dark' ? 'text-gray-300' :
-                  'text-amber-400'
+                    theme === 'dark' ? 'text-gray-300' :
+                      'text-amber-400'
                 }>Carregando imagem...</p>
               </div>
             )}
