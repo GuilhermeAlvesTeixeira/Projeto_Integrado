@@ -29,8 +29,11 @@ const PranchaInformativa: React.FC<PranchaInformativaProps> = ({
     }));
   };
 
+  const closeModal = () => setIsImageModalOpen(false);
+  const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
+
   return (
-    <div className="bgspace-y-4">
+    <div className="space-y-4">
       <h2 className={`text-xl font-bold ${theme === 'light' ? 'text-gray-800' :
           theme === 'dark' ? 'text-white' :
             'text-white'
@@ -70,22 +73,26 @@ const PranchaInformativa: React.FC<PranchaInformativaProps> = ({
           </div>
 
           {isImageModalOpen && (
-            <div className="fixed inset-0 bg-black/70 z-50 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-screen p-4">
-                <div className="relative max-w-full max-h-full">
-                  <button
-                    onClick={() => setIsImageModalOpen(false)}
-                    className={`fixed top-4 right-4 ${theme === 'high-contrast' ? 'text-amber-400' : 'text-white'
-                      } hover:opacity-80 z-50 p-2 bg-black/50 rounded-full`}
-                  >
-                    <X size={30} />
-                  </button>
-                  <img
-                    src={currentLamina.pranchaImage}
-                    alt="Esquema anatômico ampliado"
-                    className="max-w-[90vw] max-h-[90vh] object-contain"
-                  />
-                </div>
+            <div 
+              className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+              onClick={closeModal}
+            >
+              <div 
+                className="relative max-w-full max-h-full"
+                onClick={stopPropagation}
+              >
+                <button
+                  onClick={closeModal}
+                  className={`absolute top-2 right-2 ${theme === 'high-contrast' ? 'text-amber-400' : 'text-white'
+                    } hover:opacity-80 z-50 p-2 bg-black/50 rounded-full`}
+                >
+                  <X size={30} />
+                </button>
+                <img
+                  src={currentLamina.pranchaImage}
+                  alt="Esquema anatômico ampliado"
+                  className="max-w-[90vw] max-h-[90vh] object-contain"
+                />
               </div>
             </div>
           )}

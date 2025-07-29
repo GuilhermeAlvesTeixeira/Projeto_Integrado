@@ -104,7 +104,7 @@ export default function Home() {
               alt="nemertea"
               height={30}
               width={38}
-              className="mr-4 rounded-md"
+              className="mr-4 rounded-md not-hover:"
             />
             <span className="-translate-x-2">Nemerteas</span>
           </Button>

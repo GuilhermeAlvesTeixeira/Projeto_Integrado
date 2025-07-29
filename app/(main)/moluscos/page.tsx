@@ -17,6 +17,16 @@ const MoluscosPage = () => {
         link: "/moluscos/intro",
       },
       {
+        id: 'lab',
+        title: 'Laboratório',
+        level: 3,
+        icon: '🧪', // Emoji para a barra de módulos
+        image: '/molusco-lab.jpg', // Imagem para o card central
+        duration: 10,
+        completed: false,
+        link: "/moluscos/laboratorio",
+      },
+      {
         id: 'anatomy',
         title: 'Anatomia',
         level: 1,
@@ -35,16 +45,6 @@ const MoluscosPage = () => {
         duration: 7,
         completed: false,
         link: "/moluscos/sistematica",
-      },
-      {
-        id: 'lab',
-        title: 'Laboratório',
-        level: 3,
-        icon: '🧪', // Emoji para a barra de módulos
-        image: '/molusco-lab.jpg', // Imagem para o card central
-        duration: 10,
-        completed: false,
-        link: "/moluscos/laboratorio",
       },
     ],
   };
